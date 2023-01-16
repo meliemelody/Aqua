@@ -118,7 +118,7 @@ namespace Aqua
             try
             {
                 // Setup the network / Generate an IP address dynamically
-                // Network.Network.Setup();
+                Network.Network.Setup();
             }
             catch (Exception e)
             {
