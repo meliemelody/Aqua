@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <!--<RuntimeIdentifier>cosmos</RuntimeIdentifier>-->
+        <Platform>cosmos</Platform>
+        <SupportsX86Intrinsics>false</SupportsX86Intrinsics>
+        <SelfContained>True</SelfContained>
+	  <Deterministic>false</Deterministic>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <TransformOnBuild>true</TransformOnBuild>
+    	  <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
+        <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+        <Deterministic>false</Deterministic>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <EnableGDB>False</EnableGDB>
+        <StartCosmosGDB>True</StartCosmosGDB>
+        <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
+        <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
+        <Launch>VMware</Launch>
+        <Profile>VMware</Profile>
+        <Description>Use VMware Player or Workstation to deploy and debug.</Description>
+        <PxeInterface>192.168.0.8</PxeInterface>
+        <CompileVBEMultiboot>False</CompileVBEMultiboot>
+        <VBEResolution>800x600x32</VBEResolution>
+        <Timeout>5</Timeout>
+        <VMWareEdition>Player</VMWareEdition>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <OptimizationLevel>0</OptimizationLevel>
+	  <Deterministic>false</Deterministic>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Kernel.cs~RFb22bb1.TMP" />
+      <None Remove="Sounds\Startup.wav" />
+      <None Remove="Terminal\Login\LoginSystem.cs~RFbaceef.TMP" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Sounds\Startup.wav">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
+        <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
+        <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+        <PackageReference Include="CosmosFtpServer" Version="1.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
+
+</Project>
