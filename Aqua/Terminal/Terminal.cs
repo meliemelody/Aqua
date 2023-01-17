@@ -49,7 +49,7 @@ namespace Aqua.Terminal
             }
 
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(msg);
+            Console.WriteLine(msg);
 
             return "";
         }

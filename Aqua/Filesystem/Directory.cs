@@ -19,7 +19,7 @@ namespace Aqua.Filesystem
                 case "make":
                     try
                     {
-                        io.Directory.CreateDirectory(@"0:\" + Kernel.currentDirectory + string.Join(' ', args.Skip(1)));
+                        io.Directory.CreateDirectory(Kernel.currentDirectory + string.Join(' ', args.Skip(1)));
 
                         // response = "The file \"" + args[1] + "\" has been successfully created.";
                         return term.DebugWrite("The directory \"" + string.Join(' ', args.Skip(1)) + "\" has been successfully created.", 2);
@@ -32,9 +32,9 @@ namespace Aqua.Filesystem
                 case "del":
                     try
                     {
-                        if (io.Directory.Exists(@"0:\" + Kernel.currentDirectory + string.Join(' ', args.Skip(1))))
+                        if (io.Directory.Exists(Kernel.currentDirectory + string.Join(' ', args.Skip(1))))
                         {
-                            io.Directory.Delete(@"0:\" + Kernel.currentDirectory + string.Join(' ', args.Skip(1)), true);
+                            io.Directory.Delete(Kernel.currentDirectory + string.Join(' ', args.Skip(1)), true);
 
                             // response = "The file \"" + args[1] + "\" has been successfully deleted.";
                             return term.DebugWrite("The directory \"" + string.Join(' ', args.Skip(1)) + "\" has been successfully deleted.", 2);
