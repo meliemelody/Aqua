@@ -9,7 +9,6 @@ using term = Aqua.Terminal.Terminal;
 using Cosmos.System.Audio;
 using Cosmos.System.Audio.IO;
 using Cosmos.HAL.Drivers.PCI.Audio;
-using Aqua.Terminal.Accounts;
 
 namespace Aqua 
 {
@@ -22,20 +21,18 @@ namespace Aqua
 
         public static String currentDirectory = @"0:\";
 
-        public static AudioMixer mixer;
-        public static AC97 driver;
+        public static AudioMixer mixer = new AudioMixer();
+        public static AC97 driver = AC97.Initialize(bufferSize: 4096);
 
-        public AudioManager audioManager;
-
-        public static AccountManager accountManager;
-        public static Account curAccount;
+        public AudioManager audioManager = new AudioManager()
+        {
+            Stream = mixer,
+            Output = driver
+        };
 
         public void FirstRun()
         {
-            term.DebugWrite("Setting up things for you...\n", 6);
-
-            /*if (accountManager.accounts.Count == 0)
-                curAccount = new Account("Guest", Roles.Guest);*/
+            Console.WriteLine("Setting up things for you...\n");
 
             if (!System.IO.Directory.Exists(@"0:\Setup"))
             {
@@ -58,13 +55,10 @@ namespace Aqua
 
             try
             {
-                if (!System.IO.File.Exists(@"0:\Setup\FirstRun.acf"))
-                {
-                    System.IO.File.Create(@"0:\Setup\FirstRun.acf");
-                    System.IO.File.WriteAllText("0:\\Setup\\FirstRun.acf", "true");
-                    
-                    term.DebugWrite("Successfully made the FirstRun.acf file.", 1);
-                }
+                System.IO.File.Create(@"0:\Setup\FirstRun.acf");
+                System.IO.File.WriteAllText("0:\\Setup\\FirstRun.acf", "true");
+
+                term.DebugWrite("Successfully made the FirstRun.acf file.", 1);
             }
             catch (Exception ex)
             {
@@ -80,23 +74,7 @@ namespace Aqua
             try
             {
                 VFSManager.RegisterVFS(fs);
-                accountManager = new AccountManager();
-
-                curAccount = new Account("Guest", Roles.Guest);
-
-                if (!Sys.VMTools.IsVMWare)
-                {
-                    driver = AC97.Initialize(bufferSize: 4096);
-                    mixer = new AudioMixer();
-
-                    audioManager = new AudioManager()
-                    {
-                        Stream = mixer,
-                        Output = driver
-                    };
-
-                    audioManager.Enable();
-                }
+                audioManager.Enable();
             }
             catch (Exception ex)
             {
@@ -110,26 +88,17 @@ namespace Aqua
             Cosmos.HAL.Global.PIT.Wait(250);
             Console.Clear();
 
-            if (System.IO.File.Exists("0:\\Setup\\FirstRun.acf") && System.IO.File.ReadAllText("0:\\Setup\\FirstRun.acf") == "true" || accountManager.accounts.Count == 0)
+            if (System.IO.File.Exists("0:\\Setup\\FirstRun.acf") && System.IO.File.ReadAllText("0:\\Setup\\FirstRun.acf") == "true")
                 FirstRun();
 
             Cosmos.HAL.Global.PIT.Wait(750);
-            
-            /*if (accountManager.accounts.Count != 0)
-                // TO DO : https://github.com/DogOSdev/DogOS/blob/d4e3e1aeca319585f37068f3d33baa3ed94def16/DogOS/Kernel.cs
-                Aqua.Terminal.Login.LoginSystem.Start();*/
+            Aqua.Terminal.Login.LoginSystem.Start();
         }
 
         protected override void Run()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write(Terminal.Login.LoginSystem.username);
-
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(" @ ");
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write(currentDirectory);
+            Console.Write(Terminal.Login.LoginSystem.username + " | " + currentDirectory);
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(" $=> ");
@@ -148,12 +117,8 @@ namespace Aqua
         {
             try
             {
-                term.DebugWrite("Setting up the network...", 1);
-
                 // Setup the network / Generate an IP address dynamically
                 Network.Network.Setup();
-
-                Console.Clear();
             }
             catch (Exception e)
             {
@@ -187,8 +152,7 @@ namespace Aqua
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(devStatus[1]);
 
-            if (!Sys.VMTools.IsVMWare)
-                Sounds.Sounds.StartupSound();
+            Sounds.Sounds.StartupSound();
         }
     }
 }

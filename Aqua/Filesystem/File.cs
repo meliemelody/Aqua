@@ -20,7 +20,7 @@ namespace Aqua.Filesystem
                 case "make":
                     try
                     {
-                        io.File.Create(Kernel.currentDirectory + args[1]);
+                        io.File.Create(@"0:\" + Kernel.currentDirectory + args[1]);
 
                         // response = "The file \"" + args[1] + "\" has been successfully created.";
                         return term.DebugWrite("The file \"" + args[1] + "\" has been successfully created.", 2);
@@ -33,9 +33,9 @@ namespace Aqua.Filesystem
                 case "del":
                     try
                     {
-                        if (io.File.Exists(Kernel.currentDirectory + args[1]))
+                        if (io.File.Exists(@"0:\" + Kernel.currentDirectory + args[1]))
                         {
-                            io.File.Delete(Kernel.currentDirectory + args[1]);
+                            io.File.Delete(@"0:\" + Kernel.currentDirectory + args[1]);
 
                             // response = "The file \"" + args[1] + "\" has been successfully deleted.";
                             return term.DebugWrite("The file \"" + args[1] + "\" has been successfully deleted.", 2);
@@ -53,7 +53,7 @@ namespace Aqua.Filesystem
                 case "write":
                     try
                     {
-                        io.File.WriteAllText(Kernel.currentDirectory + args[1], args[2]);
+                        io.File.WriteAllText(@"0:\" + Kernel.currentDirectory + args[1], args[2]);
 
                         return term.DebugWrite("The file \"" + args[1] + "\" is successfully storing the data : \"" + args[2] + "\".", 2);
                     } 
@@ -66,7 +66,7 @@ namespace Aqua.Filesystem
                     try
                     {
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        return "\"" + io.File.ReadAllText(Kernel.currentDirectory + args[1]) + "\"";
+                        return "\"" + io.File.ReadAllText(@"0:\" + Kernel.currentDirectory + args[1]) + "\"";
                     }
                     catch (Exception e)
                     {

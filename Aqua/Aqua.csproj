@@ -33,14 +33,6 @@
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
         <OptimizationLevel>0</OptimizationLevel>
 	  <Deterministic>false</Deterministic>
-	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
-	  <QemuUSBKeyboard>True</QemuUSBKeyboard>
-	  <QemuUSBMouse>False</QemuUSBMouse>
-	  <QemuVideoDriver>VMWare</QemuVideoDriver>
-	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <QemuUseSerial>True</QemuUseSerial>
-	  <QemuMemory>512</QemuMemory>
-	  <DebugEnabled>True</DebugEnabled>
     </PropertyGroup>
 
     <ItemGroup>
@@ -60,7 +52,6 @@
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="CosmosFtpServer" Version="1.0.2" />
-        <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     </ItemGroup>
 
     <ItemGroup>
