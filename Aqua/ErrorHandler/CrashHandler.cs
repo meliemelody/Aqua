@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using term = Aqua.Terminal.Terminal;
 
 namespace Aqua.ErrorHandler

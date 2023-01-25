@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using term = Aqua.Terminal.Terminal;
 
 namespace Aqua.Commands
@@ -11,19 +8,21 @@ namespace Aqua.Commands
     {
         private List<Command> commands;
 
-        public Manager() 
+        public Manager()
         {
             this.commands = new List<Command>(1)
             {
-                new Executables.Print("print"),
-                new Executables.Clear("clear"),
+                new Executables.Print("prt"),
+                new Executables.Clear("clr"),
                 new Executables.IO("io"),
 
-                new Aqua.Filesystem.File("f"),
-                new Aqua.Filesystem.Directory("d"),
-                new Aqua.Filesystem.Filesystem("fs"),
+                new Filesystem.File("f"),
+                new Filesystem.Directory("d"),
+                new Filesystem.Filesystem("fs"),
 
-                new Aqua.Network.NetworkCommands("net")
+                new Network.NetworkCommands("net"),
+
+                new Graphics.grComs("gui")
             };
         }
 
@@ -43,9 +42,9 @@ namespace Aqua.Commands
                 ctr++;
             }
 
-            foreach (Command cmd in this.commands) 
+            foreach (Command cmd in this.commands)
             {
-                if (cmd.name == label) 
+                if (cmd.name == label)
                     return cmd.Execute(args.ToArray());
             }
 

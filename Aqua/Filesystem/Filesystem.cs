@@ -1,16 +1,12 @@
 ﻿using Aqua.Commands;
-using Sys = Cosmos.System;
 using System;
-using io = System.IO;
-using Aqua.Terminal;
 using term = Aqua.Terminal.Terminal;
-using Cosmos.System.FileSystem.VFS;
 
 namespace Aqua.Filesystem
 {
     public class Filesystem : Command
     {
-        public Filesystem (String name) : base (name) { }
+        public Filesystem(String name) : base(name) { }
 
         public override string Execute(string[] args)
         {
@@ -99,7 +95,7 @@ namespace Aqua.Filesystem
                         {
                             if (dir == args[1])
                             {
-                                Console.WriteLine("found it : " + args[1] + " : " + dir);
+                                term.DebugWrite("Successfully changed the directory to : " + dir + ".\n", 2);
                                 System.IO.Directory.SetCurrentDirectory(dir);
 
                                 Kernel.currentDirectory += (dir + "\\");

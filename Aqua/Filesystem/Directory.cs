@@ -1,16 +1,14 @@
 ﻿using Aqua.Commands;
-using Sys = Cosmos.System;
 using System;
-using io = System.IO;
-using Aqua.Terminal;
-using term = Aqua.Terminal.Terminal;
 using System.Linq;
+using io = System.IO;
+using term = Aqua.Terminal.Terminal;
 
 namespace Aqua.Filesystem
 {
     public class Directory : Command
     {
-        public Directory (String name) : base (name) { }
+        public Directory(String name) : base(name) { }
 
         public override string Execute(string[] args)
         {

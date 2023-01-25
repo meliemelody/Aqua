@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Aqua.Commands.Executables;
+using System;
+using System.IO;
 using static Aqua.Kernel;
+using futils = Aqua.Filesystem.FileUtilities;
 using term = Aqua.Terminal.Terminal;
 
 namespace Aqua.Terminal.Login
@@ -10,44 +13,141 @@ namespace Aqua.Terminal.Login
 
         public static void Start()
         {
-            // Console.WriteLine("Input your username : ");
-            GetUsername();
-            GetPassword();
-            Login();
+            FolderCheck();
+
+            // Introduction
+            String welcome = "Welcome to the world of Aqua.";
+
+            // Center the cursor position
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (welcome.Length / 2) - 2, Console.CursorTop);
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine(welcome + "\n");
+
+            LogString();
+
+            if (!File.Exists(@"0:\System\Login\Username.cfg") || !File.Exists(@"0:\System\Login\Password.cfg"))
+                SetUsername();
+            else
+                GetUsername();
         }
 
-        public static String GetUsername()
+        private static void LogString()
+        {
+            String logString;
+
+            if (!File.Exists(@"0:\System\Login\Username.cfg") || !File.Exists(@"0:\System\Login\Password.cfg"))
+                logString = "Please create an account.";
+            else
+                logString = "Please input your account information.";
+
+            Console.SetCursorPosition((Console.WindowWidth / 2) - (logString.Length / 2) - 2, Console.CursorTop);
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(logString);
+        }
+
+        private static void FolderCheck()
+        {
+            if (!Directory.Exists(@"0:\System"))
+            {
+                Directory.CreateDirectory(@"0:\System");
+            }
+
+            if (!Directory.Exists(@"0:\System\Login"))
+            {
+                Directory.CreateDirectory(@"0:\System\Login");
+            }
+        }
+
+        public static void SetUsername()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("\nInput your username : ");
-            
+            Console.Write("\nInput a username : ");
+
             Console.ForegroundColor = ConsoleColor.White;
 
             String input = Console.ReadLine();
-            if (input != null)
+
+            if (input != "system" || input != "guest")
             {
-                Cosmos.HAL.Global.PIT.Wait(500);
-                switch (input)
-                {
-                    case "root":
-                        isRoot = true;
-                        username = "root";
-                        return input;
-
-                    case "user":
-                        isRoot = false;
-                        username = "user";
-                        return input;
-
-                    default:
-                        term.DebugWrite("Invalid username, try again.\n", 4);
-                        Cosmos.HAL.Global.PIT.Wait(250);
-
-                        GetUsername();
-                        break;
-                }
+                File.WriteAllText(@"0:\System\Login\Username.cfg", input);
+                // SetPassword();
 
                 Cosmos.HAL.Global.PIT.Wait(250);
+                SetPassword();
+            }
+            else
+            {
+                term.DebugWrite("Username already used in system.", 4);
+
+                Cosmos.HAL.Global.PIT.Wait(250);
+                SetUsername();
+            }
+        }
+
+        public static void SetPassword()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("\nInput a password : ");
+
+            Console.ForegroundColor = ConsoleColor.Black;
+
+            String input = Console.ReadLine();
+
+            if (input != null || input != "")
+            {
+                File.WriteAllText(@"0:\System\Login\Password.cfg", input);
+                // SetPassword();
+
+                term.DebugWrite("\nSuccessfully created the account : \"" + username + "\".\n", 4);
+
+                Cosmos.HAL.Global.PIT.Wait(250);
+                Console.Clear();
+                LogString();
+
+                GetUsername();
+            }
+            else
+            {
+                term.DebugWrite("Password must not be empty.\n", 4);
+
+                Cosmos.HAL.Global.PIT.Wait(250);
+                SetPassword();
+            }
+        }
+
+        private static String GetUsername()
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("\nInput your username : ");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
+            String input = Console.ReadLine();
+            username = futils.ReadLine(@"0:\System\Login\Username.cfg", 0);
+
+            if (input == username)
+            {
+                Kernel.isRoot = true;
+
+                GetPassword();
+                return input;
+            }
+            else if (input == "guest")
+            {
+                username = "guest";
+                Kernel.isRoot = false;
+
+                Login();
+                return input;
+            }
+            else
+            {
+                term.DebugWrite("Invalid username, try again.\n", 4);
+                Cosmos.HAL.Global.PIT.Wait(250);
+
+                GetUsername();
             }
 
             return null;
@@ -61,53 +161,31 @@ namespace Aqua.Terminal.Login
             Console.ForegroundColor = ConsoleColor.Black;
 
             String input = Console.ReadLine();
-            Cosmos.HAL.Global.PIT.Wait(500);
-            if (username == "root")
-            {
-                if (input == "root")
-                {
-                    password = input;
-                    return input;
-                } 
-                else
-                {
-                    term.DebugWrite("Invalid password, try again.\n", 4);
-                    Cosmos.HAL.Global.PIT.Wait(500);
+            password = futils.ReadLine(@"0:\System\Login\Password.cfg", 0);
 
-                    GetPassword();
-                    return null;
-                }
-            }
-            else if (username == "user")
+            if (input == password)
+                Login();
+            else
             {
-                if (input == "" || input == null)
-                {
-                    password = input;
-                    return input;
-                }
-                else
-                {
-                    term.DebugWrite("Invalid password, try again.\n", 4);
-                    Cosmos.HAL.Global.PIT.Wait(500);
+                term.DebugWrite("Invalid password, try again.\n", 4);
+                Cosmos.HAL.Global.PIT.Wait(250);
 
-                    GetPassword();
-                    return null;
-                }
+                GetPassword();
             }
 
+
             Cosmos.HAL.Global.PIT.Wait(500);
-            username = input;
 
             return null;
         }
 
         public static void Login()
         {
-            term.DebugWrite("Successfully logged in. Welcome " + username + ".", 2);
+            Console.WriteLine(' ');
+            term.DebugWrite("Successfully logged in. Welcome " + username + ".\n", 2);
 
-            Cosmos.HAL.Global.PIT.Wait(1000);
-            Console.Clear();
-
+            Cosmos.HAL.Global.PIT.Wait(750);
+            //Console.Clear();
             StartUp();
         }
     }

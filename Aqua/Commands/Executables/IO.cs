@@ -5,12 +5,12 @@ namespace Aqua.Commands.Executables
 {
     public class IO : Command
     {
-        public IO (String name) : base (name) { }
+        public IO(String name) : base(name) { }
 
         public override string Execute(string[] args)
         {
             switch (args[0])
-            { 
+            {
                 case "sd":
                     Cosmos.System.Power.Shutdown();
                     break;

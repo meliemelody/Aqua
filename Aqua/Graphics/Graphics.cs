@@ -1,21 +1,18 @@
-﻿using System;
-using Sys = Cosmos.System;
+﻿using Aqua.Commands;
 using Cosmos.System.Graphics;
+using System;
 using System.Drawing;
-using Cosmos.System.Graphics.Fonts;
-using Cosmos.Debug.Kernel;
 
 namespace Aqua.Graphics
 {
     public class Graphics
     {
-        public Canvas canvas;
         public static void GraphicsStart(Canvas canvas)
         {
             try
             {
-                canvas = FullScreenCanvas.GetFullScreenCanvas(new Mode(640, 480, ColorDepth.ColorDepth32));
-                canvas.Clear(Color.DarkSlateBlue);
+                canvas = FullScreenCanvas.GetFullScreenCanvas();
+                canvas.Clear(Color.Violet);
             }
             catch (Exception e)
             {
@@ -23,21 +20,23 @@ namespace Aqua.Graphics
                 Console.WriteLine("Failed to initialize Graphics: " + e.Message);
             }
         }
+    }
 
-        public void Update()
+    public class grComs : Command
+    {
+        public grComs(String name) : base(name) { }
+
+        public override string Execute(string[] args)
         {
-            try
+            switch(args[0])
             {
-                // canvas.DrawFilledEllipse(Color.White, 60, 60, 50, 50);
-                // canvas.DrawString("test", PCScreenFont.Default, Color.White, 50, 250);
-            }
-            catch
-            {
-                canvas.Clear(Color.Red);
-                //mDebugger.Send("Exception occurred: " + e.Message);
+                case "start":
+                    Graphics.GraphicsStart(Kernel.canvas);
+                    Kernel.guiStarted = true;
+                    return null;
             }
 
-            canvas.Display();
+            return null;
         }
     }
 }

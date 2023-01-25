@@ -31,13 +31,22 @@
         <Timeout>5</Timeout>
         <VMWareEdition>Player</VMWareEdition>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-        <OptimizationLevel>0</OptimizationLevel>
+        <OptimizationLevel>2</OptimizationLevel>
 	  <Deterministic>false</Deterministic>
+	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
+	  <QemuAudioDriver>AC97</QemuAudioDriver>
+	  <DebugEnabled>True</DebugEnabled>
+	  <RemoveBootDebugOutput>False</RemoveBootDebugOutput>
+	  <TraceMode>All</TraceMode>
+	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
+	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
+	  <QemuUseSerial>True</QemuUseSerial>
     </PropertyGroup>
 
     <ItemGroup>
       <None Remove="Kernel.cs~RFb22bb1.TMP" />
       <None Remove="Sounds\Startup.wav" />
+      <None Remove="Terminal\Login\LoginSystem.cs~RF25e82b9.TMP" />
       <None Remove="Terminal\Login\LoginSystem.cs~RFbaceef.TMP" />
     </ItemGroup>
 
