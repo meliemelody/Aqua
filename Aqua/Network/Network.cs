@@ -82,7 +82,7 @@ namespace Aqua.Network
                         using (var xServer = new FtpServer(Kernel.fs, "0:\\"))
                         {
                             /** Listen for new FTP client connections **/
-                            term.DebugWrite("FTP Server has been started.", 2);
+                            term.DebugWrite($"FTP Server has been started at {NetworkConfiguration.CurrentAddress.ToString()}.", 2);
                             xServer.Listen();
                         }
 
@@ -95,7 +95,10 @@ namespace Aqua.Network
 
                 case "get":
                     if (args[1] == "ip")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         return NetworkConfiguration.CurrentAddress.ToString();
+                    }
                     else
                         return term.DebugWrite("Invalid argument.", 4);
 

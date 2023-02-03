@@ -48,6 +48,9 @@ namespace Aqua.Commands
             String label = split[0];
             List<String> args = new List<String>();
 
+            if (label == null)
+                return term.DebugWrite("Please input a correct command.", 4);
+
             int ctr = 0;
             foreach (String arg in split)
             {

@@ -13,7 +13,7 @@ namespace Aqua.ErrorHandler
             Console.WriteLine("\n");
 
             term.DebugWrite(ex.ToString() + "\n", 5);
-            term.DebugWrite("More information about this fatal system failure will be available as \'system-crash-" + number + ".log\'", 6);
+            term.DebugWrite("More information about this fatal system failure will be available as \'system-crash-" + number + ".log\'\n", 6);
 
             if (!System.IO.Directory.Exists(@"0:\Crash"))
             {
@@ -24,7 +24,7 @@ namespace Aqua.ErrorHandler
                 }
                 catch (Exception e)
                 {
-                    term.DebugWrite("Could not create the crash information folder.\n  " + e.ToString(), 4);
+                    term.DebugWrite("Could not create the crash information folder.\n  " + e.ToString() + "\n", 4);
                 }
             }
 

@@ -44,7 +44,7 @@ namespace Aqua
         //public static PCScreenFont Font = PCScreenFont.Default;
         //public static byte[] FontVga;
 
-        public static string version = "0.2.0";
+        public static string version = "0.2.1";
         static (int Left, int Top) cursorPos;
 
         // This is the "Setup" function, executed if the run is the first run ever.
@@ -52,9 +52,36 @@ namespace Aqua
         {
             Console.WriteLine("Setting up things for you...\n\n");
 
-            if (fs.Disks[0].Partitions == null)
+            /*if (fs.Disks[0].Partitions == null)
             {
                 fs.Disks[0].FormatPartition(0, "FAT32");
+            }*/
+
+            // Format the partition using FAT32.
+            try
+            {
+                fs.Disks[0].FormatPartition(0, "FAT32");
+                term.DebugWrite("Successfully formatted the partition using FAT32.", 1);
+            }
+            catch (Exception e)
+            {
+                CrashHandler.Handle(e);
+            }
+
+            if (!System.IO.Directory.Exists(@"0:\System"))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(@"0:\System");
+
+                    term.DebugWrite("Successfully made the System directory.\n", 1);
+
+                    Cosmos.HAL.Global.PIT.Wait(500);
+                }
+                catch (Exception ex)
+                {
+                    CrashHandler.Handle(ex);
+                }
             }
 
             if (!System.IO.Directory.Exists(@"0:\System\Setup"))
@@ -108,6 +135,11 @@ namespace Aqua
                 fs = new CosmosVFS();
                 VFSManager.RegisterVFS(fs);
                 System.IO.Directory.SetCurrentDirectory(currentDirectory);
+
+                // If the ISO hangs at startup without any messages, uncomment the line below then build.
+                // Don't forget to comment it when it's done, or else you're making a Live CD.
+
+                // fs.Disks[0].FormatPartition(0, "FAT32");
             }
             catch (Exception ex)
             {
