@@ -4,7 +4,7 @@ namespace Aqua.Commands.Executables
 {
     public class Clear : Command
     {
-        public Clear(String name) : base(name) { }
+        public Clear(String name, String description) : base(name, description) { }
 
         public override string Execute(string[] args)
         {

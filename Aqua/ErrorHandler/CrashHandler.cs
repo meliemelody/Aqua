@@ -5,10 +5,15 @@ namespace Aqua.ErrorHandler
 {
     public static class CrashHandler
     {
-        public static void CrashHandle(Exception ex)
+        public static void Handle(Exception ex)
         {
-            term.DebugWrite(ex.ToString(), 5);
-            term.DebugWrite("More information about the crash will be available as \'system-crash-*number*.txt\'", 6);
+            Random rnd = new();
+            int number = rnd.Next(100, 999);
+
+            Console.WriteLine("\n");
+
+            term.DebugWrite(ex.ToString() + "\n", 5);
+            term.DebugWrite("More information about this fatal system failure will be available as \'system-crash-" + number + ".log\'", 6);
 
             if (!System.IO.Directory.Exists(@"0:\Crash"))
             {
@@ -25,11 +30,8 @@ namespace Aqua.ErrorHandler
 
             try
             {
-                Random rnd = new Random();
-                int number = rnd.Next(3);
-
-                System.IO.File.Create(@"0:\Crash\system-crash-" + number + ".txt");
-                System.IO.File.WriteAllText("0:\\Crash\\system-crash-" + number + ".txt", ex.ToString());
+                System.IO.File.Create(@"0:\Crash\system-crash-" + number + ".log");
+                System.IO.File.WriteAllText("0:\\Crash\\system-crash-" + number + ".log", DateTime.Now.ToString("HH:mm:ss | ") + ex.ToString() + " | " + ex.Data.ToString());
             }
             catch (Exception e)
             {

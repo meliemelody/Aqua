@@ -7,23 +7,38 @@ namespace Aqua.Commands
     public class Manager
     {
         private List<Command> commands;
+        public static List<string> commandStrings = new(), descriptionStrings = new();
 
         public Manager()
         {
-            this.commands = new List<Command>(1)
+            this.commands = new List<Command>()
             {
-                new Executables.Print("prt"),
-                new Executables.Clear("clr"),
-                new Executables.IO("io"),
+                // Executables
+                new Executables.Print("prt", "Echoes back your sentence."),
+                new Executables.Clear("clr", "Clears your entire screen, and leaves you with only the shell and the bar"),
+                new Executables.IO("io", "Used to shutdown or reboot/restart your computer."),
+                new Executables.Time("time", "Shows the current time with \"direct\", and the compile time with \"compile\"."),
+                new Executables.Calculate("calc", "Calculate values between them [only 2 values allowed for now]"),
+                new Executables.TextEditor("ted", "Execute the TED Editor, an all new text editor for Aqua System."),
 
-                new Filesystem.File("f"),
-                new Filesystem.Directory("d"),
-                new Filesystem.Filesystem("fs"),
+                // Filesystem commands
+                new Filesystem.File("f", "The file utilities, everything you need for creating, deleting and editing files."),
+                new Filesystem.Directory("d", "The directory utilities, same as the file utilities but with directories."),
+                new Filesystem.Filesystem("fs", "The file system utilities, used to format or see the type of the drive."),
 
-                new Network.NetworkCommands("net"),
-
-                new Graphics.grComs("gui")
+                // System-wise commands
+                new Network.Commands("net", "Manages your network and FTP."),
+                new Executables.Manual("man", "List all the commands and their description."),
+                new Network.PackageManager("pm", "The general package manager for Aqua."),
+                new Graphics.grComs("gui", "All your Graphical Interface needs start here."),
+                new Terminal.Accounts.Accounts("acc", "Manage your accounts and log out.")
             };
+
+            foreach (Command command in this.commands)
+            {
+                commandStrings.Add(command.name);
+                descriptionStrings.Add(command.description);
+            }
         }
 
         public String ProcessInput(String input)

@@ -6,7 +6,6 @@
         <Platform>cosmos</Platform>
         <SupportsX86Intrinsics>false</SupportsX86Intrinsics>
         <SelfContained>True</SelfContained>
-	  <Deterministic>false</Deterministic>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -14,43 +13,53 @@
         <TransformOnBuild>true</TransformOnBuild>
     	  <OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
         <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
-        <Deterministic>false</Deterministic>
     </PropertyGroup>
 
     <PropertyGroup>
-        <EnableGDB>False</EnableGDB>
         <StartCosmosGDB>True</StartCosmosGDB>
-        <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
-        <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
         <Launch>VMware</Launch>
         <Profile>VMware</Profile>
-        <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
-        <CompileVBEMultiboot>False</CompileVBEMultiboot>
         <VBEResolution>800x600x32</VBEResolution>
-        <Timeout>5</Timeout>
         <VMWareEdition>Player</VMWareEdition>
-        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-        <OptimizationLevel>2</OptimizationLevel>
-	  <Deterministic>false</Deterministic>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>True</DebugEnabled>
-	  <RemoveBootDebugOutput>False</RemoveBootDebugOutput>
-	  <TraceMode>All</TraceMode>
+	  <DebugEnabled>False</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>
+	  <ExtractMapFile>True</ExtractMapFile>
+	  <Timeout>3</Timeout>
+	  <GenerateDocumentationFile>False</GenerateDocumentationFile>
+	  <Version>$(VersionPrefix)</Version>
+	  <TraceMode>All</TraceMode>
+	  <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
+	  <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+
     <ItemGroup>
+      <None Remove="Commands\Executables\Manual.cs~RF1397f7e.TMP" />
+      <None Remove="Commands\Executables\Time.cs~RF610cb61.TMP" />
+      <None Remove="Fonts\Font1.bf" />
+      <None Remove="Fonts\zap-ext-vga09.psf" />
       <None Remove="Kernel.cs~RFb22bb1.TMP" />
       <None Remove="Sounds\Startup.wav" />
-      <None Remove="Terminal\Login\LoginSystem.cs~RF25e82b9.TMP" />
-      <None Remove="Terminal\Login\LoginSystem.cs~RFbaceef.TMP" />
+      <None Remove="Terminal\Accounts\LoginSystem.cs~RF25e82b9.TMP" />
+      <None Remove="Terminal\Accounts\LoginSystem.cs~RFbaceef.TMP" />
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Fonts\Font1.bf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Fonts\zap-ext-light16.psf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Fonts\zap-ext-vga09.psf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
       <EmbeddedResource Include="Sounds\Startup.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
@@ -58,13 +67,51 @@
 
     <ItemGroup>
         <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
+        <PackageReference Include="Cosmos.Coroutines" Version="1.0.0" />
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="CosmosFtpServer" Version="1.0.2" />
+        <PackageReference Include="ManagedSoftwareExecution" Version="1.2.2" />
+        <PackageReference Include="SharpDX" Version="4.2.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Assets\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="DotNetClr">
+        <HintPath>Assets\Libraries\DotNetClr.dll</HintPath>
+      </Reference>
+      <Reference Include="DotNetParser">
+        <HintPath>Assets\Libraries\DotNetParser.dll</HintPath>
+      </Reference>
+      <Reference Include="LibDotNetParser">
+        <HintPath>Assets\Libraries\LibDotNetParser.dll</HintPath>
+      </Reference>
+      <Reference Include="PrismNetwork">
+        <HintPath>Assets\Libraries\Network.dll</HintPath>
+      </Reference>
+      <Reference Include="PrismFilesystem">
+        <HintPath>Assets\Libraries\Filesystem.dll</HintPath>
+      </Reference>
+      <Reference Include="PrismAudio">
+        <HintPath>Assets\Libraries\Audio.dll</HintPath>
+      </Reference>
+      <Reference Include="PrismGraphics">
+        <HintPath>Assets\Libraries\Graphics.dll</HintPath>
+      </Reference>
+      <Reference Include="PrismTools">
+        <HintPath>Assets\Libraries\PrismTools.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+      <Exec Command="cd Miscellaneous&#xD;&#xA;echo using System; &gt; CompileTime.cs&#xD;&#xA;echo namespace Aqua.Miscellaneous { &gt;&gt; CompileTime.cs&#xD;&#xA;echo     static class Compilation { &gt;&gt; CompileTime.cs&#xD;&#xA;echo         public static readonly string Date = @&quot;%25date%25&quot;; &gt;&gt; CompileTime.cs&#xD;&#xA;echo         public static readonly string Time = @&quot;%25time%25&quot;; &gt;&gt; CompileTime.cs&#xD;&#xA;echo     } &gt;&gt; CompileTime.cs&#xD;&#xA;echo } &gt;&gt; CompileTime.cs&#xD;&#xA;" />
+    </Target>
 
 </Project>

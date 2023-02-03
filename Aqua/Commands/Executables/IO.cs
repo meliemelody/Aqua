@@ -5,7 +5,7 @@ namespace Aqua.Commands.Executables
 {
     public class IO : Command
     {
-        public IO(String name) : base(name) { }
+        public IO(String name, String description) : base(name, description) { }
 
         public override string Execute(string[] args)
         {

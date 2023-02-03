@@ -4,7 +4,7 @@ namespace Aqua.Commands.Executables
 {
     public class Print : Command
     {
-        public Print(string name) : base(name) { }
+        public Print(string name, string description) : base(name, description) { }
 
         public override string Execute(string[] args)
         {
