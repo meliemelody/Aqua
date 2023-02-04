@@ -105,14 +105,14 @@ namespace Aqua.Terminal.Accounts
         private static void SetRoot()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("\nDo you want to be root [administrator] ? (y/n) : ");
+            Console.Write("\nDo you want to be root [administrator] ? [y/n] : ");
 
             Console.ForegroundColor = ConsoleColor.White;
-            String input = Console.ReadLine();
+            ConsoleKeyInfo input = Console.ReadKey();
                
-            if (input == "y" || input == "yes")
+            if (input.Key == ConsoleKey.Y)
                 File.WriteAllText(@"0:\System\Login\Root.cfg", "true");
-            else if (input == "n" || input == "no")
+            else if (input.Key == ConsoleKey.N)
                 File.WriteAllText(@"0:\System\Login\Root.cfg", "false");
             else
             {

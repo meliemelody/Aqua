@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aqua.Miscellaneous
+namespace Aqua.Miscellaneous.Compatibility
 {
     // TO DO : fix the open function to open the file properly
     public class TextEditor
@@ -18,7 +18,7 @@ namespace Aqua.Miscellaneous
         public static int xint;
         public static bool wrap = true;
         static string tosav;
-        public static string ver = "0.1.1";
+        public static string ver = "0.1.2";
 
         static ConsoleColor BarFg = ConsoleColor.Black;
         static ConsoleColor BarBg = ConsoleColor.Gray;
@@ -74,7 +74,7 @@ namespace Aqua.Miscellaneous
                         PATH = Kernel.currentDirectory + $"\\{PATH}";
                         PATH = PATH.Replace("\\\\", "\\");
                     }
-                    
+
                     //if (!File.Exists(PATH))
                     //    File.Create(PATH);
                 }
@@ -173,6 +173,14 @@ namespace Aqua.Miscellaneous
                     Console.Write(" ");
                     Console.ForegroundColor = EditorFg;
                 }*/
+
+                if (arrow == "" && arrow[0] == '\n')
+                {
+                    Console.ForegroundColor = EditorBg;
+                    Console.Write(" ");
+                    Console.ForegroundColor = EditorFg;
+                }
+
                 xint = Console.CursorLeft;
                 yint = Console.CursorTop;
                 Console.SetCursorPosition(0, 0);
@@ -545,7 +553,7 @@ namespace Aqua.Miscellaneous
                         Console.SetCursorPosition(20, 13);
                         Console.Write("CHAR [                              ]"); Console.SetCursorPosition(26, 13);
                         string chr = LootiTerminal();
-                        if (!Int32.TryParse(chr, out int ascii))
+                        if (!int.TryParse(chr, out int ascii))
                         {
                             Console.Beep(300, 300);
                         }

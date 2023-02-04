@@ -12,7 +12,21 @@ namespace Aqua.Commands.Executables
 
         public override string Execute(string[] args)
         {
-            return Miscellaneous.TextEditor.Run(args);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("  Do you want to run the rewrote version of TED Editor ? [y/n] : ");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            ConsoleKeyInfo input = Console.ReadKey();
+
+            Console.WriteLine();
+            if (input.Key == ConsoleKey.Y)
+                return Miscellaneous.TEDEditor.Run(args);
+
+            else if (input.Key == ConsoleKey.N)
+                return Miscellaneous.Compatibility.TextEditor.Run(args);
+
+            else
+                return Terminal.Terminal.DebugWrite("Please input \"y\" or \"n\".", 4);
         }
     }
 }

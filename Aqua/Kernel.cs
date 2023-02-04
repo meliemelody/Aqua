@@ -146,9 +146,8 @@ namespace Aqua
                 VFSManager.RegisterVFS(fs);
                 System.IO.Directory.SetCurrentDirectory(currentDirectory);
 
-                // If the ISO hangs at startup without any messages, uncomment th!e line below then build.
-                // Don't forget to comment it when it's done, or else you're making a "Live CD" [not really].
-                // fs.Disks[0].FormatPartition(0, "FAT32");
+                // Check for format input.
+                FormatCheck();
             }
             catch (Exception ex)
             {
@@ -164,6 +163,25 @@ namespace Aqua
 
             Cosmos.HAL.Global.PIT.Wait(750);
             LoginSystem.Start();
+        }
+
+        private static void FormatCheck()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine($"Aqua System v{version} | Filesystem Utility");
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.Write("Do you want to format the drive ? [y/n] : ");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            ConsoleKeyInfo input = Console.ReadKey();
+
+            Console.WriteLine();
+            if (input.Key == ConsoleKey.Y)
+                fs.Disks[0].FormatPartition(0, "FAT32");
+            else if (input.Key == ConsoleKey.N) { }
+            else
+                term.DebugWrite("Input was not recognized, consequently, the drive was not formatted.", 4);
         }
 
         protected override void Run()
