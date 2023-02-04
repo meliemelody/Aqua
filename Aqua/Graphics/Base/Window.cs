@@ -34,12 +34,13 @@ namespace Aqua.Graphics.Base
         public void Update(Canvas canvas)
         {
             // Draw the main window
-            canvas.DrawFilledRectangle(Color.White, (int)x, (int)y, (int)width, (int)height);
+            canvas.DrawFilledRectangle(Color.White, (int)this.x, (int)this.y, (int)this.width, (int)this.height);
 
             // Draw the title bar and the title bar string/program name.
-            canvas.DrawFilledRectangle(Color.Aquamarine, (int)x, (int)((int)y - (titleBarHeight * 2)), 150, (int)titleBarHeight * 2);
-            canvas.DrawString(name, Cosmos.System.Graphics.Fonts.PCScreenFont.Default, Color.Black, (int)x + 10, (int)((int)y - titleBarHeight) - (int)(titleBarHeight / 2));
+            canvas.DrawFilledRectangle(Color.Aquamarine, (int)this.x, (int)((int)this.y - (titleBarHeight * 2)), 150, (int)titleBarHeight * 2);
+            canvas.DrawString(name, Cosmos.System.Graphics.Fonts.PCScreenFont.Default, Color.Black, (int)x + 10, (int)((int)this.y - titleBarHeight) - (int)(titleBarHeight / 2));
 
+            canvas.DrawString(windowEditMode.ToString(), Cosmos.System.Graphics.Fonts.PCScreenFont.Default, Color.Black, 10, canvas.Mode.Height - 15);
             // Switch to Edit Mode once the left mouse button is clicked.
             if (MouseManager.MouseState == MouseState.Left)
                 windowEditMode = true;
@@ -57,7 +58,7 @@ namespace Aqua.Graphics.Base
                     Kernel.guiStarted = false;
                     canvas.Disable();
                 }
-                else if (MouseManager.MouseState == MouseState.Middle)
+                else if (MouseManager.MouseState == MouseState.Left)
                 {
                     windowEditMode = false;
                 }

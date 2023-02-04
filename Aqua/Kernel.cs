@@ -60,59 +60,69 @@ namespace Aqua
             // Format the partition using FAT32.
             try
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 fs.Disks[0].FormatPartition(0, "FAT32");
-                term.DebugWrite("Successfully formatted the partition using FAT32.", 1);
+
+                Console.WriteLine();
+                term.DebugWrite("Successfully formatted the partition using FAT32.\n\n", 1);
             }
             catch (Exception e)
             {
                 CrashHandler.Handle(e);
             }
 
-            if (!System.IO.Directory.Exists(@"0:\System"))
+            if (!VMTools.IsVirtualBox || !VMTools.IsQEMU)
             {
+                if (!System.IO.Directory.Exists(@"0:\System"))
+                {
+                    try
+                    {
+                        System.IO.Directory.CreateDirectory(@"0:\System");
+
+                        term.DebugWrite("Successfully made the System directory.\n", 1);
+
+                        Cosmos.HAL.Global.PIT.Wait(500);
+                    }
+                    catch (Exception ex)
+                    {
+                        CrashHandler.Handle(ex);
+                    }
+                }
+
+                if (!System.IO.Directory.Exists(@"0:\System\Setup"))
+                {
+                    try
+                    {
+                        System.IO.Directory.CreateDirectory(@"0:\System\Setup");
+
+                        term.DebugWrite("Successfully made the Setup directory.\n", 1);
+
+                        Cosmos.HAL.Global.PIT.Wait(500);
+                    }
+                    catch (Exception ex)
+                    {
+                        CrashHandler.Handle(ex);
+                    }
+                }
+
                 try
                 {
-                    System.IO.Directory.CreateDirectory(@"0:\System");
+                    System.IO.File.Create(@"0:\System\Setup\FirstRun.acf");
+                    System.IO.File.WriteAllText("0:\\System\\Setup\\FirstRun.acf", "true");
 
-                    term.DebugWrite("Successfully made the System directory.\n", 1);
-
-                    Cosmos.HAL.Global.PIT.Wait(500);
+                    term.DebugWrite("Successfully made the FirstRun.acf file.\n", 1);
                 }
                 catch (Exception ex)
                 {
-                    CrashHandler.Handle(ex);
+                    term.DebugWrite(ex.ToString(), 4);
                 }
-            }
 
-            if (!System.IO.Directory.Exists(@"0:\System\Setup"))
+                Miscellaneous.Readme.WriteReadme();
+            }
+            else
             {
-                try
-                {
-                    System.IO.Directory.CreateDirectory(@"0:\System\Setup");
-
-                    term.DebugWrite("Successfully made the Setup directory.\n", 1);
-
-                    Cosmos.HAL.Global.PIT.Wait(500);
-                }
-                catch (Exception ex)
-                {
-                    CrashHandler.Handle(ex);
-                }
+                term.DebugWrite("Your emulator/virtualizer does not support the VFS.", 4);
             }
-
-            try
-            {
-                System.IO.File.Create(@"0:\System\Setup\FirstRun.acf");
-                System.IO.File.WriteAllText("0:\\System\\Setup\\FirstRun.acf", "true");
-
-                term.DebugWrite("Successfully made the FirstRun.acf file.\n", 1);
-            }
-            catch (Exception ex)
-            {
-                term.DebugWrite(ex.ToString(), 4);
-            }
-
-            Miscellaneous.Readme.WriteReadme();
 
             Cosmos.HAL.Global.PIT.Wait(750);
             Console.Clear();
@@ -121,7 +131,7 @@ namespace Aqua
         // This function runs before the main loop, which is Run().
         // It is used to initiate drivers, the filesystem, check if this run is the first run, and set settings.
         protected override void BeforeRun()
-        {
+        {  
             Console.SetWindowSize(90, 60);
 
             //FontVga = Font.CreateVGAFont();
@@ -136,9 +146,8 @@ namespace Aqua
                 VFSManager.RegisterVFS(fs);
                 System.IO.Directory.SetCurrentDirectory(currentDirectory);
 
-                // If the ISO hangs at startup without any messages, uncomment the line below then build.
-                // Don't forget to comment it when it's done, or else you're making a Live CD.
-
+                // If the ISO hangs at startup without any messages, uncomment th!e line below then build.
+                // Don't forget to comment it when it's done, or else you're making a "Live CD" [not really].
                 // fs.Disks[0].FormatPartition(0, "FAT32");
             }
             catch (Exception ex)

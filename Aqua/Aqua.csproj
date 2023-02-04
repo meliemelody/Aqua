@@ -24,7 +24,7 @@
         <VMWareEdition>Player</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>False</DebugEnabled>
+	  <DebugEnabled>True</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>
@@ -35,6 +35,7 @@
 	  <TraceMode>All</TraceMode>
 	  <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
 	  <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
+	  <EnableGDB>False</EnableGDB>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />

@@ -10,6 +10,7 @@ namespace Aqua.Terminal.Accounts
     public class LoginSystem
     {
         public static String username, password;
+        static int count = 0;
 
         public static void Start()
         {
@@ -128,7 +129,7 @@ namespace Aqua.Terminal.Accounts
             GetUsername();
         }
 
-        private static String GetUsername()
+        private static string GetUsername()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("\nInput your username : ");
@@ -169,7 +170,7 @@ namespace Aqua.Terminal.Accounts
             return null;
         }
 
-        public static String GetPassword()
+        public static string GetPassword()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("\nInput your password : ");
@@ -185,8 +186,20 @@ namespace Aqua.Terminal.Accounts
             {
                 term.DebugWrite("Invalid password, try again.\n", 4);
                 Cosmos.HAL.Global.PIT.Wait(250);
+                
+                // After 3 attempts, it will redirect you to the username page again. 
+                if (count == 2)
+                {
+                    term.DebugWrite("3 incorrect attempts have been made, please input yours or another username.", 4);
 
-                GetPassword();
+                    count = 0;
+                    GetUsername();
+                }
+                else
+                {
+                    GetPassword();
+                    count++;
+                }
             }
 
             Cosmos.HAL.Global.PIT.Wait(500);
