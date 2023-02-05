@@ -61,7 +61,10 @@ namespace Aqua
             try
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                fs.Disks[0].FormatPartition(0, "FAT32");
+
+                fs.Disks[0].DeletePartition(0);
+                // TODO : Ask the user for the size
+                fs.Disks[0].CreatePartition(fs.Disks[0].Size);
 
                 Console.WriteLine();
                 term.DebugWrite("Successfully formatted the partition using FAT32.\n\n", 1);
@@ -168,7 +171,7 @@ namespace Aqua
         private static void FormatCheck()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($"Aqua System v{version} | Filesystem Utility");
+            Console.WriteLine($"Aqua System v{version} | Filesystem Utility\n");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("Do you want to format the drive ? [y/n] : ");
@@ -178,7 +181,13 @@ namespace Aqua
 
             Console.WriteLine();
             if (input.Key == ConsoleKey.Y)
-                fs.Disks[0].FormatPartition(0, "FAT32");
+            {
+                /*for (int i = 0; i <= fs.Disks[0].Partitions.Count; i++)
+                    fs.Disks[0].FormatPartition(i, "FAT32");*/
+                fs.Disks[0].DeletePartition(0);
+                // TODO : Ask the user for the size
+                fs.Disks[0].CreatePartition(fs.Disks[0].Size);
+            }
             else if (input.Key == ConsoleKey.N) { }
             else
                 term.DebugWrite("Input was not recognized, consequently, the drive was not formatted.", 4);
@@ -229,8 +238,8 @@ namespace Aqua
             //var time = DateTime.Now.ToString("HH:mm");
             var developmentStatus = "Alpha | Milestone 2";
 
-            //time = $"{Cosmos.HAL.RTC.Hour.ToString()}:{Cosmos.HAL.RTC.Minute.ToString()}";
-            time = DateTime.Now.ToString("t");
+            time = $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}";
+            //time = DateTime.Now.ToString("t");
             cursorPos = Console.GetCursorPosition();
 
             Console.BackgroundColor = ConsoleColor.Blue;

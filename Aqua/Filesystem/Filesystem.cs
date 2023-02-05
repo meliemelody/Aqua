@@ -285,7 +285,9 @@ namespace Aqua.Filesystem
                     {
                         if (Kernel.isRoot == true)
                         {
-                            Kernel.fs.Disks[0].FormatPartition(0, "FAT32", true);
+                            /*for (int i = 0; i <= Kernel.fs.Disks[0].Partitions.Count; i++)
+                                Kernel.fs.Disks[0].FormatPartition(i, "FAT32");*/
+                            Kernel.fs.Disks[0].FormatPartition(0, "FAT32");
 
                             term.DebugWrite("Formatted the drive, rebooting in 2 seconds...", 1);
 
