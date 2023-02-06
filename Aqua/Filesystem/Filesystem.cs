@@ -58,10 +58,8 @@ namespace Aqua.Filesystem
 
                         if (args[2] == "true")
                             Utilities.WriteLine(path, args[3], true);
-                        else if (args[2] == "false")
-                            Utilities.WriteLine(path, args[3], false);
                         else
-                            return term.DebugWrite("Please specify \"true\" or \"false\" for the third argument.", 4);
+                            Utilities.WriteLine(path, args[3], false);
 
                         return term.DebugWrite("The file \"" + file + "\" is successfully storing the data : \"" + args[3] + "\".", 2);
                     }
