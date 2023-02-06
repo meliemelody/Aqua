@@ -76,6 +76,7 @@ namespace Aqua.Terminal.Accounts
             {
                 File.Create(@"0:\AquaSys\Login\Username.cfg");
                 File.WriteAllText(@"0:\AquaSys\Login\Username.cfg", input);
+                username = input;
                 // SetPassword();
 
                 Cosmos.HAL.Global.PIT.Wait(250);
@@ -127,7 +128,7 @@ namespace Aqua.Terminal.Accounts
             Console.WriteLine();
             term.DebugWrite("Successfully created the account : \"" + username + "\".\n", 2);
 
-            Cosmos.HAL.Global.PIT.Wait(250);
+            Cosmos.HAL.Global.PIT.Wait(1250);
             Console.Clear();
             LogString();
 

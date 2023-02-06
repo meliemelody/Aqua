@@ -62,9 +62,8 @@ namespace Rescue
                         fs.Disks[0].CreatePartition(fs.Disks[0].Size);
 
                         // In case the user wants to delete their current installation.
-                        conPos = Console.GetCursorPosition();
-
                         Console.WriteLine("Do you want to delete your current installation ? [y/n] : [");
+                        conPos = Console.GetCursorPosition();
 
                         Console.SetCursorPosition(conPos.Left + 1, conPos.Top);
                         Console.WriteLine("]");
@@ -106,6 +105,7 @@ namespace Rescue
 
                                 break;
                         }
+                        Cosmos.HAL.Global.PIT.Wait(1500);
 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"Successfully formated the partitions.");
@@ -164,6 +164,14 @@ namespace Rescue
 
                     break;
 
+                case ConsoleKey.NumPad1:
+                    Cosmos.System.Power.Shutdown();
+                    break;
+
+                case ConsoleKey.NumPad2:
+                    Cosmos.System.Power.Reboot();
+                    break;
+
                 default:
                     Console.SetCursorPosition(0, conPos.Top + 1);
 
@@ -207,6 +215,9 @@ namespace Rescue
 | A | Disk Format Utility
 | B | Credential Wiper
 | C | Backup and Restore
+
+| 1 | Shutdown
+| 2 | Restart
 ");
         }
     }

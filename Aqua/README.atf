@@ -57,6 +57,7 @@ Bugfixes :
 0.2.1 :
 - Fixed a small bug where some dialogs were unspaced.
 - Fixed a bug where the setup tried to format, without success.
+- Fixed a small bug where the login system didn't display the username correctly.
 
 0.2.0 :
 - Finally fixed a bug with directory creating, and deleting.
