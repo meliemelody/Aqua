@@ -58,13 +58,57 @@ namespace Rescue
                     }*/
                     try
                     {
-                        var diskInput = (int)Console.ReadKey().Key;
+                        fs.Disks[0].Clear();
+                        fs.Disks[0].CreatePartition(fs.Disks[0].Size);
 
-                        fs.Disks[diskInput].Clear();
-                        fs.Disks[diskInput].CreatePartition(fs.Disks[diskInput].Size);
+                        // In case the user wants to delete their current installation.
+                        conPos = Console.GetCursorPosition();
+
+                        Console.WriteLine("Do you want to delete your current installation ? [y/n] : [");
+
+                        Console.SetCursorPosition(conPos.Left + 1, conPos.Top);
+                        Console.WriteLine("]");
+
+                        Console.SetCursorPosition(conPos.Left, conPos.Top);
+                        var deleteInput = Console.ReadKey().Key;
+
+                        Console.SetCursorPosition(conPos.Left, conPos.Top + 1);
+                        switch (deleteInput)
+                        {
+                            case ConsoleKey.Y:
+                                if (Directory.Exists(@"0:\AquaSys"))
+                                {
+                                    try
+                                    {
+                                        Directory.Delete(@"0:\AquaSys", true);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine(ex.ToString());
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Current installation not found, aborting this step.");
+                                    break;
+                                }
+                                break;
+
+                            case ConsoleKey.N:
+                                break;
+
+                            default:
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("You have entered an incorrect argument, aborting this step.");
+
+                                break;
+                        }
 
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"Successfully formated the partition {diskInput}.");
+                        Console.WriteLine($"Successfully formated the partitions.");
                     }
                     catch (Exception ex)
                     {
@@ -75,12 +119,27 @@ namespace Rescue
                     break;
 
                 case ConsoleKey.B:
-                    if (System.IO.Directory.Exists(@"0:\System\Login"))
-                        System.IO.Directory.Delete(@"0:\System\Login");
-                    else
-                        break;
-
                     Console.SetCursorPosition(0, conPos.Top + 1);
+
+                    if (Directory.Exists(@"0:\AquaSys\Login"))
+                    {
+                        try
+                        {
+                            Directory.Delete(@"0:\AquaSys\Login", true);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(ex.ToString());
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Login information is not present on your system.");
+                        break;
+                    }
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Successfully deleted the login information.");
@@ -89,6 +148,8 @@ namespace Rescue
                 case ConsoleKey.C:
                     // This utility is in major development.
                     // It might not be useable for now.
+                    Console.SetCursorPosition(0, conPos.Top + 1);
+
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine("Which disk do you want to store your backup in ? [ex : 1:\\] : ");
 
@@ -118,7 +179,7 @@ namespace Rescue
 
         private void GetSystemStatus()
         {
-            var exists = System.IO.File.Exists(@"0:\System\Setup\FirstRun.acf");
+            var exists = System.IO.File.Exists(@"0:\AquaSys\Setup\FirstRun.acf");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("System Status : ");

@@ -75,15 +75,15 @@ namespace Aqua
             // These emulators/virtualizers cannot support the filesystem completely for now. 
             if (!VMTools.IsVirtualBox || !VMTools.IsQEMU)
             {
-                // Create the System directory.
+                // Create the AquaSys directory.
                 // THIS IS OBLIGATORY FOR SYSTEM APPS.
-                if (!System.IO.Directory.Exists(@"0:\System"))
+                if (!System.IO.Directory.Exists(@"0:\AquaSys"))
                 {
                     try
                     {
-                        System.IO.Directory.CreateDirectory(@"0:\System");
+                        System.IO.Directory.CreateDirectory(@"0:\AquaSys");
 
-                        term.DebugWrite("Successfully made the System directory.\n", 1);
+                        term.DebugWrite("Successfully made the AquaSys directory.\n", 1);
 
                         Cosmos.HAL.Global.PIT.Wait(500);
                     }
@@ -95,11 +95,11 @@ namespace Aqua
 
                 // Create the one-time Setup folder.
                 // This folder plays a role in First Time-detecting.
-                if (!System.IO.Directory.Exists(@"0:\System\Setup"))
+                if (!System.IO.Directory.Exists(@"0:\AquaSys\Setup"))
                 {
                     try
                     {
-                        System.IO.Directory.CreateDirectory(@"0:\System\Setup");
+                        System.IO.Directory.CreateDirectory(@"0:\AquaSys\Setup");
 
                         term.DebugWrite("Successfully made the Setup directory.\n", 1);
 
@@ -114,8 +114,8 @@ namespace Aqua
                 // Make the FirstRun.acf file.
                 try
                 {
-                    System.IO.File.Create(@"0:\System\Setup\FirstRun.acf");
-                    System.IO.File.WriteAllText("0:\\System\\Setup\\FirstRun.acf", "true");
+                    System.IO.File.Create(@"0:\AquaSys\Setup\FirstRun.acf");
+                    System.IO.File.WriteAllText("0:\\AquaSys\\Setup\\FirstRun.acf", "true");
 
                     term.DebugWrite("Successfully made the FirstRun.acf file.\n", 1);
                 }
@@ -165,7 +165,7 @@ namespace Aqua
             Cosmos.HAL.Global.PIT.Wait(250);
             Console.Clear();
 
-            if (!System.IO.File.Exists("0:\\System\\Setup\\FirstRun.acf") || System.IO.File.ReadAllText("0:\\System\\Setup\\FirstRun.acf") != "true" || fs.Disks[0].Partitions == null)
+            if (!System.IO.File.Exists("0:\\AquaSys\\Setup\\FirstRun.acf") || System.IO.File.ReadAllText("0:\\AquaSys\\Setup\\FirstRun.acf") != "true" || fs.Disks[0].Partitions == null)
                 FirstRun();
 
             Cosmos.HAL.Global.PIT.Wait(750);

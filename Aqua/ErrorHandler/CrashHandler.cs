@@ -15,11 +15,11 @@ namespace Aqua.ErrorHandler
             term.DebugWrite(ex.ToString() + "\n", 5);
             term.DebugWrite("More information about this fatal system failure will be available as \'system-crash-" + number + ".log\'\n", 6);
 
-            if (!System.IO.Directory.Exists(@"0:\Crash"))
+            if (!System.IO.Directory.Exists(@"0:\AquaSys\Crash"))
             {
                 try
                 {
-                    System.IO.Directory.CreateDirectory(@"0:\Crash");
+                    System.IO.Directory.CreateDirectory(@"0:\AquaSys\Crash");
                     // term.DebugWrite("Successfully made the Crash directory.", 1);
                 }
                 catch (Exception e)
@@ -30,8 +30,8 @@ namespace Aqua.ErrorHandler
 
             try
             {
-                System.IO.File.Create(@"0:\Crash\system-crash-" + number + ".log");
-                System.IO.File.WriteAllText("0:\\Crash\\system-crash-" + number + ".log", DateTime.Now.ToString("HH:mm:ss | ") + ex.ToString() + " | " + ex.Data.ToString());
+                System.IO.File.Create(@"0:\AquaSys\Crash\system-crash-" + number + ".log");
+                System.IO.File.WriteAllText("0:\\AquaSys\\Crash\\system-crash-" + number + ".log", DateTime.Now.ToString("HH:mm:ss | ") + ex.ToString() + " | " + ex.Data.ToString());
             }
             catch (Exception e)
             {

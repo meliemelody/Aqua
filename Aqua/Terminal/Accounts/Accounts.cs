@@ -15,7 +15,7 @@ namespace Aqua.Terminal.Accounts
                 case "reset":
                     try
                     {
-                        System.IO.Directory.Delete(@"0:\System\Login");
+                        System.IO.Directory.Delete(@"0:\AquaSys\Login");
                         return term.DebugWrite("Deleted the login credentials, log out to make your new account.", 0);
                     }
                     catch (Exception e)

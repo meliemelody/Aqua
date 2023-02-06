@@ -136,7 +136,7 @@ namespace Aqua.Filesystem
                     {
                         if (System.IO.Directory.Exists(Kernel.currentDirectory + directory))
                         {
-                            if (directory == "System" && Kernel.currentDirectory == "0:\\")
+                            if (directory == "AquaSys" && Kernel.currentDirectory == "0:\\")
                             {
                                 if (Kernel.isRoot != true)
                                     return term.DebugWrite("You are not a \"root\" user, please log in using root credentials.", 4);

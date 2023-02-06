@@ -22,6 +22,15 @@ malfunction !
 
 ------------------------------------------------------------------------------------
 
+IF YOU ARE UPDATING FROM 0.2.0 TO 0.2.1, INNER WORKINGS HAVE CHANGED : 
+
+If you had a directory called "System" at the root of your drive, it contains
+your old Aqua System installation, if you want to keep your old installation,
+simply move the files from System to the AquaSys folder, else, you can
+just delete it.
+
+------------------------------------------------------------------------------------
+
 Check out the "man" command [not fully implemented yet] to know how 
 this system works, and also check the available 
 commands and their counterpart in other operating systems.
@@ -66,7 +75,8 @@ Additions :
 0.2.1 :
 - An option to re-enter your username after 3 password attempts.
 - An in-development TED Editor complete rewrite.
-- Added a new filesystem utility at startup.
+- Fixed a bug with file writing.
+- A brand new Aqua Rescue Disk.
 
 0.2.0 :
 - A brand new text editor [TED Editor].
@@ -123,7 +133,7 @@ Thank you for supporting Aqua System. :]
 
 ------------------------------------------------------------------------------------
 
-Thank you for using Aqua System version 0.2.0 !
+Thank you for using Aqua System version 0.2.1 !
 
 I am incredibly grateful for your support in using Aqua.
 Please report any bugs you see on the official Aqua System Github** repository.
