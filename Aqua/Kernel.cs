@@ -50,20 +50,17 @@ namespace Aqua
         // This is the "Setup" function, executed if the run is the first run ever.
         public void FirstRun()
         {
-            Console.WriteLine("Setting up things for you...\n\n");
-
-            /*if (fs.Disks[0].Partitions == null)
-            {
-                fs.Disks[0].FormatPartition(0, "FAT32");
-            }*/
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("Setting up things for you...");
 
             // Format the partition using FAT32.
-            try
+            // Why would we need this at first start ?
+            /*try
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
+                //fs.Disks[0].CreatePartition(fs.Disks[0].Size);
 
-                fs.Disks[0].DeletePartition(0);
-                // TODO : Ask the user for the size
+                fs.Disks[0].Clear();
                 fs.Disks[0].CreatePartition(fs.Disks[0].Size);
 
                 Console.WriteLine();
@@ -72,10 +69,14 @@ namespace Aqua
             catch (Exception e)
             {
                 CrashHandler.Handle(e);
-            }
+            }*/
 
+            // Detect if the emulator is NOT VirtualBox or QEMU.
+            // These emulators/virtualizers cannot support the filesystem completely for now. 
             if (!VMTools.IsVirtualBox || !VMTools.IsQEMU)
             {
+                // Create the System directory.
+                // THIS IS OBLIGATORY FOR SYSTEM APPS.
                 if (!System.IO.Directory.Exists(@"0:\System"))
                 {
                     try
@@ -92,6 +93,8 @@ namespace Aqua
                     }
                 }
 
+                // Create the one-time Setup folder.
+                // This folder plays a role in First Time-detecting.
                 if (!System.IO.Directory.Exists(@"0:\System\Setup"))
                 {
                     try
@@ -108,6 +111,7 @@ namespace Aqua
                     }
                 }
 
+                // Make the FirstRun.acf file.
                 try
                 {
                     System.IO.File.Create(@"0:\System\Setup\FirstRun.acf");
@@ -134,11 +138,8 @@ namespace Aqua
         // This function runs before the main loop, which is Run().
         // It is used to initiate drivers, the filesystem, check if this run is the first run, and set settings.
         protected override void BeforeRun()
-        {  
+        {
             Console.SetWindowSize(90, 60);
-
-            //FontVga = Font.CreateVGAFont();
-            //VGAScreen.SetFont(FontVga, Font.Height);
 
             var f = PCScreenFont.LoadFont(font);
             VGAScreen.SetFont(f.CreateVGAFont(), f.Height);
@@ -149,8 +150,11 @@ namespace Aqua
                 VFSManager.RegisterVFS(fs);
                 System.IO.Directory.SetCurrentDirectory(currentDirectory);
 
+                // fs.Disks[0].FormatPartition(0, "FAT32");
+
                 // Check for format input.
-                FormatCheck();
+                // Note : Replaced by the Disk Utility/Recovery Disk
+                // FormatCheck();
             }
             catch (Exception ex)
             {
@@ -168,6 +172,8 @@ namespace Aqua
             LoginSystem.Start();
         }
 
+        // THIS FUNCTION IS OUTDATED.
+        // Please use the Recovery Disk to format your drive.
         private static void FormatCheck()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -182,11 +188,11 @@ namespace Aqua
             Console.WriteLine();
             if (input.Key == ConsoleKey.Y)
             {
-                /*for (int i = 0; i <= fs.Disks[0].Partitions.Count; i++)
-                    fs.Disks[0].FormatPartition(i, "FAT32");*/
-                fs.Disks[0].DeletePartition(0);
-                // TODO : Ask the user for the size
-                fs.Disks[0].CreatePartition(fs.Disks[0].Size);
+                /*const string root = @"0:\";
+                long initialSize = VFSManager.GetTotalSize(root);
+                //mainDisk.FormatPartition(0, "FAT32", true);*/
+                //mainDisk.Clear();
+                //mainDisk.CreatePartition(mainDisk.Size);
             }
             else if (input.Key == ConsoleKey.N) { }
             else
@@ -215,7 +221,7 @@ namespace Aqua
 
         private void AquaShell()
         {
-            // Change the text color to Dark Green (esthetic!!!1!!1!1!!!111)
+            // Change the text color to Dark Green.
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.Write(currentDirectory);
 

@@ -24,7 +24,7 @@
         <VMWareEdition>Player</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>True</DebugEnabled>
+	  <DebugEnabled>False</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>

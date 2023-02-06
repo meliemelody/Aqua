@@ -53,11 +53,13 @@ namespace Aqua.Terminal.Accounts
             if (!Directory.Exists(@"0:\System"))
             {
                 Directory.CreateDirectory(@"0:\System");
+                // Console.WriteLine("ok for system");
             }
 
             if (!Directory.Exists(@"0:\System\Login"))
             {
                 Directory.CreateDirectory(@"0:\System\Login");
+                // Console.WriteLine("ok for login");
             }
         }
 
@@ -70,8 +72,9 @@ namespace Aqua.Terminal.Accounts
 
             String input = Console.ReadLine();
 
-            if (input != "system" || input != "guest")
+            if (input != "guest")
             {
+                File.Create(@"0:\System\Login\Username.cfg");
                 File.WriteAllText(@"0:\System\Login\Username.cfg", input);
                 // SetPassword();
 
@@ -96,6 +99,7 @@ namespace Aqua.Terminal.Accounts
 
             String input = Console.ReadLine();
 
+            File.Create(@"0:\System\Login\Password.cfg");
             File.WriteAllText(@"0:\System\Login\Password.cfg", input);
             // SetPassword();
 
@@ -120,6 +124,7 @@ namespace Aqua.Terminal.Accounts
                 SetRoot();
             }
 
+            Console.WriteLine();
             term.DebugWrite("Successfully created the account : \"" + username + "\".\n", 2);
 
             Cosmos.HAL.Global.PIT.Wait(250);
@@ -184,9 +189,6 @@ namespace Aqua.Terminal.Accounts
                 Login();
             else
             {
-                term.DebugWrite("Invalid password, try again.\n", 4);
-                Cosmos.HAL.Global.PIT.Wait(250);
-                
                 // After 3 attempts, it will redirect you to the username page again. 
                 if (count == 2)
                 {
@@ -197,10 +199,18 @@ namespace Aqua.Terminal.Accounts
                 }
                 else
                 {
-                    GetPassword();
+                    term.DebugWrite("Invalid password, try again.\n", 4);
+
                     count++;
+                    GetPassword();
                 }
+
+                Cosmos.HAL.Global.PIT.Wait(250);
             }
+
+            // --- DEBUG ---
+            // Print the count variable's value.
+            // Console.WriteLine($"Attempt count : {count}");
 
             Cosmos.HAL.Global.PIT.Wait(500);
             return null;

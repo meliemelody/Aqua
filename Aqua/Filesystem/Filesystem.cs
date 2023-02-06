@@ -115,7 +115,7 @@ namespace Aqua.Filesystem
 
             var directory = string.Join(" ", args, 1, args.Length - 1);
 
-            Console.WriteLine(directory);
+            // Console.WriteLine(directory);
 
             switch (args[0])
             {
@@ -141,7 +141,7 @@ namespace Aqua.Filesystem
                             if (directory == "System" && Kernel.currentDirectory == "0:\\")
                             {
                                 if (Kernel.isRoot != true)
-                                    return term.DebugWrite("You are not a \"root\" user, please log in using a root user.", 4);
+                                    return term.DebugWrite("You are not a \"root\" user, please log in using root credentials.", 4);
                             }
 
                             System.IO.Directory.Delete(Kernel.currentDirectory + directory, true);
@@ -287,7 +287,8 @@ namespace Aqua.Filesystem
                         {
                             /*for (int i = 0; i <= Kernel.fs.Disks[0].Partitions.Count; i++)
                                 Kernel.fs.Disks[0].FormatPartition(i, "FAT32");*/
-                            Kernel.fs.Disks[0].FormatPartition(0, "FAT32");
+                            Kernel.fs.Disks[0].Clear();
+                            Kernel.fs.Disks[0].CreatePartition(Kernel.fs.Disks[0].Size);
 
                             term.DebugWrite("Formatted the drive, rebooting in 2 seconds...", 1);
 
@@ -297,7 +298,7 @@ namespace Aqua.Filesystem
                         }
                         else
                         {
-                            return term.DebugWrite("You are not a \"root\" user, please log in using a root user.", 4);
+                            return term.DebugWrite("You are not a \"root\" user, please log in using root credentials.", 4);
                         }
                     }
                     catch (Exception e)

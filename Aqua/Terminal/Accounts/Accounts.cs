@@ -24,8 +24,8 @@ namespace Aqua.Terminal.Accounts
                     }
 
                 case "out":
-                    term.DebugWrite("Goodbye " + LoginSystem.username + ", see you later !", 1);
-                    Cosmos.HAL.Global.PIT.Wait(1000);
+                    term.DebugWrite($"See you later, {LoginSystem.username}.", 0);
+                    Cosmos.HAL.Global.PIT.Wait(2250);
 
                     Console.Clear();
                     LoginSystem.Start();

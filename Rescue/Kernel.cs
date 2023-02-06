@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Sys = Cosmos.System;
+using System.IO;
 
 namespace Rescue
 {
@@ -30,7 +31,7 @@ namespace Rescue
 
             // Set the foreground to gray, then shows the "What do you need to do today ?" message.
             // Unintentional reference to Windows.
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("What do you need to do today ? : [");
 
             // Save the cursor position for the "[value]" thing.
@@ -55,8 +56,21 @@ namespace Rescue
                         fs.Disks[0].FormatPartition(i, "FAT32");
                         Console.WriteLine($"[OK] | Successfully formated the partition {i}.");
                     }*/
-                    fs.Disks[0].FormatPartition(0, "FAT32");
-                    Console.WriteLine($"[OK] | Successfully formated the partition 0.");
+                    try
+                    {
+                        var diskInput = (int)Console.ReadKey().Key;
+
+                        fs.Disks[diskInput].Clear();
+                        fs.Disks[diskInput].CreatePartition(fs.Disks[diskInput].Size);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Successfully formated the partition {diskInput}.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine(ex.ToString());
+                    }
 
                     break;
 
@@ -67,12 +81,34 @@ namespace Rescue
                         break;
 
                     Console.SetCursorPosition(0, conPos.Top + 1);
-                    Console.WriteLine("[OK] | Successfully deleted the login information.");
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Successfully deleted the login information.");
+                    break;
+
+                case ConsoleKey.C:
+                    // This utility is in major development.
+                    // It might not be useable for now.
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine("Which disk do you want to store your backup in ? [ex : 1:\\] : ");
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                    var saveInput = Console.ReadLine();
+
+                    var directories = Directory.GetDirectories("0:\\");
+                    foreach (var directory in directories)
+                    {
+                        Console.WriteLine(directory);
+                    }
+
                     break;
 
                 default:
                     Console.SetCursorPosition(0, conPos.Top + 1);
-                    Console.WriteLine("[ERROR] | You have entered an incorrect command.");
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You have entered an incorrect command.");
+
                     break;
             }
 
@@ -102,13 +138,14 @@ namespace Rescue
         private static void ShowOptions()
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("Aqua System | Rescue Disk | v0.1.0");
+            Console.WriteLine("Aqua System | Rescue Disk | v0.1.1");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(
                 @"
-| A | Format the hard drive.
-| B | Delete your login information.
+| A | Disk Format Utility
+| B | Credential Wiper
+| C | Backup and Restore
 ");
         }
     }
