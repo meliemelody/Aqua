@@ -26,7 +26,7 @@ namespace Aqua.Miscellaneous
             {
                 // Debugging only.
                 // This is only used for debugging purposes.
-                Console.WriteLine(args[i]);
+                // Console.WriteLine(args[i]);
 
                 if (args[i] == "-h") { }
                 else if (path == "")
@@ -35,18 +35,27 @@ namespace Aqua.Miscellaneous
 
                     if (!path.Contains("\\"))
                     {
-                        // Set the path to (for example) : "0:\System\" + "file.txt".
+                        // Set the path to (for example) : "0:\AquaSys\" + "file.txt".
                         path = $"{Kernel.currentDirectory}{path}";
 
                         // Replace all the "\\" to "\".
                         path = path.Replace("\\\\", "\\");
                     }
 
-                    Console.WriteLine($"Path : {path}");
+                    // Console.WriteLine($"Path : {path}");
                 }
                 else
                     Terminal.Terminal.DebugWrite("Unknown argument : " + args[i], 4);
             }
+
+            if (!Directory.Exists("0:\\AquaSys\\Config"))
+                Directory.CreateDirectory("0:\\AquaSys\\Config");
+
+            if (!Directory.Exists("0:\\AquaSys\\Config\\TED"))
+                Directory.CreateDirectory("0:\\AquaSys\\Config\\TED");
+
+            Console.Clear();
+            for (; ; ) { }
         }
     }
 }

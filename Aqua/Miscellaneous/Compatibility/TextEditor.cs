@@ -87,19 +87,19 @@ namespace Aqua.Miscellaneous.Compatibility
                 }
             }
 
-            if (!Directory.Exists("0:\\System\\Config"))
-                Directory.CreateDirectory("0:\\System\\Config");
+            if (!Directory.Exists("0:\\AquaSys\\Config"))
+                Directory.CreateDirectory("0:\\AquaSys\\Config");
 
-            if (!Directory.Exists("0:\\System\\Config\\TED"))
-                Directory.CreateDirectory("0:\\System\\Config\\TED");
+            if (!Directory.Exists("0:\\AquaSys\\Config\\TED"))
+                Directory.CreateDirectory("0:\\AquaSys\\Config\\TED");
 
-            if (File.Exists("0:\\System\\Config\\TED\\tedConfig.bin"))
+            if (File.Exists("0:\\AquaSys\\Config\\TED\\tedConfig.bin"))
             {
-                byte[] config = File.ReadAllBytes("0:\\System\\Config\\TED\\tedConfig.bin");
+                byte[] config = File.ReadAllBytes("0:\\AquaSys\\Config\\TED\\tedConfig.bin");
                 if (config.Length != 11)
                 {
-                    File.WriteAllText("0:\\System\\Config\\TED\\TED.log", "> Invalid tedConfig.bin");
-                    File.WriteAllBytes("0:\\System\\Config\\TED\\tedConfig.bin", new byte[] { (int)ConsoleColor.Black, (int)ConsoleColor.Gray, (int)ConsoleColor.DarkBlue, (int)ConsoleColor.White, (int)ConsoleColor.Black, (int)ConsoleColor.White, (int)ConsoleColor.DarkGray, (int)ConsoleColor.White, 1, 1, 1 });
+                    File.WriteAllText("0:\\AquaSys\\Config\\TED\\TED.log", "> Invalid tedConfig.bin");
+                    File.WriteAllBytes("0:\\AquaSys\\Config\\TED\\tedConfig.bin", new byte[] { (int)ConsoleColor.Black, (int)ConsoleColor.Gray, (int)ConsoleColor.DarkBlue, (int)ConsoleColor.White, (int)ConsoleColor.Black, (int)ConsoleColor.White, (int)ConsoleColor.DarkGray, (int)ConsoleColor.White, 1, 1, 1 });
                 }
                 BarFg = (ConsoleColor)config[0];
                 BarBg = (ConsoleColor)config[1];
@@ -112,7 +112,7 @@ namespace Aqua.Miscellaneous.Compatibility
             }
             else
             {
-                File.WriteAllBytes("0:\\System\\Config\\TED\\tedConfig.bin", new byte[] { (int)ConsoleColor.Black, (int)ConsoleColor.Gray, (int)ConsoleColor.Black, (int)ConsoleColor.White, (int)ConsoleColor.DarkBlue, (int)ConsoleColor.Gray, (int)ConsoleColor.Gray, (int)ConsoleColor.Black });
+                File.WriteAllBytes("0:\\AquaSys\\Config\\TED\\tedConfig.bin", new byte[] { (int)ConsoleColor.Black, (int)ConsoleColor.Gray, (int)ConsoleColor.Black, (int)ConsoleColor.White, (int)ConsoleColor.DarkBlue, (int)ConsoleColor.Gray, (int)ConsoleColor.Gray, (int)ConsoleColor.Black });
             }
 
             if (!File.Exists(@PATH))
@@ -587,7 +587,7 @@ namespace Aqua.Miscellaneous.Compatibility
                     Console.Write("| F4  [-]         \n");
                     Console.SetCursorPosition(29, 7);
                     Console.Write("| F5  [DEF]       \n");
-                    byte[] config = File.ReadAllBytes("0:\\System\\Config\\TED\\tedConfig.bin");
+                    byte[] config = File.ReadAllBytes("0:\\AquaSys\\Config\\TED\\tedConfig.bin");
 
                     int index = 0;
                     for (; ; )
@@ -639,7 +639,7 @@ namespace Aqua.Miscellaneous.Compatibility
                         }
                         else
                         {
-                            File.WriteAllBytes("0:\\System\\Config\\TED\\tedConfig.bin", config);
+                            File.WriteAllBytes("0:\\AquaSys\\Config\\TED\\tedConfig.bin", config);
                             Console.BackgroundColor = EditorBg;
                             //Console.Clear();
                             Console.SetCursorPosition(0, 0);
