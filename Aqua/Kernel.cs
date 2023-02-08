@@ -20,6 +20,7 @@ using Cosmos.System.Graphics;
 using IL2CPU.API.Attribs;
 using System.Threading;
 using System.Diagnostics;
+using Aqua.Miscellaneous.Activation;
 
 namespace Aqua
 {
@@ -284,9 +285,11 @@ namespace Aqua
         {
             try
             {
-                term.DebugWrite("Setting up the network...", 0);
+                term.DebugWrite("Setting up the network...", 1);
                 // Setup the network / Generate an IP address dynamically
                 Network.Network.Setup();
+
+                // Network.Network.DownloadFile("http://info.cern.ch/hypertext/WWW/TheProject.html", @"0:\File.txt");
 
                 if (!VMTools.IsVMWare)
                 {
@@ -347,6 +350,16 @@ namespace Aqua
 
             if (!VMTools.IsVMWare)
                 Sounds.Sounds.StartupSound();
+
+            // Surprise tool that will help us later.
+            /*Random rnd = new Random();
+
+            int number = rnd.Next(250);
+            string decryptedKey = KeyDecryption.DecryptKey(
+                ProductKeys.EncryptedKeys[number]
+            );
+
+            Console.WriteLine(decryptedKey);*/
         }
     }
 }

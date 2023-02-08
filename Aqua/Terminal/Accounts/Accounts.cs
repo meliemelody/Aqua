@@ -1,4 +1,5 @@
 ﻿using Aqua.Commands;
+using Aqua.Network;
 using System;
 using term = Aqua.Terminal.Terminal;
 
@@ -25,6 +26,7 @@ namespace Aqua.Terminal.Accounts
 
                 case "out":
                     term.DebugWrite($"See you later, {LoginSystem.username}.", 0);
+                    Network.Network.xClient.Close();
                     Cosmos.HAL.Global.PIT.Wait(2250);
 
                     Console.Clear();

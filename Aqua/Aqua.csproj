@@ -24,7 +24,7 @@
         <VMWareEdition>Player</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>False</DebugEnabled>
+	  <DebugEnabled>True</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>
@@ -46,6 +46,7 @@
       <None Remove="Fonts\Font1.bf" />
       <None Remove="Fonts\zap-ext-vga09.psf" />
       <None Remove="Kernel.cs~RFb22bb1.TMP" />
+      <None Remove="Miscellaneous\Activation\KeyDecryption.cs~RF15cb99fd.TMP" />
       <None Remove="Sounds\Startup.wav" />
       <None Remove="Terminal\Accounts\LoginSystem.cs~RF25e82b9.TMP" />
       <None Remove="Terminal\Accounts\LoginSystem.cs~RFbaceef.TMP" />
