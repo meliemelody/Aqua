@@ -196,7 +196,7 @@ namespace Aqua.Terminal.Accounts
                 // After 3 attempts, it will redirect you to the username page again. 
                 if (count == 2)
                 {
-                    term.DebugWrite("3 incorrect attempts have been made, please input yours or another username.", 4);
+                    term.DebugWrite("3 incorrect attempts have been made, please input yours or another username.\n", 4);
 
                     count = 0;
                     GetUsername();

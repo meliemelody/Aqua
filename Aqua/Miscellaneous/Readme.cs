@@ -35,9 +35,8 @@ just delete it.
 
 ------------------------------------------------------------------------------------
 
-Check out the ""man"" command [not fully implemented yet] to know how 
-this system works, and also check the available 
-commands and their counterpart in other operating systems.
+Check out the ""man"" command to know how this system works, and also check the
+available commands.
 
 ------------------------------------------------------------------------------------
 
@@ -62,6 +61,8 @@ Bugfixes :
 - Fixed a small bug where some dialogs were unspaced.
 - Fixed a bug where the setup tried to format, without success.
 - Fixed a small bug where the login system didn't display the username correctly.
+- Fixed a bug where the system would somehow crash when displaying the time.
+- Fixed a bug where you couldn't create an account.
 
 0.2.0 :
 - Finally fixed a bug with directory creating, and deleting.
@@ -117,6 +118,7 @@ Future features :
 - Internet Connectivity commands [like ""weather"", ""get"", or ""update""].
 - ACF files finally being useful : text coloring using tags, fonts, etc...
 - Package Manager revamp.
+- A new activation system.
 - Games [Snake, Pong, Doom, etc...]
 - Perhaps more..? ;]
 
