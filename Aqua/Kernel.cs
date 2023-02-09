@@ -151,7 +151,7 @@ namespace Aqua
                 VFSManager.RegisterVFS(fs);
                 System.IO.Directory.SetCurrentDirectory(currentDirectory);
 
-                fs.Disks[0].FormatPartition(0, "FAT32");
+                // fs.Disks[0].FormatPartition(0, "FAT32");
 
                 // Check for format input.
                 // Note : Replaced by the Disk Utility/Recovery Disk
