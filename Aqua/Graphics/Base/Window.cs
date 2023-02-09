@@ -63,6 +63,8 @@ namespace Aqua.Graphics.Base
                     windowEditMode = false;
                 }
             }
+
+            canvas.Display();
         }
     }
 }

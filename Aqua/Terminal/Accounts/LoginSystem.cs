@@ -65,6 +65,10 @@ namespace Aqua.Terminal.Accounts
 
         public static void SetUsername()
         {
+            // Just in case.
+            FolderCheck();
+
+            // Check for the user's input.
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write("\nInput a username : ");
 
@@ -74,7 +78,6 @@ namespace Aqua.Terminal.Accounts
 
             if (input != "guest")
             {
-                File.Create(@"0:\AquaSys\Login\Username.cfg");
                 File.WriteAllText(@"0:\AquaSys\Login\Username.cfg", input);
                 username = input;
                 // SetPassword();

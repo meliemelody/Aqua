@@ -21,7 +21,14 @@ namespace Aqua.Miscellaneous
 
         public static void Load(string[] args)
         {
-            string path = "";
+            string path = null;
+
+            if (!Directory.Exists("0:\\AquaSys\\Config"))
+                Directory.CreateDirectory("0:\\AquaSys\\Config");
+
+            if (!Directory.Exists("0:\\AquaSys\\Config\\TED"))
+                Directory.CreateDirectory("0:\\AquaSys\\Config\\TED");
+
             for (int i = 0; i < args.Length; i++)
             {
                 // Debugging only.
@@ -29,7 +36,7 @@ namespace Aqua.Miscellaneous
                 // Console.WriteLine(args[i]);
 
                 if (args[i] == "-h") { }
-                else if (path == "")
+                else if (path == null)
                 {
                     path = args[i];
 
@@ -42,20 +49,21 @@ namespace Aqua.Miscellaneous
                         path = path.Replace("\\\\", "\\");
                     }
 
+                    Console.Clear();
+                    Editor(path);
                     // Console.WriteLine($"Path : {path}");
                 }
                 else
                     Terminal.Terminal.DebugWrite("Unknown argument : " + args[i], 4);
             }
+        }
 
-            if (!Directory.Exists("0:\\AquaSys\\Config"))
-                Directory.CreateDirectory("0:\\AquaSys\\Config");
-
-            if (!Directory.Exists("0:\\AquaSys\\Config\\TED"))
-                Directory.CreateDirectory("0:\\AquaSys\\Config\\TED");
-
-            Console.Clear();
-            for (; ; ) { }
+        public static void Editor(string path)
+        {
+            for (; ; )
+            {
+                Console.Write(".");
+            }
         }
     }
 }
