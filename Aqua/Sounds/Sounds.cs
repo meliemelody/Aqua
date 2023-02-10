@@ -6,11 +6,18 @@ namespace Aqua.Sounds
     public class Sounds
     {
         // To add an audio file, go to the file propreties in Visual Studio and make it embedded.
-        [ManifestResourceStream(ResourceName = "Aqua.Sounds.Startup.wav")] static byte[] sound;
+        [ManifestResourceStream(ResourceName = "Aqua.Sounds.Logon.wav")] static byte[] logonSound;
+        [ManifestResourceStream(ResourceName = "Aqua.Sounds.Logoff.wav")] static byte[] logoffSound;
 
-        public static void StartupSound()
+        public static void LogonSound()
         {
-            var audioStream = MemoryAudioStream.FromWave(sound);
+            var audioStream = MemoryAudioStream.FromWave(logonSound);
+            Kernel.mixer.Streams.Add(audioStream);
+        }
+
+        public static void LogoffSound()
+        {
+            var audioStream = MemoryAudioStream.FromWave(logoffSound);
             Kernel.mixer.Streams.Add(audioStream);
         }
     }

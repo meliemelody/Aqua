@@ -47,7 +47,7 @@
       <None Remove="Fonts\zap-ext-vga09.psf" />
       <None Remove="Kernel.cs~RFb22bb1.TMP" />
       <None Remove="Miscellaneous\Activation\KeyDecryption.cs~RF15cb99fd.TMP" />
-      <None Remove="Sounds\Startup.wav" />
+      <None Remove="Sounds\Logon.wav" />
       <None Remove="Terminal\Accounts\LoginSystem.cs~RF25e82b9.TMP" />
       <None Remove="Terminal\Accounts\LoginSystem.cs~RFbaceef.TMP" />
     </ItemGroup>
@@ -62,7 +62,7 @@
       <EmbeddedResource Include="Fonts\zap-ext-vga09.psf">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
-      <EmbeddedResource Include="Sounds\Startup.wav">
+      <EmbeddedResource Include="Sounds\Logon.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
     </ItemGroup>

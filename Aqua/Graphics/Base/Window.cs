@@ -48,8 +48,9 @@ namespace Aqua.Graphics.Base
             if (windowEditMode)
             {
                 // Move the window to the cursor's position, with the cursor being in the center of the window.
-                x = (uint)MouseManager.X - (uint)(width / 2);
-                y = (uint)MouseManager.Y - (uint)(height / 2);
+                this.x = (uint)MouseManager.X - (uint)(width / 2);
+                this.y = (uint)MouseManager.Y - (uint)(height / 2);
+                canvas.DrawFilledRectangle(Color.White, (int)this.x, (int)this.y, (int)this.width, (int)this.height);
 
                 // If a mouse button is pressed, execute an event.
                 if (MouseManager.LastMouseState == MouseState.Right)

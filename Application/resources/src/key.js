@@ -1,6 +1,6 @@
 keys = [];
 console.log("Loading...");
-fetch("src/ProductKeys.atf")
+fetch("https://download1584.mediafire.com/fcc6zyat4tig/kz5gmcl16pjdc47/030ProductKeys.atf")
   .then(response => response.text())
   .then(data => {
     keys = data.split("\n");

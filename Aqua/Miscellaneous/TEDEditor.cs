@@ -1,6 +1,7 @@
 ﻿using Aqua.Terminal;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Aqua.Miscellaneous
 {
@@ -89,8 +90,44 @@ namespace Aqua.Miscellaneous
                 Console.SetCursorPosition(Console.WindowWidth - path.Length, y);
                 Console.Write(path);
 
+                if (newC != oldC)
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    string status = "Unsaved";
+                    Console.SetCursorPosition(Console.WindowWidth - status.Length, y + 1);
+                    Console.Write(status);
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
+
+                    string status = "Saved";
+                    Console.SetCursorPosition(Console.WindowWidth - status.Length, y + 1);
+                    Console.Write(status);
+                }
+
                 Console.SetCursorPosition(x, y + 1);
+                for (int screenX = x; screenX <= Console.WindowWidth; screenX++)
+                {
+                    Console.Write(' ');
+                }
+
+                Console.SetCursorPosition(x, y + 1);
+                if (newC.Length != 0)
+                {
+                    int chars = newC.Length;
+                    chars--;
+                    Console.Write("Characters : [" + chars + "]");
+                }
+                else
+                    Console.Write("Characters : [No characters yet]");
+
                 Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(x, y + 2);
                 return true;
             }
             catch
@@ -102,6 +139,7 @@ namespace Aqua.Miscellaneous
         public static void Editor(string path)
         {
             string fileContents = File.ReadAllText(path), oldFC = File.ReadAllText(path);
+            string toreturn = fileContents;
             int defaultYPos = 2;
 
             for (; ; )
@@ -137,6 +175,13 @@ namespace Aqua.Miscellaneous
                         }
                     }
                 }
+                else if (input.Key == ConsoleKey.LeftArrow)
+                {
+                    if (toreturn.Length > 0)
+                    {
+                        toreturn = toreturn.Remove(toreturn.Length - 1, 1);
+                    }
+                }
                 else if ((input.Modifiers & ConsoleModifiers.Control) != 0)
                 {
                     if (input.Key == ConsoleKey.S)
@@ -146,7 +191,7 @@ namespace Aqua.Miscellaneous
                     }
                     else if (input.Key == ConsoleKey.K)
                     {
-                        fileContents = null;
+                        fileContents = " ";
                         Console.Clear();
 
                         Console.SetCursorPosition(0, defaultYPos);

@@ -1,6 +1,9 @@
 ﻿using Aqua.Commands;
 using Aqua.Network;
+using Aqua.Sounds;
+using Cosmos.System;
 using System;
+using Console = System.Console;
 using term = Aqua.Terminal.Terminal;
 
 namespace Aqua.Terminal.Accounts
@@ -26,6 +29,8 @@ namespace Aqua.Terminal.Accounts
 
                 case "out":
                     term.DebugWrite($"See you later, {LoginSystem.username}.", 0);
+                    if (!VMTools.IsVMWare)
+                        Sounds.Sounds.LogoffSound();
                     Network.Network.xClient.Close();
                     Cosmos.HAL.Global.PIT.Wait(2250);
 

@@ -1089,7 +1089,6 @@ namespace Aqua.Miscellaneous.Compatibility
 
                     if (toreturn.Length > 0)
                     {
-                        arrow = toreturn[toreturn.Length - 1] + arrow;
                         toreturn = toreturn.Remove(toreturn.Length - 1, 1);
                     }
                 }

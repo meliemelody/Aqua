@@ -1,4 +1,5 @@
 ﻿using Aqua.Commands.Executables;
+using Aqua.Miscellaneous.Activation;
 using System;
 using System.IO;
 using static Aqua.Kernel;
@@ -27,7 +28,7 @@ namespace Aqua.Terminal.Accounts
 
             LogString();
 
-            if (!File.Exists(@"0:\AquaSys\Login\Username.cfg") || !File.Exists(@"0:\AquaSys\Login\Password.cfg"))
+            if (!File.Exists(@"0:\AquaSys\Login\Username.acf") || !File.Exists(@"0:\AquaSys\Login\Password.acf"))
                 SetUsername();
             else
                 GetUsername();
@@ -37,7 +38,7 @@ namespace Aqua.Terminal.Accounts
         {
             String logString;
 
-            if (!File.Exists(@"0:\AquaSys\Login\Username.cfg") || !File.Exists(@"0:\AquaSys\Login\Password.cfg"))
+            if (!File.Exists(@"0:\AquaSys\Login\Username.acf") || !File.Exists(@"0:\AquaSys\Login\Password.acf"))
                 logString = "Please create an account.";
             else
                 logString = "Please input your account information.";
@@ -78,7 +79,7 @@ namespace Aqua.Terminal.Accounts
 
             if (input != "guest")
             {
-                File.WriteAllText(@"0:\AquaSys\Login\Username.cfg", input);
+                File.WriteAllText(@"0:\AquaSys\Login\Username.acf", KeyDecryption.Encrypt(input));
                 username = input;
                 // SetPassword();
 
@@ -103,8 +104,8 @@ namespace Aqua.Terminal.Accounts
 
             String input = Console.ReadLine();
 
-            File.Create(@"0:\AquaSys\Login\Password.cfg");
-            File.WriteAllText(@"0:\AquaSys\Login\Password.cfg", input);
+            File.Create(@"0:\AquaSys\Login\Password.acf");
+            File.WriteAllText(@"0:\AquaSys\Login\Password.acf", KeyDecryption.Encrypt(input));
             // SetPassword();
 
             SetRoot();
@@ -119,9 +120,9 @@ namespace Aqua.Terminal.Accounts
             ConsoleKeyInfo input = Console.ReadKey();
                
             if (input.Key == ConsoleKey.Y)
-                File.WriteAllText(@"0:\AquaSys\Login\Root.cfg", "true");
+                File.WriteAllText(@"0:\AquaSys\Login\Root.acf", "true");
             else if (input.Key == ConsoleKey.N)
-                File.WriteAllText(@"0:\AquaSys\Login\Root.cfg", "false");
+                File.WriteAllText(@"0:\AquaSys\Login\Root.acf", "false");
             else
             {
                 term.DebugWrite("The input was not recognized, try again.", 4);
@@ -146,9 +147,9 @@ namespace Aqua.Terminal.Accounts
             Console.ForegroundColor = ConsoleColor.White;
 
             String input = Console.ReadLine();
-            username = futils.ReadLine(@"0:\AquaSys\Login\Username.cfg", 0);
+            username = KeyDecryption.Decrypt(futils.ReadLine(@"0:\AquaSys\Login\Username.acf", 0));
 
-            var rootCheck = futils.ReadLine(@"0:\AquaSys\Login\Root.cfg", 0);
+            var rootCheck = futils.ReadLine(@"0:\AquaSys\Login\Root.acf", 0);
 
             if (input == username)
             {
@@ -187,7 +188,7 @@ namespace Aqua.Terminal.Accounts
             Console.ForegroundColor = ConsoleColor.Black;
 
             String input = Console.ReadLine();
-            password = futils.ReadLine(@"0:\AquaSys\Login\Password.cfg", 0);
+            password = KeyDecryption.Decrypt(futils.ReadLine(@"0:\AquaSys\Login\Password.acf", 0));
 
             if (input == password)
                 Login();

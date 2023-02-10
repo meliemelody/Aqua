@@ -54,30 +54,12 @@ namespace Aqua
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("Setting up things for you...");
 
-            // Format the partition using FAT32.
-            // Why would we need this at first start ?
-            /*try
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                //fs.Disks[0].CreatePartition(fs.Disks[0].Size);
-
-                fs.Disks[0].Clear();
-                fs.Disks[0].CreatePartition(fs.Disks[0].Size);
-
-                Console.WriteLine();
-                term.DebugWrite("Successfully formatted the partition using FAT32.\n\n", 1);
-            }
-            catch (Exception e)
-            {
-                CrashHandler.Handle(e);
-            }*/
-
             // Detect if the emulator is NOT VirtualBox or QEMU.
             // These emulators/virtualizers cannot support the filesystem completely for now. 
             if (!VMTools.IsVirtualBox || !VMTools.IsQEMU)
             {
                 // Create the AquaSys directory.
-                // THIS IS OBLIGATORY FOR SYSTEM APPS.
+                // THIS IS OBLIGATORY FOR MOST SYSTEM APPS.
                 if (!System.IO.Directory.Exists(@"0:\AquaSys"))
                 {
                     try
@@ -349,7 +331,7 @@ namespace Aqua
             cursorPos = Console.GetCursorPosition();
 
             if (!VMTools.IsVMWare)
-                Sounds.Sounds.StartupSound();
+                Sounds.Sounds.LogonSound();
 
             // Surprise tool that will help us later.
             /*Random rnd = new Random();
