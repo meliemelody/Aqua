@@ -24,11 +24,11 @@
         <VMWareEdition>Player</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>True</DebugEnabled>
+	  <DebugEnabled>False</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>
-	  <ExtractMapFile>True</ExtractMapFile>
+	  <ExtractMapFile>False</ExtractMapFile>
 	  <Timeout>3</Timeout>
 	  <GenerateDocumentationFile>False</GenerateDocumentationFile>
 	  <Version>$(VersionPrefix)</Version>
@@ -36,6 +36,9 @@
 	  <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
 	  <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
 	  <EnableGDB>False</EnableGDB>
+	  <CompileVBEMultiboot>False</CompileVBEMultiboot>
+	  <CompressionType>Gzip</CompressionType>
+	  <OptimizationLevel>2</OptimizationLevel>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
@@ -47,6 +50,7 @@
       <None Remove="Fonts\zap-ext-vga09.psf" />
       <None Remove="Kernel.cs~RFb22bb1.TMP" />
       <None Remove="Miscellaneous\Activation\KeyDecryption.cs~RF15cb99fd.TMP" />
+      <None Remove="Sounds\Logoff.wav" />
       <None Remove="Sounds\Logon.wav" />
       <None Remove="Terminal\Accounts\LoginSystem.cs~RF25e82b9.TMP" />
       <None Remove="Terminal\Accounts\LoginSystem.cs~RFbaceef.TMP" />
@@ -60,6 +64,9 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
       <EmbeddedResource Include="Fonts\zap-ext-vga09.psf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Sounds\Logoff.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
       <EmbeddedResource Include="Sounds\Logon.wav">
