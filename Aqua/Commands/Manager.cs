@@ -20,6 +20,7 @@ namespace Aqua.Commands
                 new Executables.Time("time", "Shows the current time with \"direct\", and the compile time with \"compile\"."),
                 new Executables.Calculate("calc", "Calculate values between them [only 2 values allowed for now]"),
                 new Executables.TextEditor("ted", "Execute the TED Editor, an all new text editor for Aqua System."),
+                new Executables.System("sys", "Get all of your system information, like your CPU or free memory."),
 
                 // Filesystem commands
                 new Filesystem.File("f", "The file utilities, everything you need for creating, deleting and editing files."),

@@ -1,5 +1,6 @@
 ﻿using Cosmos.System;
 using Cosmos.System.Graphics;
+using PrismTools.IO;
 using System.Drawing;
 
 namespace Aqua.Graphics.Base
@@ -41,9 +42,7 @@ namespace Aqua.Graphics.Base
             canvas.DrawString(name, Cosmos.System.Graphics.Fonts.PCScreenFont.Default, Color.Black, (int)x + 10, (int)((int)this.y - titleBarHeight) - (int)(titleBarHeight / 2));
 
             canvas.DrawString(windowEditMode.ToString(), Cosmos.System.Graphics.Fonts.PCScreenFont.Default, Color.Black, 10, canvas.Mode.Height - 15);
-            // Switch to Edit Mode once the left mouse button is clicked.
-            if (MouseManager.MouseState == MouseState.Left)
-                windowEditMode = true;
+            windowEditMode = true;
 
             // Events for the Edit Mode
             if (windowEditMode)
@@ -53,15 +52,15 @@ namespace Aqua.Graphics.Base
                 y = (uint)MouseManager.Y - (uint)(height / 2);
 
                 // If a mouse button is pressed, execute an event.
-                if (MouseManager.MouseState == MouseState.Right)
+                if (MouseManager.LastMouseState == MouseState.Right)
                 {
                     Kernel.guiStarted = false;
                     canvas.Disable();
                 }
-                else if (MouseManager.MouseState == MouseState.Left)
+                /*else if (KeyboardManager.ReadKey().Key == ConsoleKeyEx.LAlt)
                 {
                     windowEditMode = false;
-                }
+                }*/
             }
 
             canvas.Display();
