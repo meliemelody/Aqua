@@ -26,7 +26,7 @@ malfunction !
 
 ------------------------------------------------------------------------------------
 
-IF YOU ARE UPDATING FROM 0.2.0 TO 0.2.1, INNER WORKINGS HAVE CHANGED : 
+IF YOU ARE UPDATING FROM 0.2.0 TO 0.2.1 OR 0.3.0, INNER WORKINGS HAVE CHANGED : 
 
 If you had a directory called ""System"" at the root of your drive, it contains
 your old Aqua System installation, if you want to keep your old installation,
@@ -57,6 +57,8 @@ If not, you can always access TED using the ""ted"" + the file you want to edit.
 
 Bugfixes :
 
+0.3.0 :
+
 0.2.1 :
 - Fixed a small bug where some dialogs were unspaced.
 - Fixed a bug where the setup tried to format, without success.
@@ -77,6 +79,10 @@ Bugfixes :
 ------------------------------------------------------------------------------------
 
 Additions :
+
+0.3.0 :
+- Ability to move files with ""f move"".
+- Brand new programming language for custom executables.
 
 0.2.1 :
 - An option to re-enter your username after 3 password attempts.

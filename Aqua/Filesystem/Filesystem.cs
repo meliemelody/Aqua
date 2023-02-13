@@ -3,6 +3,7 @@ using System;
 using io = System.IO;
 using term = Aqua.Terminal.Terminal;
 using System.Linq;
+using System.IO;
 
 namespace Aqua.Filesystem
 {
@@ -37,12 +38,45 @@ namespace Aqua.Filesystem
                             io.File.Delete(Kernel.currentDirectory + file);
 
                             // response = "The file \"" + args[1] + "\" has been successfully deleted.";
-                            return term.DebugWrite("The file \"" + file + "\" has been successfully deleted.", 2);
+                            return term.DebugWrite($"The file \"{args[0]}\" has been successfully moved over to \"{args[1]}\".", 2);
                         }
                         else
                         {
                             return term.DebugWrite("The file you have specified does not exist.", 4);
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        return term.DebugWrite(e.ToString(), 4);
+                    }
+
+                case "move":
+                    try
+                    {
+                        //io.File.Move(args[0], args[1]);
+                        var oldFileContents = io.File.ReadAllLines(Kernel.currentDirectory + args[0]);
+                        io.File.Delete(Kernel.currentDirectory + args[0]);
+
+                        io.File.Create(Kernel.currentDirectory + args[1]);
+                        io.File.WriteAllLines(Kernel.currentDirectory + args[1], oldFileContents);
+
+                        return term.DebugWrite($"The file \"{args[0]}\" has been successfully copied over to \"{args[1]}\".", 2);
+                    }
+                    catch (Exception e)
+                    {
+                        return term.DebugWrite(e.ToString(), 4);
+                    }
+
+                case "copy":
+                    try
+                    {
+                        //io.File.Move(args[0], args[1]);
+                        var fileContents = io.File.ReadAllLines(Kernel.currentDirectory + args[0]);
+
+                        io.File.Create(Kernel.currentDirectory + args[1]);
+                        io.File.WriteAllLines(Kernel.currentDirectory + args[1], fileContents);
+
+                        return term.DebugWrite("This file has been successfully moved over.", 2);
                     }
                     catch (Exception e)
                     {

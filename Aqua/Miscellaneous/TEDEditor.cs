@@ -1,6 +1,7 @@
 ﻿using Aqua.Terminal;
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Aqua.Miscellaneous
@@ -91,23 +92,11 @@ namespace Aqua.Miscellaneous
                 Console.Write(path);
 
                 if (newC != oldC)
-                {
                     Console.BackgroundColor = ConsoleColor.Red;
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    string status = "Unsaved";
-                    Console.SetCursorPosition(Console.WindowWidth - status.Length, y + 1);
-                    Console.Write(status);
-                }
                 else
-                {
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
 
-                    string status = "Saved";
-                    Console.SetCursorPosition(Console.WindowWidth - status.Length, y + 1);
-                    Console.Write(status);
-                }
+                Console.ForegroundColor = ConsoleColor.White;
 
                 Console.SetCursorPosition(x, y + 1);
                 for (int screenX = x; screenX <= Console.WindowWidth; screenX++)
@@ -173,13 +162,6 @@ namespace Aqua.Miscellaneous
                         {
                             Console.CursorTop--;
                         }
-                    }
-                }
-                else if (input.Key == ConsoleKey.LeftArrow)
-                {
-                    if (toreturn.Length > 0)
-                    {
-                        toreturn = toreturn.Remove(toreturn.Length - 1, 1);
                     }
                 }
                 else if ((input.Modifiers & ConsoleModifiers.Control) != 0)

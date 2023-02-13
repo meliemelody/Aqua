@@ -20,7 +20,8 @@ using Cosmos.System.Graphics;
 using IL2CPU.API.Attribs;
 using System.Threading;
 using System.Diagnostics;
-using Aqua.Miscellaneous.Activation;
+using Aqua.Filesystem;
+using Aqua.Miscellaneous;
 
 namespace Aqua
 {
@@ -45,7 +46,7 @@ namespace Aqua
         //public static PCScreenFont Font = PCScreenFont.Default;
         //public static byte[] FontVga;
 
-        public static string version = "0.2.1";
+        public static string version = "0.3.0";
         static (int Left, int Top) cursorPos;
 
         // This is the "Setup" function, executed if the run is the first run ever.
@@ -153,33 +154,6 @@ namespace Aqua
 
             Cosmos.HAL.Global.PIT.Wait(750);
             LoginSystem.Start();
-        }
-
-        // THIS FUNCTION IS OUTDATED.
-        // Please use the Recovery Disk to format your drive.
-        private static void FormatCheck()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($"Aqua System v{version} | Filesystem Utility\n");
-
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("Do you want to format the drive ? [y/n] : ");
-
-            Console.ForegroundColor = ConsoleColor.White;
-            ConsoleKeyInfo input = Console.ReadKey();
-
-            Console.WriteLine();
-            if (input.Key == ConsoleKey.Y)
-            {
-                /*const string root = @"0:\";
-                long initialSize = VFSManager.GetTotalSize(root);
-                //mainDisk.FormatPartition(0, "FAT32", true);*/
-                //mainDisk.Clear();
-                //mainDisk.CreatePartition(mainDisk.Size);
-            }
-            else if (input.Key == ConsoleKey.N) { }
-            else
-                term.DebugWrite("Input was not recognized, consequently, the drive was not formatted.", 4);
         }
 
         protected override void Run()

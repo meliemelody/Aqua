@@ -24,11 +24,11 @@
         <VMWareEdition>Player</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>False</DebugEnabled>
+	  <DebugEnabled>True</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>
-	  <ExtractMapFile>False</ExtractMapFile>
+	  <ExtractMapFile>True</ExtractMapFile>
 	  <Timeout>3</Timeout>
 	  <GenerateDocumentationFile>False</GenerateDocumentationFile>
 	  <Version>$(VersionPrefix)</Version>
@@ -37,8 +37,6 @@
 	  <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
 	  <EnableGDB>False</EnableGDB>
 	  <CompileVBEMultiboot>False</CompileVBEMultiboot>
-	  <CompressionType>Gzip</CompressionType>
-	  <OptimizationLevel>2</OptimizationLevel>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
@@ -49,7 +47,6 @@
       <None Remove="Fonts\Font1.bf" />
       <None Remove="Fonts\zap-ext-vga09.psf" />
       <None Remove="Kernel.cs~RFb22bb1.TMP" />
-      <None Remove="Miscellaneous\Activation\KeyDecryption.cs~RF15cb99fd.TMP" />
       <None Remove="Sounds\Logoff.wav" />
       <None Remove="Sounds\Logon.wav" />
       <None Remove="Terminal\Accounts\LoginSystem.cs~RF25e82b9.TMP" />
@@ -90,6 +87,10 @@
 
     <ItemGroup>
       <Folder Include="Assets\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\.editorconfig" Link=".editorconfig" />
     </ItemGroup>
 
     <ItemGroup>

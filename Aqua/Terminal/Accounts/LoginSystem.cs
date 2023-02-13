@@ -1,5 +1,5 @@
 ﻿using Aqua.Commands.Executables;
-using Aqua.Miscellaneous.Activation;
+using Aqua.Miscellaneous;
 using System;
 using System.IO;
 using static Aqua.Kernel;
@@ -79,7 +79,7 @@ namespace Aqua.Terminal.Accounts
 
             if (input != "guest")
             {
-                File.WriteAllText(@"0:\AquaSys\Login\Username.acf", KeyDecryption.Encrypt(input));
+                File.WriteAllText(@"0:\AquaSys\Login\Username.acf", Decryption.Encrypt(input));
                 username = input;
                 // SetPassword();
 
@@ -105,7 +105,7 @@ namespace Aqua.Terminal.Accounts
             String input = Console.ReadLine();
 
             File.Create(@"0:\AquaSys\Login\Password.acf");
-            File.WriteAllText(@"0:\AquaSys\Login\Password.acf", KeyDecryption.Encrypt(input));
+            File.WriteAllText(@"0:\AquaSys\Login\Password.acf", Decryption.Encrypt(input));
             // SetPassword();
 
             SetRoot();
@@ -147,7 +147,7 @@ namespace Aqua.Terminal.Accounts
             Console.ForegroundColor = ConsoleColor.White;
 
             String input = Console.ReadLine();
-            username = KeyDecryption.Decrypt(futils.ReadLine(@"0:\AquaSys\Login\Username.acf", 0));
+            username = Decryption.Decrypt(futils.ReadLine(@"0:\AquaSys\Login\Username.acf", 0));
 
             var rootCheck = futils.ReadLine(@"0:\AquaSys\Login\Root.acf", 0);
 
@@ -188,7 +188,7 @@ namespace Aqua.Terminal.Accounts
             Console.ForegroundColor = ConsoleColor.Black;
 
             String input = Console.ReadLine();
-            password = KeyDecryption.Decrypt(futils.ReadLine(@"0:\AquaSys\Login\Password.acf", 0));
+            password = Decryption.Decrypt(futils.ReadLine(@"0:\AquaSys\Login\Password.acf", 0));
 
             if (input == password)
                 Login();

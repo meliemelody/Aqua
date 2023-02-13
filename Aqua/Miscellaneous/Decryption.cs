@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Aqua.Miscellaneous.Activation
+namespace Aqua.Miscellaneous
 {
-    public class KeyDecryption
+    public class Decryption
     {
         private const int V = 2;
 

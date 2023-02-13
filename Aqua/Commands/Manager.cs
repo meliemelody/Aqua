@@ -21,7 +21,11 @@ namespace Aqua.Commands
                 new Executables.Time("time", "Shows the current time with \"direct\", and the compile time with \"compile\"."),
                 new Executables.Calculate("calc", "Calculate values between them [only 2 values allowed for now]"),
                 new Executables.TextEditor("ted", "Execute the TED Editor, an all new text editor for Aqua System."),
-                new Executables.System("sys", "Get all of your system information, like your CPU or free memory."),
+                new Executables.Games("games", "Play some games and have fun!"),
+
+                // Important commands
+                new Executables.Get("get", "Get all of your system information, like your CPU or free memory."),
+                new Executables.Set("set", "Set all of your settings, like background or foreground color."),
 
                 // Filesystem commands
                 new Filesystem.File("f", "The file utilities, everything you need for creating, deleting and editing files."),
@@ -29,11 +33,10 @@ namespace Aqua.Commands
                 new Filesystem.Filesystem("fs", "The file system utilities, used to format or see the type of the drive."),
 
                 // System-wise commands
+                new Terminal.Accounts.Accounts("acc", "Manage your accounts and log out."),
                 new Network.Commands("net", "Manages your network and FTP."),
-                new Executables.Manual("man", "List all the commands and their description."),
                 new Network.PackageManager("pm", "The general package manager for Aqua."),
-                new Graphics.grComs("gui", "All your Graphical Interface needs start here."),
-                new Terminal.Accounts.Accounts("acc", "Manage your accounts and log out.")
+                new Executables.Manual("man", "List all the commands and their description.")
             };
 
             foreach (Command command in this.commands)
