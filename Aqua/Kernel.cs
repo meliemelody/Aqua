@@ -22,6 +22,8 @@ using System.Threading;
 using System.Diagnostics;
 using Aqua.Filesystem;
 using Aqua.Miscellaneous;
+using Cosmos.System.ScanMaps;
+using Aqua.Commands.Executables;
 
 namespace Aqua
 {
@@ -37,6 +39,9 @@ namespace Aqua
         public static AC97 audioDriver;
         public static AudioManager audioManager;
 
+        public static ConsoleColor bgColor = ConsoleColor.Black;
+        public static ConsoleColor fgColor = ConsoleColor.White;
+
         public static Canvas canvas;
 
         public static string time;
@@ -47,6 +52,7 @@ namespace Aqua
         //public static byte[] FontVga;
 
         public static string version = "0.3.0";
+
         static (int Left, int Top) cursorPos;
 
         // This is the "Setup" function, executed if the run is the first run ever.
@@ -119,6 +125,33 @@ namespace Aqua
             Console.Clear();
         }
 
+        public void CheckKeyboardLayout()
+        {
+            if (System.IO.File.Exists(@"0:\AquaSys\Config\KeyMap.acf"))
+            {
+                var content = System.IO.File.ReadAllText(@"0:\AquaSys\Config\KeyMap.acf");
+
+                switch (content)
+                {
+                    case "us":
+                        KeyboardManager.SetKeyLayout(new US_Standard());
+                        break;
+
+                    case "fr":
+                        KeyboardManager.SetKeyLayout(new FR_Standard());
+                        break;
+
+                    case "de":
+                        KeyboardManager.SetKeyLayout(new DE_Standard());
+                        break;
+                }
+            }
+            else
+            {
+                KeyboardManager.SetKeyLayout(new US_Standard());
+            }
+        }
+
         // This function runs before the main loop, which is Run().
         // It is used to initiate drivers, the filesystem, check if this run is the first run, and set settings.
         protected override void BeforeRun()
@@ -149,6 +182,8 @@ namespace Aqua
             Cosmos.HAL.Global.PIT.Wait(250);
             Console.Clear();
 
+            CheckKeyboardLayout();
+
             if (!System.IO.File.Exists("0:\\AquaSys\\Setup\\FirstRun.acf") || System.IO.File.ReadAllText("0:\\AquaSys\\Setup\\FirstRun.acf") != "true" || fs.Disks[0].Partitions == null)
                 FirstRun();
 
@@ -173,6 +208,11 @@ namespace Aqua
 
                 // The main shell, source of almost all my problems.
                 AquaShell();
+
+                // Set the current colors to the specified colors.
+                // Can set them using the "set" command.
+                Console.BackgroundColor = bgColor;
+                Console.ForegroundColor = fgColor;
             }
         }
 
@@ -185,7 +225,10 @@ namespace Aqua
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("$=> ");
 
-            Console.ForegroundColor = ConsoleColor.White;
+            // Set the current colors to the specified colors, again.
+            // Can set them using the "set" command.
+            Console.BackgroundColor = bgColor;
+            Console.ForegroundColor = fgColor;
 
             // Listen for input, then respond to that input accordingly using the command manager.
             string response;
@@ -220,8 +263,8 @@ namespace Aqua
             Console.Write(developmentStatus);
 
             Console.SetCursorPosition(cursorPos.Left, cursorPos.Top);
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = bgColor;
+            Console.ForegroundColor = fgColor;
         }
 
         public static void DrawTime(string time)

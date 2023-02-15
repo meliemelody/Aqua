@@ -1,5 +1,6 @@
 ﻿using Aqua.Terminal;
 using Cosmos.Core;
+using Cosmos.System.ScanMaps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,37 +22,38 @@ namespace Aqua.Commands.Executables
                     switch (args[1])
                     {
                         case "blue":
-                            Console.BackgroundColor = ConsoleColor.Blue;
+                            Kernel.bgColor = ConsoleColor.Blue;
                             break;
 
                         case "green":
-                            Console.BackgroundColor = ConsoleColor.Green;
+                            Kernel.bgColor = ConsoleColor.Green;
                             break;
 
                         case "red":
-                            Console.BackgroundColor = ConsoleColor.Red;
+                            Kernel.bgColor = ConsoleColor.Red;
                             break;
 
                         case "yellow":
-                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            Kernel.bgColor = ConsoleColor.Yellow;
                             break;
 
                         case "black":
-                            Console.BackgroundColor = ConsoleColor.Black;
+                            Kernel.bgColor = ConsoleColor.Black;
                             break;
 
                         case "white":
-                            Console.BackgroundColor = ConsoleColor.White;
+                            Kernel.bgColor = ConsoleColor.White;
                             break;
 
                         case "cyan":
-                            Console.BackgroundColor = ConsoleColor.Cyan;
+                            Kernel.bgColor = ConsoleColor.Cyan;
                             break;
 
                         default:
                             return "Please select a correct color.";
                     }
 
+                    Console.Clear();
                     return null;
 
                 case "fg":
@@ -88,8 +90,28 @@ namespace Aqua.Commands.Executables
                         default:
                             return Terminal.Terminal.DebugWrite("Please select a correct color.", 4);
                     }
-
                     return null;
+
+                case "keymap":
+                    switch (args[1])
+                    {
+                        case "us":
+                            Cosmos.System.KeyboardManager.SetKeyLayout(new US_Standard());
+                            break;
+
+                        case "fr":
+                            Cosmos.System.KeyboardManager.SetKeyLayout(new FR_Standard());
+                            break;
+
+                        case "de":
+                            Cosmos.System.KeyboardManager.SetKeyLayout(new DE_Standard());
+                            break;
+
+                        default:
+                            return Terminal.Terminal.DebugWrite("Please select a correct key mapping.", 4);
+                    }
+                    System.IO.File.WriteAllText(@"0:\AquaSys\Config\KeyMap.acf", args[1]);
+                    return Terminal.Terminal.DebugWrite($"Successfully set the keyboard to \"{args[1]}\".", 2);
 
                 default:
                     return Terminal.Terminal.DebugWrite("Specify a correct argument.\n", 4);
@@ -105,10 +127,10 @@ namespace Aqua.Commands.Executables
         {
             switch (args[0])
             {
-                case "cpu":
+                case "ram":
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    //return $"Vendor: {CPU.GetCPUVendorName()}\n  Name: {CPU.GetCPUBrandString()}\n  Frequency: {CPU.GetCPUCycleSpeed()}";
-                    return "test";
+                    double ramUsage = (double)(Cosmos.Core.GCImplementation.GetUsedRAM() / 1024 / 1024) / (double)Cosmos.Core.CPU.GetAmountOfRAM();
+                    return "RAM usage : " + ((int)ramUsage * 100).ToString() + "%";
 
                 default:
                     return Terminal.Terminal.DebugWrite("Specify a correct argument.", 4);

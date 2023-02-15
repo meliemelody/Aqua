@@ -152,6 +152,7 @@ namespace Aqua.Games
             {
                 player.coins++;
                 grid[y][x] = " ";
+                Beep(2500, 50);
             }
             else if (grid[y][x] == "X" && Maze.rand <= player.coins)
             {
@@ -195,38 +196,26 @@ namespace Aqua.Games
 
         private static void Instructions()
         {
-            // HUD
-            SetCursorPosition(0, height);
-            ForegroundColor = ConsoleColor.Yellow;
-            Write("Coins : ");
-
-            ForegroundColor = ConsoleColor.White;
-            Write(player.coins);
-
-            SetCursorPosition(0, height + 1);
-            ForegroundColor = ConsoleColor.Green;
-            Write("Wins : ");
-
-            ForegroundColor = ConsoleColor.White;
-            Write(player.wins);
-
             // Required coin amount indicator.
-            SetCursorPosition(0, WindowHeight - 5);
+            SetCursorPosition(0, WindowHeight - 8);
             ForegroundColor = ConsoleColor.Cyan;
             Write("You need ");
 
             ForegroundColor = ConsoleColor.White;
-            Write($"{rand} ");
+            if ((rand - player.coins) > 0)
+                Write($"{rand - player.coins} ");
+            else if ((rand - player.coins) <= 0)
+                Write("0 ");
 
             ForegroundColor = ConsoleColor.Cyan;
             Write("coins to go to the next level.");
 
             // Copyright and controls stuff.
-            SetCursorPosition(0, WindowHeight - 3);
+            SetCursorPosition(0, WindowHeight - 6);
             ForegroundColor = ConsoleColor.Cyan;
             Write("A-Mazed | for the Aqua System | (C) 2023");
 
-            SetCursorPosition(0, WindowHeight - 2);
+            SetCursorPosition(0, WindowHeight - 5);
             ForegroundColor = ConsoleColor.Gray;
             Write("Press the \"");
 
@@ -236,7 +225,7 @@ namespace Aqua.Games
             ForegroundColor = ConsoleColor.Gray;
             Write("\" key if you want to reset your maze progress.");
 
-            SetCursorPosition(0, WindowHeight - 1);
+            SetCursorPosition(0, WindowHeight - 4);
             ForegroundColor = ConsoleColor.Gray;
             Write("Press the \"");
 
@@ -245,6 +234,21 @@ namespace Aqua.Games
 
             ForegroundColor = ConsoleColor.Gray;
             Write("\" key if you want to quit the game.");
+
+            // HUD
+            SetCursorPosition(0, WindowHeight - 2);
+            ForegroundColor = ConsoleColor.Yellow;
+            Write("Coins : ");
+
+            ForegroundColor = ConsoleColor.White;
+            Write(player.coins);
+
+            SetCursorPosition(0, WindowHeight - 1);
+            ForegroundColor = ConsoleColor.Green;
+            Write("Wins : ");
+
+            ForegroundColor = ConsoleColor.White;
+            Write(player.wins);
         }
 
         public static void HandleInput(Player player, World world)
@@ -285,8 +289,9 @@ namespace Aqua.Games
                     break;
 
                 case ConsoleKey.Escape:
-                    running = false;
                     CursorVisible = true;
+                    CursorSize = 50;
+                    running = false;
                     Clear();
                     break;
 

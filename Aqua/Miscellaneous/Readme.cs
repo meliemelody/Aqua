@@ -6,7 +6,7 @@
 
 Welcome to the open-source world of Aqua System [by iplux].
 
-Congratulations on installing Aqua System version 0.2.1 !
+Congratulations on installing Aqua System version 0.3.0 !
 This system aims to be a different way for computing,
 while still being simple to use and to understand.
 
@@ -14,7 +14,7 @@ This release is probably the biggest release so far,
 in terms of bug fixing, optimizations and features.
 
 This readme was created on : 31/01/2023.
-Updated on : 04/02/2023.
+Updated on : 15/02/2023.
 
 ------------------------------------------------------------------------------------
 
@@ -57,8 +57,6 @@ If not, you can always access TED using the ""ted"" + the file you want to edit.
 
 Bugfixes :
 
-0.3.0 :
-
 0.2.1 :
 - Fixed a small bug where some dialogs were unspaced.
 - Fixed a bug where the setup tried to format, without success.
@@ -83,6 +81,8 @@ Additions :
 0.3.0 :
 - Ability to move files with ""f move"".
 - Brand new programming language for custom executables.
+- New game [""maze""].
+- Ability to change your keyboard layout.
 
 0.2.1 :
 - An option to re-enter your username after 3 password attempts.
