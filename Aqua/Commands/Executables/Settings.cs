@@ -33,7 +33,7 @@ namespace Aqua.Commands.Executables
                             Kernel.bgColor = ConsoleColor.Red;
                             break;
 
-                        case "yellow":
+                        case "orange":
                             Kernel.bgColor = ConsoleColor.Yellow;
                             break;
 
@@ -52,7 +52,7 @@ namespace Aqua.Commands.Executables
                         default:
                             return "Please select a correct color.";
                     }
-
+                    Filesystem.Utilities.WriteLine(@"0:\AquaSys\Config\Colors.acf", args[1], false);
                     Console.Clear();
                     return null;
 
@@ -60,36 +60,37 @@ namespace Aqua.Commands.Executables
                     switch (args[1])
                     {
                         case "blue":
-                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Kernel.fgColor = ConsoleColor.Blue;
                             break;
 
                         case "green":
-                            Console.ForegroundColor = ConsoleColor.Green;
+                            Kernel.fgColor = ConsoleColor.Green;
                             break;
 
                         case "red":
-                            Console.ForegroundColor = ConsoleColor.Red;
+                            Kernel.fgColor = ConsoleColor.Red;
                             break;
 
-                        case "yellow":
-                            Console.ForegroundColor = ConsoleColor.Yellow;
+                        case "orange":
+                            Kernel.fgColor = ConsoleColor.Yellow;
                             break;
 
                         case "black":
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Kernel.fgColor = ConsoleColor.Black;
                             break;
 
                         case "white":
-                            Console.ForegroundColor = ConsoleColor.White;
+                            Kernel.fgColor = ConsoleColor.White;
                             break;
 
                         case "cyan":
-                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Kernel.fgColor = ConsoleColor.Cyan;
                             break;
 
                         default:
                             return Terminal.Terminal.DebugWrite("Please select a correct color.", 4);
                     }
+                    Filesystem.Utilities.WriteLine(@"0:\AquaSys\Config\Colors.acf", args[1], true);
                     return null;
 
                 case "keymap":

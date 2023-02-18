@@ -36,7 +36,8 @@ namespace Aqua.Commands
                 new Terminal.Accounts.Accounts("acc", "Manage your accounts and log out."),
                 new Network.Commands("net", "Manages your network and FTP."),
                 new Network.PackageManager("pm", "The general package manager for Aqua."),
-                new Executables.Manual("man", "List all the commands and their description.")
+                new Executables.Manual("man", "List all the commands and their description."),
+                new Interpreter.LangCommand("lang", "Execute the programs made in AquaLang.")
             };
 
             foreach (Command command in this.commands)

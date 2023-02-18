@@ -14,7 +14,7 @@ namespace Aqua.Commands.Executables
         {
             for (int i = 0; i < Manager.descriptionStrings.Count; i++)
             {
-                if (Manager.commandStrings[i] == "f" || Manager.commandStrings[i] == "net")
+                if (Manager.commandStrings[i] == "f" || Manager.commandStrings[i] == "net" || Manager.commandStrings[i] == "get")
                     Console.WriteLine();
 
                 Console.ForegroundColor = ConsoleColor.Cyan;

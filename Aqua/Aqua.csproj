@@ -21,7 +21,7 @@
         <Profile>VMware</Profile>
         <PxeInterface>192.168.0.8</PxeInterface>
         <VBEResolution>800x600x32</VBEResolution>
-        <VMWareEdition>Player</VMWareEdition>
+        <VMWareEdition>Workstation</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
 	  <DebugEnabled>True</DebugEnabled>
@@ -46,6 +46,7 @@
       <None Remove="Commands\Executables\Time.cs~RF610cb61.TMP" />
       <None Remove="Fonts\Font1.bf" />
       <None Remove="Fonts\zap-ext-vga09.psf" />
+      <None Remove="Interpreter\glvkqr4v.4lc~" />
       <None Remove="Kernel.cs~RFb22bb1.TMP" />
       <None Remove="Sounds\Logoff.wav" />
       <None Remove="Sounds\Logon.wav" />
