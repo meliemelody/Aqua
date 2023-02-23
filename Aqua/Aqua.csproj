@@ -43,6 +43,7 @@
 
     <ItemGroup>
       <None Remove="Commands\Executables\Manual.cs~RF1397f7e.TMP" />
+      <None Remove="Commands\Executables\Tabs.cs~RFde8d211.TMP" />
       <None Remove="Commands\Executables\Time.cs~RF610cb61.TMP" />
       <None Remove="Fonts\Font1.bf" />
       <None Remove="Fonts\zap-ext-vga09.psf" />

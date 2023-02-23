@@ -24,7 +24,9 @@ namespace Aqua.Interpreter
                 "input: ",
                 "keywait: ",
                 "set: ",
-                "if "
+                "if ",
+                "clear",
+                "color: "
             };
 
         public static void Run(string filePath)
@@ -73,28 +75,30 @@ namespace Aqua.Interpreter
                         case "input: ":
                             string[] args = text.Split(',');
 
-                            for (int i = 0; i < args.Length; i++)
-                                Console.WriteLine(args[i].Trim());
+                            /*for (int i = 0; i < args.Length; i++)
+                                Console.WriteLine(args[i].Trim());*/
 
-                            if (args.Length == 3)
+                            if (args.Length == 2)
                             {
                                 string input;
                                 ConsoleKeyInfo key;
 
+                                if (args[1].Trim() == "false")
+                                {
+                                    input = Console.ReadLine();
+                                    StoreVariable(args[0], input);
+                                    break;
+                                }
                                 if (args[1].Trim() == "true")
                                 {
                                     bool intercept;
                                     bool.TryParse(args[2].Trim(), out intercept);
 
                                     key = Console.ReadKey(intercept);
-                                    StoreVariable(text.Trim(), key.Key);
+                                    StoreVariable(args[0], key.Key);
 
-                                    Console.WriteLine(GetVariable(text.Trim()).GetType());
-                                }
-                                else if (args[1].Trim() == "false")
-                                {
-                                    input = Console.ReadLine();
-                                    StoreVariable(text.Trim(), input);
+                                    Console.WriteLine(GetVariable(args[0]).GetType());
+                                    break;
                                 }
                                 else
                                 {
@@ -103,8 +107,9 @@ namespace Aqua.Interpreter
                             }
                             else
                             {
+                                Console.WriteLine("WARNING: Not enough arguments detected, default mode activated");
                                 string input = Console.ReadLine();
-                                StoreVariable(text.Trim(), input);
+                                StoreVariable(args[0], input);
                             }
                             break;
 
@@ -156,11 +161,184 @@ namespace Aqua.Interpreter
                                 results.Add("Syntax error: Invalid if statement");
                             }
                             break;
+
+                        case "clear":
+                            Console.Clear();
+                            break;
+
+                        case "color: ":
+                            var argsV = text.Split(", ");
+
+                            if (argsV.Length == 2)
+                            {
+                                // isForeground
+                                switch (argsV[1])
+                                {
+                                    case "true":
+                                        switch (argsV[0])
+                                        {
+                                            // Light colors
+                                            case "blue" or "b":
+                                                Console.ForegroundColor = ConsoleColor.Blue;
+                                                break;
+
+                                            case "red" or "r":
+                                                Console.ForegroundColor = ConsoleColor.Red;
+                                                break;
+
+                                            case "yellow" or "y":
+                                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                                break;
+
+                                            case "green" or "g":
+                                                Console.ForegroundColor = ConsoleColor.Green;
+                                                break;
+
+                                            case "magenta" or "m":
+                                                Console.ForegroundColor = ConsoleColor.Magenta;
+                                                break;
+
+                                            case "cyan" or "c":
+                                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                                break;
+
+                                            // Dark-toned colors
+                                            case "darkblue" or "db":
+                                                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                                                break;
+
+                                            case "darkgreen" or "dg":
+                                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                                break;
+
+                                            case "darkcyan" or "dc":
+                                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                                break;
+
+                                            case "darkmagenta" or "dm":
+                                                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                                                break;
+
+                                            case "darkred" or "dr":
+                                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                                break;
+
+                                            case "darkyellow" or "dy":
+                                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                                break;
+
+                                            // Monochrome colors
+                                            case "gray" or "g":
+                                                Console.ForegroundColor = ConsoleColor.Gray;
+                                                break;
+
+                                            case "darkgray" or "dg":
+                                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                                break;
+
+                                            case "black" or "d":
+                                                Console.ForegroundColor = ConsoleColor.Black;
+                                                break;
+
+                                            case "white" or "w":
+                                                Console.ForegroundColor = ConsoleColor.White;
+                                                break;
+
+                                            default:
+                                                Console.WriteLine("Syntax error: Unknown color.");
+                                                break;
+                                        }
+                                        break;
+
+                                    case "false":
+                                        switch (argsV[0])
+                                        {
+                                            // Light colors
+                                            case "blue" or "b":
+                                                Console.BackgroundColor = ConsoleColor.Blue;
+                                                break;
+
+                                            case "red" or "r":
+                                                Console.BackgroundColor = ConsoleColor.Red;
+                                                break;
+
+                                            case "yellow" or "y":
+                                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                                break;
+
+                                            case "green" or "g":
+                                                Console.BackgroundColor = ConsoleColor.Green;
+                                                break;
+
+                                            case "magenta" or "m":
+                                                Console.BackgroundColor = ConsoleColor.Magenta;
+                                                break;
+
+                                            case "cyan" or "c":
+                                                Console.BackgroundColor = ConsoleColor.Cyan;
+                                                break;
+
+                                            // Dark-toned colors
+                                            case "darkblue" or "db":
+                                                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                                                break;
+
+                                            case "darkgreen" or "dg":
+                                                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                                                break;
+
+                                            case "darkcyan" or "dc":
+                                                Console.BackgroundColor = ConsoleColor.DarkCyan;
+                                                break;
+
+                                            case "darkmagenta" or "dm":
+                                                Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                                                break;
+
+                                            case "darkred" or "dr":
+                                                Console.BackgroundColor = ConsoleColor.DarkRed;
+                                                break;
+
+                                            case "darkyellow" or "dy":
+                                                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                                                break;
+
+                                            // Monochrome colors
+                                            case "gray" or "g":
+                                                Console.BackgroundColor = ConsoleColor.Gray;
+                                                break;
+
+                                            case "darkgray" or "dg":
+                                                Console.BackgroundColor = ConsoleColor.DarkGray;
+                                                break;
+
+                                            case "black" or "d":
+                                                Console.BackgroundColor = ConsoleColor.Black;
+                                                break;
+
+                                            case "white" or "w":
+                                                Console.BackgroundColor = ConsoleColor.White;
+                                                break;
+
+                                            default:
+                                                Console.WriteLine("Syntax error: Unknown color.");
+                                                break;
+                                        }
+                                        break;
+
+                                    default:
+                                        Console.WriteLine("Syntax error: Incorrect argument.");
+                                        break;
+                                }
+                            }
+                            else
+                                Console.WriteLine("Syntax error: Not enough arguments");
+                            break;
                     }
                 }
                 else
                 {
-                    results.Add("Syntax error : Required semicolon not found");
+                    results.Add("Syntax error: Required semicolon not found");
                 }
             }
 
@@ -169,7 +347,7 @@ namespace Aqua.Interpreter
 
         private static bool EvaluateCondition(string condition)
         {
-            string[] tokens = condition.Split(new string[] { "==" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] tokens = condition.Split(new string[] { "==", "!=", "<", ">", "<=", ">=" }, StringSplitOptions.RemoveEmptyEntries);
             if (tokens.Length == 2)
             {
                 var first = tokens[0].Trim();
@@ -177,20 +355,51 @@ namespace Aqua.Interpreter
 
                 int outfirst, outsecond;
 
-                if (variables.ContainsKey(first))
-                    first = (string)GetVariable(first);
-                if (variables.ContainsKey(second))
-                    second = (string)GetVariable(second);
+                if (!first.StartsWith('"') && !first.EndsWith('"'))
+                {
+                    if (variables.ContainsKey(first))
+                        first = (string)GetVariable(first);
+                }
+                else if (first.StartsWith('"') && first.EndsWith('"'))
+                {
+                    var parts = tokens[0].Split('"');
+                    first = parts[1];
+                }
+
+                if (!second.StartsWith('"') && !second.EndsWith('"'))
+                {
+                    if (variables.ContainsKey(second))
+                        second = (string)GetVariable(second);
+                }
+                else if (second.StartsWith('"') && second.EndsWith('"'))
+                {
+                    var parts = tokens[1].Split('"');
+                    second = parts[1];
+                }
 
                 if (int.TryParse(first, out outfirst) && int.TryParse(second, out outsecond))
                 {
                     //Console.WriteLine("out = " + outfirst + " " + outsecond);
-                    return outfirst == outsecond;
+                    if (condition.Contains("=="))
+                        return outfirst == outsecond;
+                    else if (condition.Contains("!="))
+                        return outfirst != outsecond;
+                    else if (condition.Contains("<"))
+                        return outfirst < outsecond;
+                    else if (condition.Contains(">"))
+                        return outfirst > outsecond;
+                    else if (condition.Contains("<="))
+                        return outfirst <= outsecond;
+                    else if (condition.Contains(">="))
+                        return outfirst >= outsecond;
                 }
                 else
                 {
                     //Console.WriteLine(first + " " + second);
-                    return first == second;
+                    if (condition.Contains("=="))
+                        return first == second;
+                    else if (condition.Contains("!="))
+                        return first != second;
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cosmos.Debug.Kernel;
+using System;
 using System.Collections.Generic;
 using static System.Console;
 
@@ -54,14 +55,59 @@ namespace Aqua.Games
                     player.y++;
                     break;
             }
+
+            Maze.enemy.Move();
+        }
+    }
+
+    public class Enemy
+    {
+        public int x { get; set; }
+        public int y { get; set; }
+
+        public Enemy(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public void Draw()
+        {
+            ForegroundColor = ConsoleColor.Red;
+            SetCursorPosition(x, y);
+
+            Write("0");
+        }
+
+        public void Move()
+        {
+            Random random = new Random();
+            int direction = random.Next(0, 4);
+
+            SetCursorPosition(x, y);
+            Write(' ');
+
+            switch (direction)
+            {
+                case 0:
+                    if (Maze.world.CheckEnemyCollisions(x-1, y)) x--;
+                    break;
+                case 1:
+                    if (Maze.world.CheckEnemyCollisions(x+1, y)) x++;
+                    break;
+                case 2:
+                    if (Maze.world.CheckEnemyCollisions(x, y-1)) y--;
+                    break;
+                case 3:
+                    if (Maze.world.CheckEnemyCollisions(x, y+1)) y++;
+                    break;
+            }
         }
     }
 
     public class World
     {
-        private List<List<string>> grid = new List<List<string>>()
-        {
-        };
+        private List<List<string>> grid = new List<List<string>>() { };
         private int rows, cols;
 
         public World(int rows, int cols)
@@ -143,7 +189,7 @@ namespace Aqua.Games
             ResetColor();
         }
 
-        public bool CheckCollisions(int x, int y, Player player)
+        public bool CheckPlayerCollisions(int x, int y, Player player)
         {
             if (x == 0 || x == this.cols - 1 || y == 0 || y == this.rows - 1)
                 return false;
@@ -161,6 +207,16 @@ namespace Aqua.Games
             }
             else if (grid[y][x] == "X" && Maze.rand > player.coins)
                 return false;
+            else if (x == Maze.enemy.x && y == Maze.enemy.y)
+                return false;
+
+            return grid[y][x] == " ";
+        }
+
+        public bool CheckEnemyCollisions(int x, int y)
+        {
+            if (x == 0 || x == this.cols - 1 || y == 0 || y == this.rows - 1)
+                return false;
 
             return grid[y][x] == " ";
         }
@@ -177,14 +233,17 @@ namespace Aqua.Games
 
         public static World world = new World(width, height);
         static Player player = new Player(1, 1, symbol, ConsoleColor.Cyan);
+        public static Enemy enemy;
 
         static List<List<string>> drawnWorld = world.Draw();
+        static int posMode;
 
         public static void Draw(World world, Player player, List<List<string>> drawnWorld)
         {
             var oldCurPos = GetCursorPosition();
 
             player.Draw();
+            enemy.Draw(); 
             world.Update();
 
             Instructions();
@@ -257,28 +316,28 @@ namespace Aqua.Games
             switch (input)
             {
                 case ConsoleKey.LeftArrow:
-                    if (world.CheckCollisions(player.x - 1, player.y, player))
+                    if (world.CheckPlayerCollisions(player.x - 1, player.y, player))
                         player.Movement(player, 0);
                     else
                         Beep(100, 75);
                     break;
 
                 case ConsoleKey.RightArrow:
-                    if (world.CheckCollisions(player.x + 1, player.y, player))
+                    if (world.CheckPlayerCollisions(player.x + 1, player.y, player))
                         player.Movement(player, 1);
                     else
                         Beep(100, 75);
                     break;
 
                 case ConsoleKey.UpArrow:
-                    if (world.CheckCollisions(player.x, player.y - 1, player))
+                    if (world.CheckPlayerCollisions(player.x, player.y - 1, player))
                         player.Movement(player, 2);
                     else
                         Beep(100, 75);
                     break;
 
                 case ConsoleKey.DownArrow:
-                    if (world.CheckCollisions(player.x, player.y + 1, player))
+                    if (world.CheckPlayerCollisions(player.x, player.y + 1, player))
                         player.Movement(player, 3);
                     else
                         Beep(100, 75);
@@ -307,12 +366,46 @@ namespace Aqua.Games
             player.y = 1;
             player.coins = 0;
             rand = random.Next(25, 75);
+
+            posMode = random.Next(0, 2);
+            switch (posMode)
+            {
+                case 0:
+                    enemy = new(width - 2, height - 2);
+                    break;
+
+                case 1:
+                    enemy = new(2, height - 2);
+                    break;
+
+                case 2:
+                    enemy = new(width - 2, 2);
+                    break;
+            }
+
             drawnWorld = world.Draw();
         }
 
-        public static void Game()
+        public static void Game(int difficulty)
         {
+            Random random = new Random();
             Clear();
+
+            posMode = random.Next(0, 2);
+            switch (posMode)
+            {
+                case 0:
+                    enemy = new(width - 2, height - 2);
+                    break;
+
+                case 1:
+                    enemy = new(2, height - 2);
+                    break;
+
+                case 2:
+                    enemy = new(width - 2, 2);
+                    break;
+            }
 
             while (running)
             {

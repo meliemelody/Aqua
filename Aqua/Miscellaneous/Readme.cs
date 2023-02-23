@@ -57,6 +57,10 @@ If not, you can always access TED using the ""ted"" + the file you want to edit.
 
 Bugfixes :
 
+0.3.0 :
+- Fixed a bug with logging out and logging in back again.
+- Fixed a bug with the ""time"" command.
+
 0.2.1 :
 - Fixed a small bug where some dialogs were unspaced.
 - Fixed a bug where the setup tried to format, without success.
@@ -118,17 +122,12 @@ Bugs to fix :
 Future features :
 
 - Graphic File Manager on the terminal.
-- Chatting software.
 - Implement tabs for multiple terminal instances.
-- External Executables [""elf"", and a custom-made ""ape""* format].
-- Internet Connectivity commands [like ""weather"", ""get"", or ""update""].
 - ACF files finally being useful : text coloring using tags, fonts, etc...
 - Package Manager revamp.
 - A new activation system.
 - Games [Snake, Pong, Doom, etc...]
 - Perhaps more..? ;]
-
-* : Aqua Power Executable, ""Aqua Power"" being a program framework.
 
 ------------------------------------------------------------------------------------
 

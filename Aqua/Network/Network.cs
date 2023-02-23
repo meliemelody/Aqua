@@ -100,6 +100,8 @@ namespace Aqua.Network
 
             Address dnsAddress = new Address(8, 8, 8, 8);
             DNSConfig.Add(dnsAddress);
+
+            Kernel.isNetworkConnected = true;
         }
 
         public static string Get(string address, string port, string message)

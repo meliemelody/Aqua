@@ -18,12 +18,7 @@ using Cosmos.System.Graphics.Fonts;
 using Cosmos.Core.Memory;
 using Cosmos.System.Graphics;
 using IL2CPU.API.Attribs;
-using System.Threading;
-using System.Diagnostics;
-using Aqua.Filesystem;
-using Aqua.Miscellaneous;
 using Cosmos.System.ScanMaps;
-using Aqua.Commands.Executables;
 
 namespace Aqua
 {
@@ -32,7 +27,7 @@ namespace Aqua
         private Manager _commandManager = new Manager();
         public static CosmosVFS fs;
 
-        public static bool isRoot, guiStarted;
+        public static bool isRoot, guiStarted, isNetworkConnected;
         public static string currentDirectory = "0:\\", currentAccount;
 
         public static AudioMixer mixer;
@@ -53,7 +48,7 @@ namespace Aqua
 
         public static string version = "0.3.0";
 
-        static (int Left, int Top) cursorPos;
+        public static (int Left, int Top) cursorPos;
 
         // This is the "Setup" function, executed if the run is the first run ever.
         public void FirstRun()
@@ -187,6 +182,8 @@ namespace Aqua
             if (!System.IO.File.Exists("0:\\AquaSys\\Setup\\FirstRun.acf") || System.IO.File.ReadAllText("0:\\AquaSys\\Setup\\FirstRun.acf") != "true" || fs.Disks[0].Partitions == null)
                 FirstRun();
 
+            isNetworkConnected = false;
+
             Cosmos.HAL.Global.PIT.Wait(750);
             LoginSystem.Start();
         }
@@ -286,10 +283,9 @@ namespace Aqua
             {
                 term.DebugWrite("Setting up the network...", 1);
                 // Setup the network / Generate an IP address dynamically
-                Network.Network.Setup();
+                if (!isNetworkConnected) Network.Network.Setup();
 
                 // Network.Network.DownloadFile("http://info.cern.ch/hypertext/WWW/TheProject.html", @"0:\File.txt");
-
                 if (!VMTools.IsVMWare)
                 {
                     term.DebugWrite("Setting up the audio drivers...", 0);

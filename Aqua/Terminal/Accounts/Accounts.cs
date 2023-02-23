@@ -28,10 +28,9 @@ namespace Aqua.Terminal.Accounts
                     }
 
                 case "out":
-                    term.DebugWrite($"See you later, {LoginSystem.username}.", 0);
+                    term.DebugWrite($"See you later, {LoginSystem.username}.", 1);
                     if (!VMTools.IsVMWare)
                         Sounds.Sounds.LogoffSound();
-                    Network.Network.xClient.Close();
                     Cosmos.HAL.Global.PIT.Wait(2250);
 
                     Console.Clear();

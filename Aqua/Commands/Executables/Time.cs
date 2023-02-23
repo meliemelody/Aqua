@@ -16,14 +16,14 @@ namespace Aqua.Commands.Executables
 
                 case "direct":
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    return DateTime.Now.ToString("dddd M MMMM yyyy | HH:mm:ss.fff");
+                    return $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")}";
 
                 default:
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine("  Next time, please specify an argument [\"compile\" or \"direct\"].");
 
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    return DateTime.Now.ToString("dddd M MMMM yyyy | HH:mm:ss.fff");
+                    return $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")}";
             }
         }
     }

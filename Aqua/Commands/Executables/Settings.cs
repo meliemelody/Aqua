@@ -21,36 +21,75 @@ namespace Aqua.Commands.Executables
                 case "bg":
                     switch (args[1])
                     {
-                        case "blue":
+                        // Light colors
+                        case "blue" or "b":
                             Kernel.bgColor = ConsoleColor.Blue;
                             break;
 
-                        case "green":
-                            Kernel.bgColor = ConsoleColor.Green;
-                            break;
-
-                        case "red":
+                        case "red" or "r":
                             Kernel.bgColor = ConsoleColor.Red;
                             break;
 
-                        case "orange":
+                        case "yellow" or "y":
                             Kernel.bgColor = ConsoleColor.Yellow;
                             break;
 
-                        case "black":
-                            Kernel.bgColor = ConsoleColor.Black;
+                        case "green" or "g":
+                            Kernel.bgColor = ConsoleColor.Green;
                             break;
 
-                        case "white":
-                            Kernel.bgColor = ConsoleColor.White;
+                        case "magenta" or "m":
+                            Kernel.bgColor = ConsoleColor.Magenta;
                             break;
 
-                        case "cyan":
+                        case "cyan" or "c":
                             Kernel.bgColor = ConsoleColor.Cyan;
                             break;
 
+                        // Dark-toned colors
+                        case "darkblue" or "db":
+                            Kernel.bgColor = ConsoleColor.DarkBlue;
+                            break;
+
+                        case "darkgreen" or "dg":
+                            Kernel.bgColor = ConsoleColor.DarkGreen;
+                            break;
+
+                        case "darkcyan" or "dc":
+                            Kernel.bgColor = ConsoleColor.DarkCyan;
+                            break;
+
+                        case "darkmagenta" or "dm":
+                            Kernel.bgColor = ConsoleColor.DarkMagenta;
+                            break;
+
+                        case "darkred" or "dr":
+                            Kernel.bgColor = ConsoleColor.DarkRed;
+                            break;
+
+                        case "darkyellow" or "dy":
+                            Kernel.bgColor = ConsoleColor.DarkYellow;
+                            break;
+
+                        // Monochrome colors
+                        case "gray" or "g":
+                            Kernel.bgColor = ConsoleColor.Gray;
+                            break;
+
+                        case "darkgray" or "dg":
+                            Kernel.bgColor = ConsoleColor.DarkGray;
+                            break;
+
+                        case "black" or "d":
+                            Kernel.bgColor = ConsoleColor.Black;
+                            break;
+
+                        case "white" or "w":
+                            Kernel.bgColor = ConsoleColor.White;
+                            break;
+
                         default:
-                            return "Please select a correct color.";
+                            return Terminal.Terminal.DebugWrite("Please select a correct color.", 4);
                     }
                     Filesystem.Utilities.WriteLine(@"0:\AquaSys\Config\Colors.acf", args[1], false);
                     Console.Clear();
@@ -59,32 +98,71 @@ namespace Aqua.Commands.Executables
                 case "fg":
                     switch (args[1])
                     {
-                        case "blue":
+                        // Light colors
+                        case "blue" or "b":
                             Kernel.fgColor = ConsoleColor.Blue;
                             break;
 
-                        case "green":
-                            Kernel.fgColor = ConsoleColor.Green;
-                            break;
-
-                        case "red":
+                        case "red" or "r":
                             Kernel.fgColor = ConsoleColor.Red;
                             break;
 
-                        case "orange":
+                        case "yellow" or "y":
                             Kernel.fgColor = ConsoleColor.Yellow;
                             break;
 
-                        case "black":
+                        case "green" or "g":
+                            Kernel.fgColor = ConsoleColor.Green;
+                            break;
+
+                        case "magenta" or "m":
+                            Kernel.fgColor = ConsoleColor.Magenta;
+                            break;
+
+                        case "cyan" or "c":
+                            Kernel.fgColor = ConsoleColor.Cyan;
+                            break;
+
+                        // Dark-toned colors
+                        case "darkblue" or "db":
+                            Kernel.fgColor = ConsoleColor.DarkBlue;
+                            break;
+
+                        case "darkgreen" or "dg":
+                            Kernel.fgColor = ConsoleColor.DarkGreen;
+                            break;
+
+                        case "darkcyan" or "dc":
+                            Kernel.fgColor = ConsoleColor.DarkCyan;
+                            break;
+
+                        case "darkmagenta" or "dm":
+                            Kernel.fgColor = ConsoleColor.DarkMagenta;
+                            break;
+
+                        case "darkred" or "dr":
+                            Kernel.fgColor = ConsoleColor.DarkRed;
+                            break;
+
+                        case "darkyellow" or "dy":
+                            Kernel.fgColor = ConsoleColor.DarkYellow;
+                            break;
+
+                        // Monochrome colors
+                        case "gray" or "g":
+                            Kernel.fgColor = ConsoleColor.Gray;
+                            break;
+
+                        case "darkgray" or "dg":
+                            Kernel.fgColor = ConsoleColor.DarkGray;
+                            break;
+
+                        case "black" or "d":
                             Kernel.fgColor = ConsoleColor.Black;
                             break;
 
-                        case "white":
+                        case "white" or "w":
                             Kernel.fgColor = ConsoleColor.White;
-                            break;
-
-                        case "cyan":
-                            Kernel.fgColor = ConsoleColor.Cyan;
                             break;
 
                         default:
