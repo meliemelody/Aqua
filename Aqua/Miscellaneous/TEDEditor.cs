@@ -1,8 +1,7 @@
-﻿using Aqua.Terminal;
+﻿using Cosmos.Core;
 using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Aqua.Miscellaneous
 {
@@ -59,7 +58,10 @@ namespace Aqua.Miscellaneous
                         path = path.Replace("\\\\", "\\");
                     }
                     if (!File.Exists(path))
+                    {
+                        File.Create(path);
                         File.WriteAllText(path, "This is the default TED Editor message.\nTo remove every line, simply press CTRL+K.");
+                    }
 
                     Console.Clear();
                     Editor(path);
@@ -128,8 +130,16 @@ namespace Aqua.Miscellaneous
         public static void Editor(string path)
         {
             string fileContents = File.ReadAllText(path), oldFC = File.ReadAllText(path);
-            string toreturn = fileContents;
             int defaultYPos = 2;
+
+            // Draw the information and title bar.
+            DrawUpperBar(0, 0, path, oldFC, fileContents);
+
+            Console.SetCursorPosition(0, defaultYPos);
+            Console.Write(fileContents);
+
+            int cursorX = Console.CursorLeft, cursorY = Console.CursorTop;
+            Console.SetCursorPosition(cursorX, cursorY);
 
             for (; ; )
             {
@@ -139,29 +149,81 @@ namespace Aqua.Miscellaneous
                 Console.SetCursorPosition(0, defaultYPos);
                 Console.Write(fileContents);
 
-                var currentCursorPos = Console.GetCursorPosition();
-                Console.SetCursorPosition(currentCursorPos.Left, currentCursorPos.Top);
+                Console.SetCursorPosition(cursorX, cursorY);
 
                 var input = Console.ReadKey(true);
                 if (input.Key == ConsoleKey.Enter)
+                {
                     fileContents += "\n";
+                    cursorX = 0;
+                    cursorY++;
+                }
                 else if (input.Key == ConsoleKey.Backspace)
                 {
                     if (fileContents.Length != 0)
                     {
-                        fileContents = fileContents.Remove(fileContents.Length - 1, 1);
+                        // Split the input string into lines
+                        string[] lines = fileContents.Split('\n');
 
-                        if (Console.CursorLeft != 0)
+                        // Determine the line where the new text should be inserted
+                        string lineToInsert = lines[cursorY - 2];
+                        string newLine = lineToInsert.Substring(0, cursorX-1) + lineToInsert.Substring(cursorX);
+
+                        lines[cursorY - 2] = newLine;
+                        fileContents = string.Join('\n', lines);
+
+                        if (Console.CursorLeft != 1)
                         {
-                            Console.CursorLeft--;
+                            cursorX--;
+                            Console.Write("  ");
+
+                            cursorX--;
                             Console.Write(' ');
 
-                            Console.CursorLeft++;
+                            cursorX++;
                         }
                         else
                         {
-                            Console.CursorTop--;
+                            cursorX = Console.WindowWidth - 1;
+                            cursorY--;
                         }
+                    }
+                }
+                else if (input.Key == ConsoleKey.LeftArrow)
+                {
+                    if (cursorX > 0)
+                    {
+                        cursorX--;
+                        Console.CursorLeft--;
+                    }
+                }
+                else if (input.Key == ConsoleKey.RightArrow)
+                {
+                    if (cursorX < fileContents.Split('\n')[cursorY-2].Length)
+                    {
+                        cursorX++;
+                        Console.CursorLeft++;
+                    }
+                }
+                else if (input.Key == ConsoleKey.UpArrow)
+                {
+                    if (cursorY > defaultYPos)
+                    {
+                        cursorY--;
+                        Console.CursorTop--;
+
+                        if (cursorX > fileContents.Split('\n')[cursorY-2].Length)
+                            cursorX = fileContents.Split('\n')[cursorY-2].Length;
+                    }
+                }
+                else if (input.Key == ConsoleKey.DownArrow)
+                {
+                    if (cursorY < fileContents.Split('\n').Length+1)
+                    {
+                        cursorY++;
+
+                        if (cursorX > fileContents.Split('\n')[cursorY-2].Length)
+                            cursorX = fileContents.Split('\n')[cursorY-2].Length;
                     }
                 }
                 else if ((input.Modifiers & ConsoleModifiers.Control) != 0)
@@ -173,9 +235,10 @@ namespace Aqua.Miscellaneous
                     }
                     else if (input.Key == ConsoleKey.K)
                     {
-                        fileContents = " ";
+                        fileContents = "";
+                        cursorX = 0;
+                        cursorY = 0;
                         Console.Clear();
-
                         Console.SetCursorPosition(0, defaultYPos);
                     }
                     else if (input.Key == ConsoleKey.Q)
@@ -185,7 +248,19 @@ namespace Aqua.Miscellaneous
                     }
                 }
                 else
-                    fileContents += input.KeyChar;
+                {
+                    // Split the input string into lines
+                    string[] lines = fileContents.Split('\n');
+
+                    // Determine the line where the new text should be inserted
+                    string lineToInsert = lines[cursorY-2];
+                    string newLine = lineToInsert.Substring(0, cursorX) + input.KeyChar.ToString() + lineToInsert.Substring(cursorX);
+
+                    lines[cursorY-2] = newLine;
+                    fileContents = string.Join('\n', lines);
+
+                    cursorX++;
+                }
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Aqua.Commands.Executables
             switch (args[0])
             {
                 case "maze":
-                    Aqua.Games.Maze.Game(2);
+                    Aqua.Games.Maze.Game();
                     return null;
 
                 case "help":

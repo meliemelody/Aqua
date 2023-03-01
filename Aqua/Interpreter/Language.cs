@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Aqua.Commands;
+using SharpDX;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,6 +17,9 @@ namespace Aqua.Interpreter
 
     public class Language
     {
+        private const string defaultValue = "$_DEFAULT";
+        private const string nullValue = "$_NULL";
+
         private static Dictionary<string, object> variables = new Dictionary<string, object>();
 
         public Language() { }
@@ -25,8 +30,10 @@ namespace Aqua.Interpreter
                 "keywait: ",
                 "set: ",
                 "if ",
+                "while ",
                 "clear",
-                "color: "
+                "color: ",
+                "rem: "
             };
 
         public static void Run(string filePath)
@@ -83,7 +90,7 @@ namespace Aqua.Interpreter
                                 string input;
                                 ConsoleKeyInfo key;
 
-                                if (args[1].Trim() == "false")
+                                if (args[1].Trim() == "false" || args[1].Trim() == defaultValue)
                                 {
                                     input = Console.ReadLine();
                                     StoreVariable(args[0], input);
@@ -102,12 +109,12 @@ namespace Aqua.Interpreter
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Syntax error: Not enough arguments");
+                                    Console.WriteLine("Syntax error: Please input a correct argument [boolean].");
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("WARNING: Not enough arguments detected, default mode activated");
+                                Console.WriteLine("WARNING: Not enough arguments detected, default mode activated.");
                                 string input = Console.ReadLine();
                                 StoreVariable(args[0], input);
                             }
@@ -119,30 +126,86 @@ namespace Aqua.Interpreter
                             {
                                 string variableName = parts[0].Trim();
                                 string value = parts[1].Trim();
-                                StoreVariable(variableName, value);
+
+                                if (value == defaultValue)
+                                    StoreVariable(variableName, 0);
+                                else if (value == nullValue)
+                                    StoreVariable(variableName, null);
+                                else
+                                    StoreVariable(variableName, value);
                             }
                             else
                             {
-                                results.Add("Syntax error: Invalid variable assignment");
+                                results.Add("Syntax error: Invalid variable assignment.");
                             }
                             break;
 
                         case "if ":
                             // Parse the condition and the command to be executed if the condition is true
-                            string[] ifparts = text.Split(new string[] { "then " }, StringSplitOptions.RemoveEmptyEntries);
-                            if (ifparts.Length == 2)
+                            string[] ifParts = text.Split(new string[] { "then " }, StringSplitOptions.RemoveEmptyEntries);
+                            string[] orParts = ifParts[0].Split(new string[] { "or" }, StringSplitOptions.RemoveEmptyEntries);
+
+                            if (ifParts.Length == 2)
                             {
-                                string condition = ifparts[0].Trim();
-                                string command = $"{ifparts[1].Trim()};";
+                                string[] conditions = orParts;
+                                string command = $"{ifParts[1].Trim()};";
 
                                 // Evaluate the condition
-                                bool conditionResult = EvaluateCondition(condition);
+                                bool[] conditionResult = new bool[orParts.Length];
+                                for (int i = 0; i < conditions.Length; i++)
+                                    conditionResult[i] = EvaluateCondition(conditions[i]);
 
-                                //Console.WriteLine(command + " " + conditionResult);
-
-                                // If the condition is true, execute the command
-                                if (conditionResult)
+                                foreach (bool result in conditionResult)
                                 {
+                                    if (result)
+                                    {
+                                        foreach (string s in searchText)
+                                        {
+                                            if (command.StartsWith(s))
+                                            {
+                                                List<string> rel = FindInLine(command, s);
+                                                foreach (string r in rel)
+                                                {
+                                                    Console.WriteLine(r);
+                                                }
+                                            }
+                                        }
+
+                                        break;
+                                    }
+                                }
+
+                                //TODO: do else statement
+                            }
+                            else
+                            {
+                                results.Add("Syntax error: Invalid if statement.");
+                            }
+                            break;
+
+                        case "while ":
+                            string[] then = text.Split(new string[] { "do " }, StringSplitOptions.RemoveEmptyEntries);
+                            string[] whileParts = then[0].Split(new string[] { "or" }, StringSplitOptions.RemoveEmptyEntries);
+                            
+                            string cond = null;
+                            bool status = false;
+
+                            if (then.Length == 2) 
+                            {
+                                foreach (string condition in whileParts)
+                                {
+                                    status = EvaluateCondition(condition.Trim());
+
+                                    if (status)
+                                    {
+                                        cond = condition.Trim();
+                                        break;
+                                    }
+                                }
+
+                                while (EvaluateCondition(cond))
+                                {
+                                    string command = $"{then[1].Trim()};";
                                     foreach (string s in searchText)
                                     {
                                         if (command.StartsWith(s))
@@ -157,9 +220,8 @@ namespace Aqua.Interpreter
                                 }
                             }
                             else
-                            {
-                                results.Add("Syntax error: Invalid if statement");
-                            }
+                                Console.WriteLine("Syntax error: Invalid while statement.");
+
                             break;
 
                         case "clear":
@@ -236,7 +298,7 @@ namespace Aqua.Interpreter
                                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                                 break;
 
-                                            case "black" or "d":
+                                            case "black" or "d" or defaultValue:
                                                 Console.ForegroundColor = ConsoleColor.Black;
                                                 break;
 
@@ -316,7 +378,7 @@ namespace Aqua.Interpreter
                                                 Console.BackgroundColor = ConsoleColor.Black;
                                                 break;
 
-                                            case "white" or "w":
+                                            case "white" or "w" or defaultValue:
                                                 Console.BackgroundColor = ConsoleColor.White;
                                                 break;
 
@@ -333,6 +395,9 @@ namespace Aqua.Interpreter
                             }
                             else
                                 Console.WriteLine("Syntax error: Not enough arguments");
+                            break;
+
+                        case "rem: ":
                             break;
                     }
                 }

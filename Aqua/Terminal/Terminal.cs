@@ -6,6 +6,15 @@ namespace Aqua.Terminal
     {
         public Terminal() { }
 
+        /// <summary>
+        /// It writes a message to the console with a timestamp and a prefix
+        /// </summary>
+        /// <param name="msg">The message you want to display</param>
+        /// <param name="mode">0 = Debug, 1 = Kernel, 2 = Success, 3 = Warning, 4 = Error, 5 = Critical,
+        /// 6 = Information</param>
+        /// <returns>
+        /// A string.
+        /// </returns>
         public static String DebugWrite(String msg, int mode)
         {
             Console.Write("  ");

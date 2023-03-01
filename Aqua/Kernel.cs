@@ -1,4 +1,5 @@
-﻿using Aqua.Commands;
+﻿/* The kernel of Aqua. */
+using Aqua.Commands;
 using Aqua.Terminal.Accounts;
 
 using Cosmos.HAL.Drivers.PCI.Audio;
@@ -19,6 +20,9 @@ using Cosmos.Core.Memory;
 using Cosmos.System.Graphics;
 using IL2CPU.API.Attribs;
 using Cosmos.System.ScanMaps;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace Aqua
 {
@@ -28,7 +32,7 @@ namespace Aqua
         public static CosmosVFS fs;
 
         public static bool isRoot, guiStarted, isNetworkConnected;
-        public static string currentDirectory = "0:\\", currentAccount;
+        public static string currentDirectory = "0:\\";
 
         public static AudioMixer mixer;
         public static AC97 audioDriver;
@@ -37,8 +41,9 @@ namespace Aqua
         public static ConsoleColor bgColor = ConsoleColor.Black;
         public static ConsoleColor fgColor = ConsoleColor.White;
 
-        public static Canvas canvas;
+        public static int currentTabIndex;
 
+        public static Canvas canvas;
         public static string time;
 
         [ManifestResourceStream(ResourceName = "Aqua.Fonts.zap-ext-vga09.psf")] public static byte[] font;
@@ -109,6 +114,7 @@ namespace Aqua
                     term.DebugWrite(ex.ToString(), 4);
                 }
 
+                /* Calling the WriteReadme method of the Readme class in the Miscellaneous namespace. */
                 Miscellaneous.Readme.WriteReadme();
             }
             else
@@ -116,26 +122,37 @@ namespace Aqua
                 term.DebugWrite("Your emulator/virtualizer does not support the VFS.", 4);
             }
 
+            /* Clearing the screen. */
             Cosmos.HAL.Global.PIT.Wait(750);
             Console.Clear();
         }
 
+        /// <summary>
+        /// Checks if a file exists, if it does, it reads the content of the file and sets the
+        /// keyboard layout accordingly
+        /// </summary>
         public void CheckKeyboardLayout()
         {
+            /* Checking if the file exists. */
             if (System.IO.File.Exists(@"0:\AquaSys\Config\KeyMap.acf"))
             {
+                /* Reading the content of the file KeyMap.acf and then it is setting the keyboard
+                layout based on the content of the file. */
                 var content = System.IO.File.ReadAllText(@"0:\AquaSys\Config\KeyMap.acf");
 
                 switch (content)
                 {
+                    /* Setting the keyboard layout to US_Standard. */
                     case "us":
                         KeyboardManager.SetKeyLayout(new US_Standard());
                         break;
 
+                    /* Setting the keyboard layout to the French keyboard layout. */
                     case "fr":
                         KeyboardManager.SetKeyLayout(new FR_Standard());
                         break;
 
+                    /* Setting the keyboard layout to the German Standard layout. */
                     case "de":
                         KeyboardManager.SetKeyLayout(new DE_Standard());
                         break;
@@ -151,13 +168,16 @@ namespace Aqua
         // It is used to initiate drivers, the filesystem, check if this run is the first run, and set settings.
         protected override void BeforeRun()
         {
+            /* Setting the size of the console window to 90x60. */
             Console.SetWindowSize(90, 60);
 
+            // /* Loading a font into the operating system. */
             var f = PCScreenFont.LoadFont(font);
             VGAScreen.SetFont(f.CreateVGAFont(), f.Height);
 
             try
             {
+                /* Registering the CosmosVFS with the VFSManager. */
                 fs = new CosmosVFS();
                 VFSManager.RegisterVFS(fs);
                 System.IO.Directory.SetCurrentDirectory(currentDirectory);
@@ -186,6 +206,7 @@ namespace Aqua
 
             Cosmos.HAL.Global.PIT.Wait(750);
             LoginSystem.Start();
+            currentTabIndex = 0;
         }
 
         protected override void Run()
@@ -217,7 +238,7 @@ namespace Aqua
         {
             // Change the text color to Dark Green.
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write(currentDirectory);
+            Console.Write($"{currentDirectory}");
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("$=> ");
@@ -239,6 +260,7 @@ namespace Aqua
         public static void DrawBar()
         {
             //var time = DateTime.Now.ToString("HH:mm");
+            /* Drawing the top bar of the console. */
             var developmentStatus = "Alpha | Milestone 2";
 
             time = $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}";
@@ -248,6 +270,8 @@ namespace Aqua
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.White;
 
+            /* Setting the cursor position to the top left of the console window, then it is writing a
+            space to the console window for the width of the console window. */
             Console.SetCursorPosition(0, 0);
             for (int i = 0; i < Console.WindowWidth; i++) Console.Write(' ');
 
@@ -256,6 +280,8 @@ namespace Aqua
 
             DrawTime(time);
 
+            /* Setting the cursor position to the bottom right of the console window and writing the
+            development status. */
             Console.SetCursorPosition(Console.WindowWidth - developmentStatus.Length, 0);
             Console.Write(developmentStatus);
 
@@ -290,6 +316,7 @@ namespace Aqua
                 {
                     term.DebugWrite("Setting up the audio drivers...", 0);
 
+                    /* Initializing the audio driver and mixer. */
                     audioDriver = AC97.Initialize(bufferSize: 4096);
                     mixer = new AudioMixer();
 
@@ -330,6 +357,8 @@ namespace Aqua
                 "Alpha | Milestone 2\n"
             };
 
+            /* Setting the cursor position to the center of the console window, then writing the
+            version info. */
             Console.SetCursorPosition((Console.WindowWidth / 2) - (versionInfo.Length / 2) - 1, Console.CursorTop);
 
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -343,18 +372,10 @@ namespace Aqua
 
             cursorPos = Console.GetCursorPosition();
 
+            /* Checking if the machine is not a VMWare virtual machine. If it isn't, it will play the logon
+            sound. */
             if (!VMTools.IsVMWare)
                 Sounds.Sounds.LogonSound();
-
-            // Surprise tool that will help us later.
-            /*Random rnd = new Random();
-
-            int number = rnd.Next(250);
-            string decryptedKey = KeyDecryption.DecryptKey(
-                ProductKeys.EncryptedKeys[number]
-            );
-
-            Console.WriteLine(decryptedKey);*/
         }
     }
 }

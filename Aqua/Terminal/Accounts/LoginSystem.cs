@@ -13,6 +13,9 @@ namespace Aqua.Terminal.Accounts
         public static String username, password;
         static int count = 0;
 
+        /// <summary>
+        /// It checks if the folder exists, if it doesn't, it creates it
+        /// </summary>
         public static void Start()
         {
             FolderCheck();
@@ -34,6 +37,9 @@ namespace Aqua.Terminal.Accounts
                 GetUsername();
         }
 
+        /// <summary>
+        /// It writes a string to the console
+        /// </summary>
         private static void LogString()
         {
             String logString;
@@ -49,6 +55,9 @@ namespace Aqua.Terminal.Accounts
             Console.WriteLine(logString);
         }
 
+        /// <summary>
+        /// If the directory doesn't exist, create it
+        /// </summary>
         private static void FolderCheck()
         {
             if (!Directory.Exists(@"0:\AquaSys"))
@@ -95,6 +104,9 @@ namespace Aqua.Terminal.Accounts
             }
         }
 
+        /// <summary>
+        /// It creates a file called Password.acf and writes the encrypted password to it
+        /// </summary>
         public static void SetPassword()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -111,6 +123,10 @@ namespace Aqua.Terminal.Accounts
             SetRoot();
         }
 
+        /// <summary>
+        /// It asks the user if they want to be root, and if they do, it writes "true" to a file, and if
+        /// they don't, it writes "false" to a file
+        /// </summary>
         private static void SetRoot()
         {
             Console.ForegroundColor = ConsoleColor.Gray;

@@ -21,10 +21,8 @@ namespace Aqua.Commands.Executables
             Console.WriteLine();
             if (input.Key == ConsoleKey.Y)
                 return Miscellaneous.TEDEditor.Run(args);
-
             else if (input.Key == ConsoleKey.N)
                 return Miscellaneous.Compatibility.TextEditor.Run(args);
-
             else
                 return Terminal.Terminal.DebugWrite("Please input \"y\" or \"n\".", 4);
         }

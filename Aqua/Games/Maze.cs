@@ -5,6 +5,8 @@ using static System.Console;
 
 namespace Aqua.Games
 {
+    /* The Player class is a class that contains the player's x and y coordinates, the player's marker,
+    the player's color, the player's wins, and the player's coins */
     public class Player
     {
         public int x { get; set; }
@@ -16,6 +18,7 @@ namespace Aqua.Games
         public int wins { get; set; } = 0;
         public int coins { get; set; } = 0;
 
+        /* The above code is creating a constructor for the Player class. */
         public Player(int x, int y, string playerMarker, ConsoleColor playerColor)
         {
             this.x = x;
@@ -32,6 +35,11 @@ namespace Aqua.Games
             Write(playerMarker);
         }
 
+        /// <summary>
+        /// It moves the player and the enemy
+        /// </summary>
+        /// <param name="Player">The player object</param>
+        /// <param name="mode">0 = left, 1 = right, 2 = up, 3 = down</param>
         public void Movement(Player player, int mode)
         {
             SetCursorPosition(player.x, player.y);
@@ -56,7 +64,7 @@ namespace Aqua.Games
                     break;
             }
 
-            Maze.enemy.Move();
+            Maze.enemy.Move(player);
         }
     }
 
@@ -79,35 +87,78 @@ namespace Aqua.Games
             Write("0");
         }
 
-        public void Move()
+        public void Move(Player player)
         {
-            Random random = new Random();
-            int direction = random.Next(0, 4);
-
             SetCursorPosition(x, y);
-            Write(' ');
 
-            switch (direction)
+            if (Maze.world.grid[y][x] == ".")
             {
-                case 0:
-                    if (Maze.world.CheckEnemyCollisions(x-1, y)) x--;
-                    break;
-                case 1:
-                    if (Maze.world.CheckEnemyCollisions(x+1, y)) x++;
-                    break;
-                case 2:
-                    if (Maze.world.CheckEnemyCollisions(x, y-1)) y--;
-                    break;
-                case 3:
-                    if (Maze.world.CheckEnemyCollisions(x, y+1)) y++;
-                    break;
+                ForegroundColor = ConsoleColor.Yellow;
+                Write('.');
             }
+            else
+                Write(' ');
+
+            // Compute new position of enemy
+            int newX = x;
+            int newY = y;
+
+            // Calculate distance between current enemy position and player position
+            int dx = player.x - x;
+            int dy = player.y - y;
+
+            // Determine which direction to move in based on the relative position of the player
+            if (Math.Abs(dx) > Math.Abs(dy))
+            {
+                if (dx < 0 && Maze.world.CheckEnemyCollisions(newX - 1, newY))
+                {
+                    newX--;
+                }
+                else if (dx > 0 && Maze.world.CheckEnemyCollisions(newX + 1, newY))
+                {
+                    newX++;
+                }
+                else if (dy < 0 && Maze.world.CheckEnemyCollisions(newX, newY - 1))
+                {
+                    newY--;
+                }
+                else if (dy > 0 && Maze.world.CheckEnemyCollisions(newX, newY + 1))
+                {
+                    newY++;
+                }
+            }
+            else
+            {
+                if (dy < 0 && Maze.world.CheckEnemyCollisions(newX, newY - 1))
+                {
+                    newY--;
+                }
+                else if (dy > 0 && Maze.world.CheckEnemyCollisions(newX, newY + 1))
+                {
+                    newY++;
+                }
+                else if (dx < 0 && Maze.world.CheckEnemyCollisions(newX - 1, newY))
+                {
+                    newX--;
+                }
+                else if (dx > 0 && Maze.world.CheckEnemyCollisions(newX + 1, newY))
+                {
+                    newX++;
+                }
+            }
+
+            // Update enemy position
+            x = newX;
+            y = newY;
+
+            // Redraw enemy
+            Draw();
         }
     }
 
     public class World
     {
-        private List<List<string>> grid = new List<List<string>>() { };
+        public List<List<string>> grid = new List<List<string>>() { };
         private int rows, cols;
 
         public World(int rows, int cols)
@@ -207,8 +258,11 @@ namespace Aqua.Games
             }
             else if (grid[y][x] == "X" && Maze.rand > player.coins)
                 return false;
-            else if (x == Maze.enemy.x && y == Maze.enemy.y)
+            else if (grid[y][x] == "0")
+            {
+                Maze.Regenerate(player, Maze.world);
                 return false;
+            }
 
             return grid[y][x] == " ";
         }
@@ -217,6 +271,8 @@ namespace Aqua.Games
         {
             if (x == 0 || x == this.cols - 1 || y == 0 || y == this.rows - 1)
                 return false;
+            else if (grid[y][x] == ".")
+                return true;
 
             return grid[y][x] == " ";
         }
@@ -260,6 +316,8 @@ namespace Aqua.Games
             ForegroundColor = ConsoleColor.Cyan;
             Write("You need ");
 
+            /* Checking if the random number is greater than the player's coins. If it is, it will
+            display the difference between the two. If it is not, it will display 0. */
             ForegroundColor = ConsoleColor.White;
             if ((rand - player.coins) > 0)
                 Write($"{rand - player.coins} ");
@@ -366,32 +424,14 @@ namespace Aqua.Games
             player.y = 1;
             player.coins = 0;
             rand = random.Next(25, 75);
-
-            posMode = random.Next(0, 2);
-            switch (posMode)
-            {
-                case 0:
-                    enemy = new(width - 2, height - 2);
-                    break;
-
-                case 1:
-                    enemy = new(2, height - 2);
-                    break;
-
-                case 2:
-                    enemy = new(width - 2, 2);
-                    break;
-            }
+            RegenerateEnemy();
 
             drawnWorld = world.Draw();
         }
 
-        public static void Game(int difficulty)
+        private static void RegenerateEnemy()
         {
-            Random random = new Random();
-            Clear();
-
-            posMode = random.Next(0, 2);
+            posMode = random.Next(0, 3);
             switch (posMode)
             {
                 case 0:
@@ -399,16 +439,26 @@ namespace Aqua.Games
                     break;
 
                 case 1:
-                    enemy = new(2, height - 2);
+                    enemy = new(1, height - 2);
                     break;
 
-                case 2:
-                    enemy = new(width - 2, 2);
+                default:
+                    enemy = new(width - 2, 1);
                     break;
             }
+        }
+
+        public static void Game()
+        {
+            Clear();
+
+            RegenerateEnemy();
 
             while (running)
             {
+                if (player.x == enemy.x && player.y == enemy.y)
+                    Maze.Regenerate(player, Maze.world);
+
                 Draw(world, player, drawnWorld);
                 HandleInput(player, world);
             }
