@@ -6,7 +6,7 @@ using System.Linq;
 namespace Aqua.Miscellaneous
 {
     /*
-     * Project Renaissance
+     * Project Avalanche
      * Source code by ipluxteamx.
      * Software for Aqua System 0.2.1
      * 
