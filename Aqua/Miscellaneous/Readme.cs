@@ -123,11 +123,8 @@ Bugs to fix :
 Future features :
 
 - Graphic File Manager on the terminal.
-- Implement tabs for multiple terminal instances.
 - ACF files finally being useful : text coloring using tags, fonts, etc...
-- Package Manager revamp.
-- A new activation system.
-- Games [Snake, Pong, Doom, etc...]
+- Package Manager revamp. [Almost done]
 - Perhaps more..? ;]
 
 ------------------------------------------------------------------------------------
