@@ -160,7 +160,7 @@ namespace Aqua.Miscellaneous
                 }
                 else if (input.Key == ConsoleKey.Backspace)
                 {
-                    if (fileContents.Length != 0)
+                    if (fileContents.Length != 0 || cursorX > 1)
                     {
                         // Split the input string into lines
                         string[] lines = fileContents.Split('\n');

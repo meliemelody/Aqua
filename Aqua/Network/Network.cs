@@ -10,6 +10,8 @@ using term = Aqua.Terminal.Terminal;
 using Cosmos.System.Network.IPv4.UDP.DNS;
 using PrismNetwork;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Aqua.Network
 {
@@ -82,11 +84,6 @@ namespace Aqua.Network
             return newurl;
         }
     }
-    enum HTTPRequest
-    {
-        GET = 0,
-        POST = 1,
-    }
 
     public class Network
     {
@@ -103,75 +100,6 @@ namespace Aqua.Network
 
             Kernel.isNetworkConnected = true;
         }
-
-        public static string Get(string address, string port, string message)
-        {
-            // Thank you Verde for the Package Manager code ! :]
-            // This will be refactored in release 0.3
-
-            /* This features a TCP connection
-                network initialization is needed*/
-
-            // Parse arguments
-            Address add = Address.Parse(address);
-            int destPort = Int32.Parse(port);
-
-            // Base local port = 4242
-            Console.WriteLine("Connection to destination host...");
-            using var xClient = new TcpClient(destPort); // Ports should be corresponding
-            xClient.Connect(add, destPort);
-
-            // Send data
-            Console.WriteLine("Sending request...");
-            xClient.Send(Encoding.ASCII.GetBytes(message));
-
-            // Receive data
-            var endpoint = new EndPoint(Address.Zero, 0);
-            Console.WriteLine("EndPoint set");
-
-            var data = xClient.Receive(ref endpoint);  //set endpoint to remote machine IP:port
-            Console.WriteLine("Received!");
-
-            return Encoding.UTF8.GetString(data);
-        }
-
-        public static void DownloadFile(Address address, string filename)
-        {
-            try
-            {
-                var tcpClient = new TcpClient(80);
-
-                tcpClient.Connect(address, 80);
-
-                string httpget = "GET / HTTP/1.1\r\n" +
-                                 "User-Agent: Wget (CosmosOS)\r\n" +
-                                 "Accept: */*\r\n" +
-                                 "Accept-Encoding: identity\r\n" +
-                                 "Host: " + address + "\r\n" +
-                                 "Connection: Keep-Alive\r\n\r\n";
-
-                tcpClient.Send(Encoding.ASCII.GetBytes(httpget));
-
-                var ep = new EndPoint(Address.Zero, 0);
-                var data = tcpClient.Receive(ref ep);
-                Console.WriteLine(data);
-
-                tcpClient.Close();
-
-                string httpresponse = Encoding.ASCII.GetString(data);
-
-                Console.WriteLine(httpresponse);
-
-                if (httpresponse != null)
-                    File.WriteAllText(filename, httpresponse);
-                else
-                    Console.WriteLine("no");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex);
-            }
-        }
     }
 
     public class PackageManager : Command
@@ -180,8 +108,23 @@ namespace Aqua.Network
 
         public override string Execute(string[] args)
         {
-            //return Install(args[0], args[1], args[2]);
-            return Network.Get(args[0], args[1], args[2]);
+            try
+            {
+                WebClient wc = new WebClient(args[0]);
+                Random random = new Random();
+                string path = $"0:\\temp-{random.Next(100, 999)}.txt";
+
+                byte[] fileData = wc.DownloadFile();
+
+                using (FileStream fileStream = new(path, FileMode.Create))
+                    fileStream.Write(fileData, 0, fileData.Length);
+
+                return term.DebugWrite($"File downloaded successfully at \"{path}\".", 4);
+            }
+            catch (Exception e)
+            {
+                return term.DebugWrite("Error downloading file: " + e.Message, 4);
+            }
         }
     }
 

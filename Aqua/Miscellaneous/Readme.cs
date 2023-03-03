@@ -87,6 +87,7 @@ Additions :
 - Brand new programming language for custom executables.
 - New game [""maze""].
 - Ability to change your keyboard layout.
+- Tabs (not fully functionnal yet).
 
 0.2.1 :
 - An option to re-enter your username after 3 password attempts.

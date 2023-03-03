@@ -9,7 +9,11 @@ namespace Aqua.Commands.Executables
         public override string Execute(string[] args)
         {
             Console.Clear();
-            return "";
+
+            if (Kernel.tabBarVisible)
+                Console.WriteLine();
+
+            return null;
         }
     }
 }

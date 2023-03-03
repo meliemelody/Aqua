@@ -21,26 +21,82 @@ using Cosmos.System.Graphics;
 using IL2CPU.API.Attribs;
 using Cosmos.System.ScanMaps;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.IO;
 
 namespace Aqua
 {
+    public class Tab
+    {
+        public int Index { get; set; }
+        public string Name { get; set; }
+
+        public byte[] bytes { get; set; }
+
+        public Tab(int tabNumber, string name)
+        {
+            this.Index = tabNumber;
+            this.Name = name;
+        }
+
+        public static void Add(string name)
+        {
+            Kernel.tabs.Add(new Tab(Kernel.tabs.Count, name));
+        }
+
+        public static void Change(int index)
+        {
+            if (Kernel.tabs[index] != null)
+            {
+                try
+                {
+                    Kernel.currentTabIndex = index;
+                    Console.Clear();
+
+                    if (Kernel.tabBarVisible)
+                        Console.WriteLine();
+                }
+                catch (Exception ex)
+                {
+                    term.DebugWrite(ex.ToString(), 4);
+                }
+            }
+            else
+                term.DebugWrite("Index not valid.", 4);
+        }
+
+        public static void Delete(int index)
+        {
+            if (Kernel.tabs[index] != null && Kernel.currentTabIndex != index)
+            {
+                try
+                {
+                    string name = Kernel.tabs[index].Name;
+                    Kernel.tabs.Remove(Kernel.tabs[index]);
+
+                    term.DebugWrite($"Successfully deleted the tab: {name}.", 2);
+                }
+                catch (Exception e)
+                {
+                    term.DebugWrite(e.ToString(), 4);
+                }
+            }
+        }
+    }
+
     public class Kernel : Sys.Kernel
     {
         private Manager _commandManager = new Manager();
         public static CosmosVFS fs;
 
-        public static bool isRoot, guiStarted, isNetworkConnected;
+        public static bool isRoot, guiStarted, isNetworkConnected, tabBarVisible;
         public static string currentDirectory = "0:\\";
 
         public static AudioMixer mixer;
         public static AC97 audioDriver;
         public static AudioManager audioManager;
 
-        public static ConsoleColor bgColor = ConsoleColor.Black;
-        public static ConsoleColor fgColor = ConsoleColor.White;
+        public static ConsoleColor bgColor = ConsoleColor.Black, fgColor = ConsoleColor.White;
 
+        public static List<Tab> tabs = new List<Tab>();
         public static int currentTabIndex;
 
         public static Canvas canvas;
@@ -204,11 +260,15 @@ namespace Aqua
 
             isNetworkConnected = false;
 
+            currentTabIndex = 0;
+            tabs.Add(new Tab(0, "Default"));
+
             Cosmos.HAL.Global.PIT.Wait(750);
             LoginSystem.Start();
-            currentTabIndex = 0;
-        }
 
+            tabBarVisible = true;
+        }
+        
         protected override void Run()
         {
             //Console.WriteLine($"Collected : {Heap.Collect()} objects.");
@@ -223,6 +283,10 @@ namespace Aqua
                 // Draw the upper bar, with the time, name of the OS and version.
                 // I need to find a way to update it while still being able to use the shell, and vice-versa.
                 DrawBar();
+
+                // Draw the upper bar, but this time, it shows the current tabs that are open.
+                if (tabBarVisible)
+                    DrawTabBar();
 
                 // The main shell, source of almost all my problems.
                 AquaShell();
@@ -251,6 +315,9 @@ namespace Aqua
             // Listen for input, then respond to that input accordingly using the command manager.
             string response;
             string input = Console.ReadLine();
+
+            /*if (tabs[currentTabIndex] != null)
+                tabs[currentTabIndex].AddLine($"{currentDirectory}$=> {input}");*/
 
             response = _commandManager.ProcessInput(input);
 
@@ -284,6 +351,36 @@ namespace Aqua
             development status. */
             Console.SetCursorPosition(Console.WindowWidth - developmentStatus.Length, 0);
             Console.Write(developmentStatus);
+
+            Console.SetCursorPosition(cursorPos.Left, cursorPos.Top);
+            Console.BackgroundColor = bgColor;
+            Console.ForegroundColor = fgColor;
+        }
+
+        public static void DrawTabBar()
+        {
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.Black;
+
+            Console.SetCursorPosition(0, 1);
+            for (int i = 0; i < Console.WindowWidth; i++) Console.Write(' ');
+
+            Console.SetCursorPosition(0, 1);
+            foreach (Tab tab in tabs)
+            {
+                if (tab.Index == currentTabIndex)
+                {
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                }
+
+                Console.Write($"[ {tab.Index} | {(tab.Index == currentTabIndex ? "> " : "")}{tab.Name} ]");
+            }
 
             Console.SetCursorPosition(cursorPos.Left, cursorPos.Top);
             Console.BackgroundColor = bgColor;
@@ -338,7 +435,9 @@ namespace Aqua
             }
 
             DrawBar();
-            Console.SetCursorPosition(0, 1);
+            DrawTabBar();
+
+            Console.SetCursorPosition(0, 2);
 
             // Introduction
             string welcome = "Welcome to the world of Aqua.";
