@@ -357,6 +357,9 @@ namespace Aqua
             Console.ForegroundColor = fgColor;
         }
 
+        /// <summary>
+        /// It draws a tab bar.
+        /// </summary>
         public static void DrawTabBar()
         {
             Console.BackgroundColor = ConsoleColor.Gray;
@@ -369,15 +372,10 @@ namespace Aqua
             foreach (Tab tab in tabs)
             {
                 if (tab.Index == currentTabIndex)
-                {
-                    Console.BackgroundColor = ConsoleColor.Blue;
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
+                    Console.BackgroundColor = ConsoleColor.Green;
                 else
-                {
+                    /* Changing the background color of the console to gray. */
                     Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                }
 
                 Console.Write($"[ {tab.Index} | {(tab.Index == currentTabIndex ? "> " : "")}{tab.Name} ]");
             }

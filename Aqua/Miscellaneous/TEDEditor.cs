@@ -181,6 +181,7 @@ namespace Aqua.Miscellaneous
                             Console.Write(' ');
 
                             cursorX++;
+                            Console.Write(' ');
                         }
                         else
                         {

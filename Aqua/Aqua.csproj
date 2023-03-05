@@ -24,7 +24,7 @@
         <VMWareEdition>Workstation</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>False</DebugEnabled>
+	  <DebugEnabled>True</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>
@@ -35,7 +35,7 @@
 	  <TraceMode>All</TraceMode>
 	  <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
 	  <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
-	  <EnableGDB>True</EnableGDB>
+	  <EnableGDB>False</EnableGDB>
 	  <CompileVBEMultiboot>False</CompileVBEMultiboot>
     </PropertyGroup>
 
@@ -125,5 +125,4 @@
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
       <Exec Command="cd Miscellaneous&#xD;&#xA;echo using System; &gt; CompileTime.cs&#xD;&#xA;echo namespace Aqua.Miscellaneous { &gt;&gt; CompileTime.cs&#xD;&#xA;echo     static class Compilation { &gt;&gt; CompileTime.cs&#xD;&#xA;echo         public static readonly string Date = @&quot;%25date%25&quot;; &gt;&gt; CompileTime.cs&#xD;&#xA;echo         public static readonly string Time = @&quot;%25time%25&quot;; &gt;&gt; CompileTime.cs&#xD;&#xA;echo     } &gt;&gt; CompileTime.cs&#xD;&#xA;echo } &gt;&gt; CompileTime.cs&#xD;&#xA;" />
     </Target>
-
 </Project>
