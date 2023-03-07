@@ -20,11 +20,11 @@ namespace Aqua.Interface
         {
             if (_selected == true)
             {
-                _parent.DrawText("<" + Text + ">", X, Y, Utils.COL_BUTTON_SELECTED, Utils.COL_BUTTON_TEXT);
+                _parent.DrawText("[" + Text + "]", X, Y, Utils.COL_BUTTON_SELECTED, Utils.COL_BUTTON_TEXT);
                 _parent.SetCursorPos(X, Y);
             }
             else
-                _parent.DrawText("<" + Text + ">", X, Y, Utils.COL_BUTTON_DEFAULT, Utils.COL_BUTTON_TEXT);
+                _parent.DrawText("[" + Text + "]", X, Y, Utils.COL_BUTTON_DEFAULT, Utils.COL_BUTTON_TEXT);
         }
     }
 }

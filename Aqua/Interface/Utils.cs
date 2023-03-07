@@ -9,8 +9,8 @@ namespace Aqua.Interface
     public class Utils
     {
         public const ConsoleColor COL_BUTTON_DEFAULT = ConsoleColor.Gray;
-        public const ConsoleColor COL_BUTTON_SELECTED = ConsoleColor.Black;
-        public const ConsoleColor COL_BUTTON_TEXT = ConsoleColor.White;
+        public const ConsoleColor COL_BUTTON_SELECTED = ConsoleColor.White;
+        public const ConsoleColor COL_BUTTON_TEXT = ConsoleColor.Black;
         public const ConsoleColor COL_WINDOW_ACTIVE = ConsoleColor.White;
         public const ConsoleColor COL_WINDOW_INACTIVE = ConsoleColor.Gray;
 

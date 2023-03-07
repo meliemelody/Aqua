@@ -78,6 +78,7 @@
         <PackageReference Include="Cosmos.Coroutines" Version="1.0.0" />
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+        <PackageReference Include="CosmosColor" Version="2.0.0" />
         <PackageReference Include="CosmosFtpServer" Version="1.0.2" />
         <PackageReference Include="ManagedSoftwareExecution" Version="1.2.2" />
         <PackageReference Include="SharpDX" Version="4.2.0" />

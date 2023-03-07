@@ -99,14 +99,13 @@ namespace Aqua.Interface
         {
             Inputs = new List<input>();
             _title = title;
+
             if (width < title.Length + 2)
-            {
                 width = title.Length + 2;
-            }
+
             if (height < 10)
-            {
                 height = 10;
-            }
+
             _width = width;
             _height = height;
             _x = x;

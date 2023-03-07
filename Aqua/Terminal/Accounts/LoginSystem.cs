@@ -1,4 +1,4 @@
-﻿using Aqua.Commands.Executables;
+﻿using Aqua.Interface;
 using Aqua.Miscellaneous;
 using System;
 using System.IO;
@@ -10,7 +10,7 @@ namespace Aqua.Terminal.Accounts
 {
     public class LoginSystem
     {
-        public static String username, password;
+        public static string username, password;
         static int count = 0;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Aqua.Terminal.Accounts
             FolderCheck();
 
             // Introduction
-            String welcome = "Welcome to the world of Aqua.";
+            string welcome = "Welcome to the world of Aqua.";
 
             // Center the cursor position
             Console.SetCursorPosition((Console.WindowWidth / 2) - (welcome.Length / 2) - 2, Console.CursorTop);
@@ -35,6 +35,11 @@ namespace Aqua.Terminal.Accounts
                 SetUsername();
             else
                 GetUsername();
+
+            PopupWindow popupWindow = new("testing");
+            popupWindow.Draw();
+
+            popupWindow.WaitForInput();
         }
 
         /// <summary>

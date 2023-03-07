@@ -22,6 +22,9 @@ using IL2CPU.API.Attribs;
 using Cosmos.System.ScanMaps;
 using System.Collections.Generic;
 
+using PrismTools;
+using System.IO;
+
 namespace Aqua
 {
     public class Tab
@@ -29,7 +32,7 @@ namespace Aqua
         public int Index { get; set; }
         public string Name { get; set; }
 
-        public byte[] bytes { get; set; }
+        public List<string> Screen { get; set; }
 
         public Tab(int tabNumber, string name)
         {
@@ -44,15 +47,22 @@ namespace Aqua
 
         public static void Change(int index)
         {
-            if (Kernel.tabs[index] != null)
+            Type type = Type.GetType("Aqua.Tab");
+            if (Kernel.tabs[index].GetType() == type)
             {
                 try
                 {
+                    Kernel.tabs[Kernel.currentTabIndex].Screen = Kernel.textStorage;
+
                     Kernel.currentTabIndex = index;
+                    Kernel.textStorage.Clear();
                     Console.Clear();
 
                     if (Kernel.tabBarVisible)
                         Console.WriteLine();
+
+                    for (int i = 0; i < Kernel.tabs[index].Screen.Count; i++)
+                        Console.WriteLine(Kernel.tabs[index].Screen[i]);
                 }
                 catch (Exception ex)
                 {
@@ -87,7 +97,7 @@ namespace Aqua
         private Manager _commandManager = new Manager();
         public static CosmosVFS fs;
 
-        public static bool isRoot, guiStarted, isNetworkConnected, tabBarVisible;
+        public static bool isRoot, guiStarted, isNetworkConnected, tabBarVisible = false;
         public static string currentDirectory = "0:\\";
 
         public static AudioMixer mixer;
@@ -107,9 +117,10 @@ namespace Aqua
         //public static PCScreenFont Font = PCScreenFont.Default;
         //public static byte[] FontVga;
 
-        public static string version = "0.3.0";
+        public static string version = "0.3.1";
 
         public static (int Left, int Top) cursorPos;
+        public static List<string> textStorage = new List<string>();
 
         // This is the "Setup" function, executed if the run is the first run ever.
         public void FirstRun()
@@ -265,8 +276,6 @@ namespace Aqua
 
             Cosmos.HAL.Global.PIT.Wait(750);
             LoginSystem.Start();
-
-            tabBarVisible = true;
         }
         
         protected override void Run()
@@ -321,7 +330,8 @@ namespace Aqua
 
             response = _commandManager.ProcessInput(input);
 
-            Console.WriteLine("  " + response + "\n");
+            Console.WriteLine($"  {response}\n");
+            textStorage.Add($"  {response}\n");
         }
 
         public static void DrawBar()
