@@ -443,9 +443,9 @@ namespace Aqua
             }
 
             DrawBar();
-            DrawTabBar();
+            // DrawTabBar();
 
-            Console.SetCursorPosition(0, 2);
+            Console.SetCursorPosition(0, 1);
 
             // Introduction
             string welcome = "Welcome to the world of Aqua.";

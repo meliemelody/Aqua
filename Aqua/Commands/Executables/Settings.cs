@@ -165,25 +165,35 @@ namespace Aqua.Commands.Executables
                     return null;
 
                 case "keymap":
-                    switch (args[1])
+                    try
                     {
-                        case "us":
-                            Cosmos.System.KeyboardManager.SetKeyLayout(new US_Standard());
-                            break;
+                        switch (args[1])
+                        {
+                            case "us":
+                                Cosmos.System.KeyboardManager.SetKeyLayout(new US_Standard());
+                                break;
 
-                        case "fr":
-                            Cosmos.System.KeyboardManager.SetKeyLayout(new FR_Standard());
-                            break;
+                            case "fr":
+                                Cosmos.System.KeyboardManager.SetKeyLayout(new FR_Standard());
+                                break;
 
-                        case "de":
-                            Cosmos.System.KeyboardManager.SetKeyLayout(new DE_Standard());
-                            break;
+                            case "de":
+                                Cosmos.System.KeyboardManager.SetKeyLayout(new DE_Standard());
+                                break;
 
-                        default:
-                            return Terminal.Terminal.DebugWrite("Please select a correct key mapping.", 4);
+                            default:
+                                return Terminal.Terminal.DebugWrite("Please select a correct key mapping.", 4);
+                        }
+                        if (!System.IO.Directory.Exists(@"0:\AquaSys\Config"))
+                            System.IO.Directory.CreateDirectory(@"0:\AquaSys\Config");
+
+                        System.IO.File.WriteAllText(@"0:\AquaSys\Config\KeyMap.acf", args[1]);
+                        return Terminal.Terminal.DebugWrite($"Successfully set the keyboard to \"{args[1]}\".", 2);
                     }
-                    System.IO.File.WriteAllText(@"0:\AquaSys\Config\KeyMap.acf", args[1]);
-                    return Terminal.Terminal.DebugWrite($"Successfully set the keyboard to \"{args[1]}\".", 2);
+                    catch (Exception e) 
+                    {
+                        return Terminal.Terminal.DebugWrite(e.ToString(), 4);
+                    }
 
                 default:
                     return Terminal.Terminal.DebugWrite("Specify a correct argument.\n", 4);

@@ -35,11 +35,6 @@ namespace Aqua.Terminal.Accounts
                 SetUsername();
             else
                 GetUsername();
-
-            PopupWindow popupWindow = new("testing");
-            popupWindow.Draw();
-
-            popupWindow.WaitForInput();
         }
 
         /// <summary>

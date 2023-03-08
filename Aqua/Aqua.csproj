@@ -16,7 +16,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <StartCosmosGDB>True</StartCosmosGDB>
+        <StartCosmosGDB>False</StartCosmosGDB>
         <Launch>VMware</Launch>
         <Profile>VMware</Profile>
         <PxeInterface>192.168.0.8</PxeInterface>
@@ -24,7 +24,7 @@
         <VMWareEdition>Workstation</VMWareEdition>
 	  <QemuNetworkDevice>RTL8139</QemuNetworkDevice>
 	  <QemuAudioDriver>AC97</QemuAudioDriver>
-	  <DebugEnabled>True</DebugEnabled>
+	  <DebugEnabled>False</DebugEnabled>
 	  <QemuUseCustomParameters>False</QemuUseCustomParameters>
 	  <QemuUseCustomLocation>False</QemuUseCustomLocation>
 	  <QemuUseSerial>True</QemuUseSerial>

@@ -28,13 +28,11 @@ namespace Aqua.Interface
 
                 if (input.Key == ConsoleKey.Enter)
                 {
-                    Clear();
                     Console.SetCursorPosition(conPos.Left, conPos.Top);
                     return true;
                 }
                 else if (input.Key == ConsoleKey.Escape)
                 {
-                    Clear();
                     Console.SetCursorPosition(conPos.Left, conPos.Top);
                     return false;
                 }
