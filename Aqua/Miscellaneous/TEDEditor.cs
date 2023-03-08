@@ -182,6 +182,9 @@ namespace Aqua.Miscellaneous
 
                             cursorX++;
                             Console.Write(' ');
+
+                            Console.CursorLeft = fileContents.Split('\n')[cursorY-2].Length-1;
+                            Console.Write(' ');
                         }
                         else
                         {
