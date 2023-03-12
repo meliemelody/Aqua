@@ -322,9 +322,18 @@ namespace Aqua.Filesystem
                         {
                             /*for (int i = 0; i <= Kernel.fs.Disks[0].Partitions.Count; i++)
                                 Kernel.fs.Disks[0].FormatPartition(i, "FAT32");*/
-                            Kernel.fs.Disks[0].Clear();
-                            Kernel.fs.Disks[0].CreatePartition(Kernel.fs.Disks[0].Size);
+                            var size = Kernel.fs.Disks[0].Size;
+                            
+                            if (args[1] == null) 
+                            {
+                                Kernel.fs.Disks[0].DeletePartition(0); Kernel.fs.Disks[0].CreatePartition(size);
+                            }
+                            else if (int.Parse(args[1]) <= size) 
+                            {
+                                Kernel.fs.Disks[0].DeletePartition(0); Kernel.fs.Disks[0].CreatePartition(int.Parse(args[1]));
+                            }
 
+                            Kernel.fs.Disks[0].FormatPartition(0, "FAT32");
                             term.DebugWrite("Formatted the drive, rebooting in 2 seconds...", 1);
 
                             Cosmos.HAL.Global.PIT.Wait(2000);

@@ -253,17 +253,14 @@ namespace Aqua.Miscellaneous
                         }
                         break;
 
-                    case ConsoleKey.Delete:
+                    case ConsoleKey.Tab:
                         // Split the input string into lines
                         TEDEditor.lines = fileContents.Split('\n');
-                        if (TEDEditor.lines[cursorY - defaultYPos].Length > 0 && cursorX < TEDEditor.lines[cursorY - defaultYPos].Length)
-                            fileContents = fileContents.Remove(cursorY * Console.WindowWidth + cursorX, 1);
-                        else if (fileContents.Length > 0 && cursorY < fileContents.Length - 1)
-                            fileContents = fileContents.Remove(cursorY * Console.WindowWidth + cursorX, 1);
-                        break;
+                        TEDEditor.lineToInsert = TEDEditor.lines[cursorY - defaultYPos];
 
-                    case ConsoleKey.Tab:
-                        fileContents = fileContents.Insert(cursorY * Console.WindowWidth + cursorX, "    ");
+                        TEDEditor.newLine = TEDEditor.lineToInsert.Substring(0, cursorX) + "    " + TEDEditor.lineToInsert.Substring(cursorX);
+                        fileContents = string.Join('\n', TEDEditor.lines);
+
                         cursorX += 4;
                         break;
 
