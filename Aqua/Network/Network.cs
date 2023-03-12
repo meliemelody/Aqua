@@ -10,8 +10,6 @@ using term = Aqua.Terminal.Terminal;
 using Cosmos.System.Network.IPv4.UDP.DNS;
 using PrismNetwork;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Aqua.Network
 {

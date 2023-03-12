@@ -127,6 +127,9 @@ namespace Aqua.Miscellaneous
             }
         }
 
+        private static string[] lines;
+        private static string lineToInsert, newLine;
+
         public static void Editor(string path)
         {
             string fileContents = File.ReadAllText(path), oldFC = File.ReadAllText(path);
@@ -141,7 +144,7 @@ namespace Aqua.Miscellaneous
             int cursorX = Console.CursorLeft, cursorY = Console.CursorTop;
             Console.SetCursorPosition(cursorX, cursorY);
 
-            for (; ; )
+            while (true)
             {
                 // Draw the information and title bar.
                 DrawUpperBar(0, 0, path, oldFC, fileContents);
@@ -152,118 +155,159 @@ namespace Aqua.Miscellaneous
                 Console.SetCursorPosition(cursorX, cursorY);
 
                 var input = Console.ReadKey(true);
-                if (input.Key == ConsoleKey.Enter)
+                /* It's adding a new line to the fileContents string. */
+                switch (input.Key) 
                 {
-                    fileContents += "\n";
-                    cursorX = 0;
-                    cursorY++;
-                }
-                else if (input.Key == ConsoleKey.Backspace)
-                {
-                    if (fileContents.Length != 0 || cursorX > 1)
-                    {
-                        // Split the input string into lines
-                        string[] lines = fileContents.Split('\n');
-
-                        // Determine the line where the new text should be inserted
-                        string lineToInsert = lines[cursorY - 2];
-                        string newLine = lineToInsert.Substring(0, cursorX-1) + lineToInsert.Substring(cursorX);
-
-                        lines[cursorY - 2] = newLine;
-                        fileContents = string.Join('\n', lines);
-
-                        if (Console.CursorLeft != 1)
-                        {
+                    case ConsoleKey.LeftArrow:
+                        TEDEditor.lines = fileContents.Split('\n');
+                        if (cursorX > 0)
                             cursorX--;
-                            Console.Write("  ");
-
-                            cursorX--;
-                            Console.Write(' ');
-
-                            cursorX++;
-                            Console.Write(' ');
-
-                            Console.CursorLeft = fileContents.Split('\n')[cursorY-2].Length-1;
-                            Console.Write(' ');
-                        }
-                        else
+                        else if (cursorY > defaultYPos)
                         {
-                            cursorX = Console.WindowWidth - 1;
+                            cursorX = TEDEditor.lines[cursorY - defaultYPos].Length;
                             cursorY--;
                         }
-                    }
-                }
-                else if (input.Key == ConsoleKey.LeftArrow)
-                {
-                    if (cursorX > 0)
-                    {
-                        cursorX--;
-                        Console.CursorLeft--;
-                    }
-                }
-                else if (input.Key == ConsoleKey.RightArrow)
-                {
-                    if (cursorX < fileContents.Split('\n')[cursorY-2].Length)
-                    {
-                        cursorX++;
-                        Console.CursorLeft++;
-                    }
-                }
-                else if (input.Key == ConsoleKey.UpArrow)
-                {
-                    if (cursorY > defaultYPos)
-                    {
-                        cursorY--;
-                        Console.CursorTop--;
-
-                        if (cursorX > fileContents.Split('\n')[cursorY-2].Length)
-                            cursorX = fileContents.Split('\n')[cursorY-2].Length;
-                    }
-                }
-                else if (input.Key == ConsoleKey.DownArrow)
-                {
-                    if (cursorY < fileContents.Split('\n').Length+1)
-                    {
-                        cursorY++;
-
-                        if (cursorX > fileContents.Split('\n')[cursorY-2].Length)
-                            cursorX = fileContents.Split('\n')[cursorY-2].Length;
-                    }
-                }
-                else if ((input.Modifiers & ConsoleModifiers.Control) != 0)
-                {
-                    if (input.Key == ConsoleKey.S)
-                    {
-                        File.WriteAllText(path, fileContents);
-                        oldFC = fileContents;
-                    }
-                    else if (input.Key == ConsoleKey.K)
-                    {
-                        fileContents = "";
-                        cursorX = 0;
-                        cursorY = 0;
-                        Console.Clear();
-                        Console.SetCursorPosition(0, defaultYPos);
-                    }
-                    else if (input.Key == ConsoleKey.Q)
-                    {
-                        Console.Clear();
                         break;
-                    }
-                }
-                else
-                {
-                    // Split the input string into lines
-                    string[] lines = fileContents.Split('\n');
 
-                    // Determine the line where the new text should be inserted
-                    string lineToInsert = lines[cursorY-2];
-                    string newLine = lineToInsert.Substring(0, cursorX) + input.KeyChar.ToString() + lineToInsert.Substring(cursorX);
+                    case ConsoleKey.RightArrow:
+                        // Split the input string into lines
+                        TEDEditor.lines = fileContents.Split('\n');
+                        if (cursorY - defaultYPos < TEDEditor.lines.Length - 1 && cursorX < TEDEditor.lines[cursorY - defaultYPos].Length)
+                            cursorX++;
+                        else if (cursorY - defaultYPos < TEDEditor.lines.Length - 1)
+                        {
+                            cursorX = 0;
+                            cursorY++;
+                        }
+                        break;
 
-                    lines[cursorY-2] = newLine;
-                    fileContents = string.Join('\n', lines);
+                    case ConsoleKey.UpArrow:
+                        if (cursorY > defaultYPos) 
+                        {
+                            cursorY--;
+                            if (cursorX > fileContents.Split('\n')[cursorY-2].Length)
+                                cursorX = fileContents.Split('\n')[cursorY-2].Length;
+                        }
+                        break;
 
-                    cursorX++;
+                    case ConsoleKey.DownArrow:
+                        if (cursorY < fileContents.Split('\n').Length+1) 
+                        {
+                            cursorY++;
+                            if (cursorX > fileContents.Split('\n')[cursorY-2].Length)
+                                cursorX = fileContents.Split('\n')[cursorY-2].Length;
+                        }
+                        break;
+                    
+                    case ConsoleKey.Home:
+                        cursorX = 0;
+                        break;
+
+                    case ConsoleKey.End:
+                        // Split the input string into lines
+                        TEDEditor.lines = fileContents.Split('\n');
+
+                        // Determine the line where the new text should be inserted
+                        var line = TEDEditor.lines[cursorY - defaultYPos];
+                        cursorX = line.Length;
+                        break;
+                        
+                    case ConsoleKey.Enter:
+                        // Split the input string into lines
+                        TEDEditor.lines = fileContents.Split('\n');
+                        TEDEditor.lines[cursorY - defaultYPos] += "\n";
+
+                        fileContents = string.Join('\n', TEDEditor.lines);
+                        cursorX = 0; cursorY++;
+                        break;
+
+                    case ConsoleKey.Backspace:
+                        if (fileContents.Length != 0 || cursorX > 1)
+                        {
+                            // Split the input string into lines
+                            TEDEditor.lines = fileContents.Split('\n');
+
+                            // Determine the line where the new text should be inserted
+                            TEDEditor.lineToInsert = TEDEditor.lines[cursorY - defaultYPos];
+                            
+                            if (cursorX > 0) // Check if cursorX is greater than 0
+                            {
+                                TEDEditor.newLine = TEDEditor.lineToInsert.Substring(0, cursorX - 1) + TEDEditor.lineToInsert.Substring(cursorX);
+                                TEDEditor.lines[cursorY - defaultYPos] = TEDEditor.newLine;
+
+                                cursorX--;
+                                Console.SetCursorPosition(cursorX, cursorY);
+                                Console.Write(' ');
+                            }
+                            else if (cursorY > defaultYPos)
+                            {
+                                cursorY--;
+                                if (cursorY - defaultYPos >= 0)
+                                    cursorX = TEDEditor.lines[cursorY - defaultYPos].Length;
+                                else
+                                    cursorX = 0;
+                                Console.SetCursorPosition(cursorX, cursorY);
+                            }
+
+                            fileContents = string.Join('\n', TEDEditor.lines);
+                        }
+                        break;
+
+                    case ConsoleKey.Delete:
+                        // Split the input string into lines
+                        TEDEditor.lines = fileContents.Split('\n');
+                        if (TEDEditor.lines[cursorY - defaultYPos].Length > 0 && cursorX < TEDEditor.lines[cursorY - defaultYPos].Length)
+                            fileContents = fileContents.Remove(cursorY * Console.WindowWidth + cursorX, 1);
+                        else if (fileContents.Length > 0 && cursorY < fileContents.Length - 1)
+                            fileContents = fileContents.Remove(cursorY * Console.WindowWidth + cursorX, 1);
+                        break;
+
+                    case ConsoleKey.Tab:
+                        fileContents = fileContents.Insert(cursorY * Console.WindowWidth + cursorX, "    ");
+                        cursorX += 4;
+                        break;
+
+                    case ConsoleKey.Escape:
+                        Console.Clear();
+                        return;
+
+                    default:
+                        if ((input.Modifiers & ConsoleModifiers.Control) != 0) 
+                        {
+                            switch (input.Key) 
+                            {
+                                case ConsoleKey.S:
+                                    File.WriteAllText(path, fileContents);
+                                    oldFC = fileContents;
+                                    break;
+
+                                case ConsoleKey.K:
+                                    fileContents = null;
+                                    cursorX = 0; cursorY = 0;
+
+                                    Console.Clear();
+                                    Console.SetCursorPosition(0, defaultYPos);
+                                    break;
+                            }
+                        }
+                        else if (cursorY > defaultYPos || cursorY < defaultYPos + TEDEditor.lines.Length)
+                        {
+                            // Split the input string into lines
+                            TEDEditor.lines = fileContents.Split('\n');
+
+                            // Determine the line where the new text should be inserted
+                            TEDEditor.lineToInsert = TEDEditor.lines[cursorY - defaultYPos];
+
+                            if (lineToInsert.Length > 0)
+                                TEDEditor.newLine = TEDEditor.lineToInsert.Substring(0, cursorX) + input.KeyChar.ToString() + TEDEditor.lineToInsert.Substring(cursorX);
+                            else
+                                TEDEditor.newLine = input.KeyChar.ToString();
+
+                            TEDEditor.lines[cursorY - defaultYPos] = TEDEditor.newLine;
+                            fileContents = string.Join('\n', lines);
+                            cursorX++;
+                        }
+                        break;
                 }
             }
         }

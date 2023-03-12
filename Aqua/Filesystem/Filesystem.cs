@@ -125,6 +125,9 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
+                case null:
+                    return term.DebugWrite("Invalid argument.", 4);
+
                 default:
                     return term.DebugWrite("Invalid argument.", 4);
             }

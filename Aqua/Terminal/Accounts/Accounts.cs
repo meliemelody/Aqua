@@ -1,6 +1,4 @@
 ﻿using Aqua.Commands;
-using Aqua.Network;
-using Aqua.Sounds;
 using Cosmos.System;
 using System;
 using Console = System.Console;
