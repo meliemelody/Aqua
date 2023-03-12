@@ -259,8 +259,9 @@ namespace Aqua.Miscellaneous
                         TEDEditor.lineToInsert = TEDEditor.lines[cursorY - defaultYPos];
 
                         TEDEditor.newLine = TEDEditor.lineToInsert.Substring(0, cursorX) + "    " + TEDEditor.lineToInsert.Substring(cursorX);
+                        TEDEditor.lines[cursorY - defaultYPos] = TEDEditor.newLine;
+                        
                         fileContents = string.Join('\n', TEDEditor.lines);
-
                         cursorX += 4;
                         break;
 
