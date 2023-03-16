@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "dotnet",
+            "name": "Aqua System | Main Build",
+            "projectPath": "Aqua/",
+            "exePath": "",
+            "args": ["build"],
+        },
+        {
+            "type": "dotnet",
+            "name": "Aqua System | Rescue Build",
+            "projectPath": "Rescue/",
+            "exePath": "",
+            "args": ["build"],
+        },
+        {
+            "type": "command",
+            "name": "Command configuration",
+            "program": "C:\\Windows\\aqua.bat"
+        },
+
+    ]
+}

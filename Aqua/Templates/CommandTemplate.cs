@@ -4,13 +4,13 @@
 
 namespace $rootnamespace$
 {
-    public class $safeitemname$ : Command
-    {
-        public $safeitemname$(string name, string description) : base(name, description) { }
+	public class $safeitemname$ : Command
+	{
+		public $safeitemname$(string name, string description) : base(name, description) { }
 
-        public override string Execute(string[] args)
-        {
-            return base.Execute(args);
-        }
-    }
+		public override string Execute(string[] args)
+		{
+			return base.Execute(args);
+		}
+	}
 }*/
