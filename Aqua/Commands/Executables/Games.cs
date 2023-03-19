@@ -26,7 +26,7 @@ namespace Aqua.Commands.Executables
 
                 default:
                     //return null;
-                    return Terminal.Terminal.DebugWrite("Invalid argument, type \"help\" to list the available games.", 4);
+                    return Terminal.Screen.DebugWrite("Invalid argument, type \"help\" to list the available games.", 4);
             }
         }
     }

@@ -39,7 +39,7 @@ namespace Aqua.Miscellaneous.Compatibility
             }
             catch (Exception e)
             {
-                Terminal.Terminal.DebugWrite(e.ToString(), 4);
+                Terminal.Screen.DebugWrite(e.ToString(), 4);
             }
             return null;
         }
@@ -80,7 +80,7 @@ namespace Aqua.Miscellaneous.Compatibility
                 }
                 else
                 {
-                    Terminal.Terminal.DebugWrite("Unknown argument : " + argv[i], 4);
+                    Terminal.Screen.DebugWrite("Unknown argument : " + argv[i], 4);
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.CursorVisible = true;
                     return null;

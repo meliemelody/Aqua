@@ -18,7 +18,7 @@ namespace Aqua.Commands.Executables
                         Tab.Change(result);
                     }
                     else
-                        return Terminal.Terminal.DebugWrite("Please specify an index number.", 4);
+                        return Terminal.Screen.DebugWrite("Please specify an index number.", 4);
                     break;
 
                 case "new":
@@ -34,7 +34,7 @@ namespace Aqua.Commands.Executables
                     break;
 
                 default:
-                    return Terminal.Terminal.DebugWrite("Invalid argument.", 4);
+                    return Terminal.Screen.DebugWrite("Invalid argument.", 4);
             }
 
             return null;

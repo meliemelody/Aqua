@@ -1,5 +1,5 @@
 ﻿using System;
-using term = Aqua.Terminal.Terminal;
+using term = Aqua.Terminal.Screen;
 
 namespace Aqua.Commands.Executables
 {

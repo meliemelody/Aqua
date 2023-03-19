@@ -2,7 +2,7 @@
 using Cosmos.System;
 using System;
 using Console = System.Console;
-using term = Aqua.Terminal.Terminal;
+using term = Aqua.Terminal.Screen;
 
 namespace Aqua.Terminal.Accounts
 {

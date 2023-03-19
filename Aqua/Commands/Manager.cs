@@ -1,7 +1,7 @@
 ﻿using Cosmos.System;
 using System;
 using System.Collections.Generic;
-using term = Aqua.Terminal.Terminal;
+using term = Aqua.Terminal.Screen;
 
 namespace Aqua.Commands
 {

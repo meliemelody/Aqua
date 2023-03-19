@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using static Aqua.Kernel;
 using futils = Aqua.Filesystem.Utilities;
-using term = Aqua.Terminal.Terminal;
+using term = Aqua.Terminal.Screen;
 
 namespace Aqua.Terminal.Accounts
 {
@@ -133,7 +133,7 @@ namespace Aqua.Terminal.Accounts
 
             Console.ForegroundColor = ConsoleColor.White;
             ConsoleKeyInfo input = Console.ReadKey();
-               
+
             if (input.Key == ConsoleKey.Y)
                 File.WriteAllText(@"0:\AquaSys\Login\Root.acf", "true");
             else if (input.Key == ConsoleKey.N)

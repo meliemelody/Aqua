@@ -82,7 +82,7 @@ namespace Aqua.Commands.Executables
                             break;
 
                         default:
-                            return Terminal.Terminal.DebugWrite("Please select a correct color.", 4);
+                            return Terminal.Screen.DebugWrite("Please select a correct color.", 4);
                     }
                     Filesystem.Utilities.WriteLine(@"0:\AquaSys\Config\Colors.acf", args[1], false);
                     Console.Clear();
@@ -159,7 +159,7 @@ namespace Aqua.Commands.Executables
                             break;
 
                         default:
-                            return Terminal.Terminal.DebugWrite("Please select a correct color.", 4);
+                            return Terminal.Screen.DebugWrite("Please select a correct color.", 4);
                     }
                     Filesystem.Utilities.WriteLine(@"0:\AquaSys\Config\Colors.acf", args[1], true);
                     return null;
@@ -182,21 +182,21 @@ namespace Aqua.Commands.Executables
                                 break;
 
                             default:
-                                return Terminal.Terminal.DebugWrite("Please select a correct key mapping.", 4);
+                                return Terminal.Screen.DebugWrite("Please select a correct key mapping.", 4);
                         }
                         if (!System.IO.Directory.Exists(@"0:\AquaSys\Config"))
                             System.IO.Directory.CreateDirectory(@"0:\AquaSys\Config");
 
                         System.IO.File.WriteAllText(@"0:\AquaSys\Config\KeyMap.acf", args[1]);
-                        return Terminal.Terminal.DebugWrite($"Successfully set the keyboard to \"{args[1]}\".", 2);
+                        return Terminal.Screen.DebugWrite($"Successfully set the keyboard to \"{args[1]}\".", 2);
                     }
-                    catch (Exception e) 
+                    catch (Exception e)
                     {
-                        return Terminal.Terminal.DebugWrite(e.ToString(), 4);
+                        return Terminal.Screen.DebugWrite(e.ToString(), 4);
                     }
 
                 default:
-                    return Terminal.Terminal.DebugWrite("Specify a correct argument.\n", 4);
+                    return Terminal.Screen.DebugWrite("Specify a correct argument.\n", 4);
             }
         }
     }
@@ -215,7 +215,7 @@ namespace Aqua.Commands.Executables
                     return "RAM usage : " + ((int)ramUsage * 100).ToString() + "%";
 
                 default:
-                    return Terminal.Terminal.DebugWrite("Specify a correct argument.", 4);
+                    return Terminal.Screen.DebugWrite("Specify a correct argument.", 4);
             }
         }
     }

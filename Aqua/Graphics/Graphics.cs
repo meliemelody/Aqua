@@ -3,7 +3,7 @@ using Cosmos.System;
 using Cosmos.System.Graphics;
 using System;
 using System.Drawing;
-using term = Aqua.Terminal.Terminal;
+using term = Aqua.Terminal.Screen;
 using SharpDX.Mathematics.Interop;
 using Cosmos.HAL;
 using System.Threading;
@@ -13,7 +13,7 @@ namespace Aqua.Graphics
 {
     public class Graphics
     {
-        static int[] winSize = new int[2] {500, 250}, windowPos = {0, 30};
+        static int[] winSize = new int[2] { 500, 250 }, windowPos = { 0, 30 };
 
         public static Canvas GraphicsStart()
         {
@@ -52,7 +52,7 @@ namespace Aqua.Graphics
 
         public override string Execute(string[] args)
         {
-            switch(args[0])
+            switch (args[0])
             {
                 case "start":
                     Kernel.canvas = Graphics.GraphicsStart();

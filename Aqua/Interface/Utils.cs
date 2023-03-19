@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aqua.Interface
 {
@@ -41,6 +38,7 @@ namespace Aqua.Interface
             {
                 output += input;
             }
+
             return output;
         }
 
@@ -53,7 +51,8 @@ namespace Aqua.Interface
             Console.Write(text);
         }
 
-        public static void WriteBlock(string text, int x, int y, int width, int height, ConsoleColor bg, ConsoleColor fg)
+        public static void WriteBlock(string text, int x, int y, int width, int height, ConsoleColor bg,
+            ConsoleColor fg)
         {
             List<string> text_lines = new List<string>();
             //Separate lines of text.
@@ -69,6 +68,7 @@ namespace Aqua.Interface
                     }
                 }
             }
+
             if (text.Length > 0)
             {
                 if (text.Length > width)
@@ -85,6 +85,7 @@ namespace Aqua.Interface
                             }
                         }
                     }
+
                     if (text.Length > 0)
                     {
                         text_lines.Add(text);
@@ -95,21 +96,24 @@ namespace Aqua.Interface
                     text_lines.Add(text);
                 }
             }
+
             //by now, I should be able to get the line with the most amount of chars and make it the width.
-            int new_width = 0;
+            int newWidth = 0;
             foreach (var line in text_lines)
             {
-                if (line.Length > new_width)
+                if (line.Length > newWidth)
                 {
-                    new_width = line.Length;
+                    newWidth = line.Length;
                 }
             }
-            width = new_width;
+
+            width = newWidth;
             //Gotta set a proper height.
             if (text_lines.Count > height)
             {
                 height = text_lines.Count;
             }
+
             ClearArea(x, y, width, height, bg);
             for (int i = 0; i < text_lines.Count; i++)
             {
@@ -139,8 +143,10 @@ namespace Aqua.Interface
                     currLength = 0;
                     continue;
                 }
+
                 currLength++;
             }
+
             if (oldOffset < text.Length)
                 returnSet.Add(text.Substring(oldOffset));
 

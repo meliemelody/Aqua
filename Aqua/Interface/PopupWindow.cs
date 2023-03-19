@@ -6,12 +6,14 @@ namespace Aqua.Interface
 {
     public class PopupWindow : Window
     {
-        const int Width = 25, Height = 5;
-        static int _x = Console.WindowWidth / 2 - Width / 2, _y = Console.WindowHeight / 2 - Height / 2;
+        const int new_Width = 25, new_Height = 5;
+        static readonly int _x = Console.WindowWidth / 2 - new_Width / 2, _y = Console.WindowHeight / 2 - new_Height / 2;
 
         static (int Left, int Top) conPos = Console.GetCursorPosition();
 
-        public PopupWindow(string title) : base(title, Width, Height, _x, _y)
+        // This is the constructor for the PopupWindow class.
+        // It is used to create a popup window.
+        public PopupWindow(string title) : base(title, new_Width, new_Height, _x, _y)
         {
             // Create a new button and add it to the window's Inputs list
             int buttonWidth = 5, buttonHeight = 3;

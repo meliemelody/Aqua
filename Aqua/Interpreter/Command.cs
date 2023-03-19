@@ -14,9 +14,9 @@ namespace Aqua.Interpreter
                     if (System.IO.File.Exists(Kernel.currentDirectory + args[1]) && args[1].EndsWith(".alf"))
                         Language.Run(Kernel.currentDirectory + args[1]);
                     else if (!args[1].EndsWith(".alf"))
-                        return Terminal.Terminal.DebugWrite("This file is not a .alf file.", 4);
+                        return Terminal.Screen.DebugWrite("This file is not a .alf file.", 4);
                     else
-                        return Terminal.Terminal.DebugWrite("This file does not exist.", 4);
+                        return Terminal.Screen.DebugWrite("This file does not exist.", 4);
 
                     break;
             }

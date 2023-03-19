@@ -1,7 +1,7 @@
 ﻿using Aqua.Commands;
 using System;
 using io = System.IO;
-using term = Aqua.Terminal.Terminal;
+using term = Aqua.Terminal.Screen;
 using System.Linq;
 using System.IO;
 
@@ -323,12 +323,12 @@ namespace Aqua.Filesystem
                             /*for (int i = 0; i <= Kernel.fs.Disks[0].Partitions.Count; i++)
                                 Kernel.fs.Disks[0].FormatPartition(i, "FAT32");*/
                             var size = Kernel.fs.Disks[0].Size;
-                            
-                            if (args[1] == null) 
+
+                            if (args[1] == null)
                             {
                                 Kernel.fs.Disks[0].DeletePartition(0); Kernel.fs.Disks[0].CreatePartition(size);
                             }
-                            else if (int.Parse(args[1]) <= size) 
+                            else if (int.Parse(args[1]) <= size)
                             {
                                 Kernel.fs.Disks[0].DeletePartition(0); Kernel.fs.Disks[0].CreatePartition(int.Parse(args[1]));
                             }

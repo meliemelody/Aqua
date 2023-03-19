@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 using io = System.IO;
-using term = Aqua.Terminal.Terminal;
+using term = Aqua.Terminal.Screen;
 
 namespace Aqua.Filesystem
 {
