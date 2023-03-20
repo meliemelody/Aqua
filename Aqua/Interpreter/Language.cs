@@ -104,7 +104,7 @@ namespace Aqua.Interpreter
 
                                 if (GetVariable(args[0].Trim()) == null)
                                     StoreVariable(args[0].Trim(), 0);
-
+                                
                                 if (args[1].Trim() == "false" || args[1].Trim() == defaultValue)
                                 {
                                     input = Console.ReadLine();
