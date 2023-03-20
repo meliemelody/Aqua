@@ -9,7 +9,8 @@ namespace Aqua.Filesystem
 {
     public class File : Command
     {
-        public File(String name, String description) : base(name, description) { }
+        public File(String name, String description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {
@@ -23,7 +24,10 @@ namespace Aqua.Filesystem
                         io.File.Create(Kernel.currentDirectory + file);
 
                         // response = "The file \"" + args[1] + "\" has been successfully created.";
-                        return term.DebugWrite("The file \"" + file + "\" has been successfully created.", 2);
+                        return term.DebugWrite(
+                            "The file \"" + file + "\" has been successfully created.",
+                            2
+                        );
                     }
                     catch (Exception e)
                     {
@@ -38,11 +42,17 @@ namespace Aqua.Filesystem
                             io.File.Delete(Kernel.currentDirectory + file);
 
                             // response = "The file \"" + args[1] + "\" has been successfully deleted.";
-                            return term.DebugWrite($"The file \"{args[0]}\" has been successfully moved over to \"{args[1]}\".", 2);
+                            return term.DebugWrite(
+                                $"The file \"{args[0]}\" has been successfully moved over to \"{args[1]}\".",
+                                2
+                            );
                         }
                         else
                         {
-                            return term.DebugWrite("The file you have specified does not exist.", 4);
+                            return term.DebugWrite(
+                                "The file you have specified does not exist.",
+                                4
+                            );
                         }
                     }
                     catch (Exception e)
@@ -54,13 +64,18 @@ namespace Aqua.Filesystem
                     try
                     {
                         //io.File.Move(args[0], args[1]);
-                        var oldFileContents = io.File.ReadAllLines(Kernel.currentDirectory + args[0]);
+                        var oldFileContents = io.File.ReadAllLines(
+                            Kernel.currentDirectory + args[0]
+                        );
                         io.File.Delete(Kernel.currentDirectory + args[0]);
 
                         io.File.Create(Kernel.currentDirectory + args[1]);
                         io.File.WriteAllLines(Kernel.currentDirectory + args[1], oldFileContents);
 
-                        return term.DebugWrite($"The file \"{args[0]}\" has been successfully copied over to \"{args[1]}\".", 2);
+                        return term.DebugWrite(
+                            $"The file \"{args[0]}\" has been successfully copied over to \"{args[1]}\".",
+                            2
+                        );
                     }
                     catch (Exception e)
                     {
@@ -95,7 +110,14 @@ namespace Aqua.Filesystem
                         else
                             Utilities.WriteLine(path, args[3], false);
 
-                        return term.DebugWrite("The file \"" + file + "\" is successfully storing the data : \"" + args[3] + "\".", 2);
+                        return term.DebugWrite(
+                            "The file \""
+                                + file
+                                + "\" is successfully storing the data : \""
+                                + args[3]
+                                + "\".",
+                            2
+                        );
                     }
                     catch (Exception e)
                     {
@@ -136,7 +158,8 @@ namespace Aqua.Filesystem
 
     public class Directory : Command
     {
-        public Directory(String name, String description) : base(name, description) { }
+        public Directory(String name, String description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {
@@ -161,7 +184,10 @@ namespace Aqua.Filesystem
                         System.IO.Directory.CreateDirectory(Kernel.currentDirectory + directory);
 
                         // response = "The file \"" + args[1] + "\" has been successfully created.";
-                        return term.DebugWrite("The directory \"" + directory + "\" has been successfully created.", 2);
+                        return term.DebugWrite(
+                            "The directory \"" + directory + "\" has been successfully created.",
+                            2
+                        );
                     }
                     catch (Exception e)
                     {
@@ -176,15 +202,26 @@ namespace Aqua.Filesystem
                             if (directory == "AquaSys" && Kernel.currentDirectory == "0:\\")
                             {
                                 if (Kernel.isRoot != true)
-                                    return term.DebugWrite("You are not a \"root\" user, please log in using root credentials.", 4);
+                                    return term.DebugWrite(
+                                        "You are not a \"root\" user, please log in using root credentials.",
+                                        4
+                                    );
                             }
 
                             System.IO.Directory.Delete(Kernel.currentDirectory + directory, true);
-                            return term.DebugWrite("The directory \"" + directory + "\" has been successfully deleted.", 2);
+                            return term.DebugWrite(
+                                "The directory \""
+                                    + directory
+                                    + "\" has been successfully deleted.",
+                                2
+                            );
                         }
                         else
                         {
-                            return term.DebugWrite("The directory you have specified does not exist.", 4);
+                            return term.DebugWrite(
+                                "The directory you have specified does not exist.",
+                                4
+                            );
                         }
                     }
                     catch (Exception e)
@@ -200,7 +237,8 @@ namespace Aqua.Filesystem
 
     public class Filesystem : Command
     {
-        public Filesystem(String name, String description) : base(name, description) { }
+        public Filesystem(String name, String description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {
@@ -283,14 +321,19 @@ namespace Aqua.Filesystem
                 case "cd":
                     try
                     {
-                        string[] directories = System.IO.Directory.GetDirectories(Kernel.currentDirectory);
+                        string[] directories = System.IO.Directory.GetDirectories(
+                            Kernel.currentDirectory
+                        );
                         int notTheFolder = 0;
 
                         foreach (var dir in directories)
                         {
                             if (dir == args[1])
                             {
-                                term.DebugWrite("Successfully changed the directory to " + dir + ".", 2);
+                                term.DebugWrite(
+                                    "Successfully changed the directory to " + dir + ".",
+                                    2
+                                );
                                 System.IO.Directory.SetCurrentDirectory(dir);
 
                                 Kernel.currentDirectory += dir + "\\";
@@ -326,11 +369,13 @@ namespace Aqua.Filesystem
 
                             if (args[1] == null)
                             {
-                                Kernel.fs.Disks[0].DeletePartition(0); Kernel.fs.Disks[0].CreatePartition(size);
+                                Kernel.fs.Disks[0].DeletePartition(0);
+                                Kernel.fs.Disks[0].CreatePartition(size);
                             }
                             else if (int.Parse(args[1]) <= size)
                             {
-                                Kernel.fs.Disks[0].DeletePartition(0); Kernel.fs.Disks[0].CreatePartition(int.Parse(args[1]));
+                                Kernel.fs.Disks[0].DeletePartition(0);
+                                Kernel.fs.Disks[0].CreatePartition(int.Parse(args[1]));
                             }
 
                             Kernel.fs.Disks[0].FormatPartition(0, "FAT32");
@@ -342,7 +387,10 @@ namespace Aqua.Filesystem
                         }
                         else
                         {
-                            return term.DebugWrite("You are not a \"root\" user, please log in using root credentials.", 4);
+                            return term.DebugWrite(
+                                "You are not a \"root\" user, please log in using root credentials.",
+                                4
+                            );
                         }
                     }
                     catch (Exception e)

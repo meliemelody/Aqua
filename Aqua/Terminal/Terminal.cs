@@ -23,37 +23,58 @@ namespace Aqua.Terminal
             {
                 case 0:
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write("[Debug] | " + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | ");
+                    Console.Write(
+                        "[Debug] | "
+                            + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | "
+                    );
                     break;
 
                 case 1:
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.Write("[Kernel] | " + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | ");
+                    Console.Write(
+                        "[Kernel] | "
+                            + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | "
+                    );
                     break;
 
                 case 2:
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("[Success] | " + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | ");
+                    Console.Write(
+                        "[Success] | "
+                            + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | "
+                    );
                     break;
 
                 case 3:
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("[Warning] | " + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | ");
+                    Console.Write(
+                        "[Warning] | "
+                            + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | "
+                    );
                     break;
 
                 case 4:
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("[Error] | " + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | ");
+                    Console.Write(
+                        "[Error] | "
+                            + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | "
+                    );
                     break;
 
                 case 5:
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.Write("[Critical] | " + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | ");
+                    Console.Write(
+                        "[Critical] | "
+                            + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | "
+                    );
                     break;
 
                 case 6:
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.Write("[Information] | " + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | ");
+                    Console.Write(
+                        "[Information] | "
+                            + $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")} | "
+                    );
                     break;
             }
 

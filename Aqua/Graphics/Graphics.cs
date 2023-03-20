@@ -13,13 +13,16 @@ namespace Aqua.Graphics
 {
     public class Graphics
     {
-        static int[] winSize = new int[2] { 500, 250 }, windowPos = { 0, 30 };
+        static int[] winSize = new int[2] { 500, 250 },
+            windowPos =  { 0, 30 };
 
         public static Canvas GraphicsStart()
         {
             try
             {
-                Canvas canvas = FullScreenCanvas.GetFullScreenCanvas(new Mode(640, 480, ColorDepth.ColorDepth32));
+                Canvas canvas = FullScreenCanvas.GetFullScreenCanvas(
+                    new Mode(640, 480, ColorDepth.ColorDepth32)
+                );
                 return canvas;
             }
             catch (Exception e)
@@ -34,21 +37,41 @@ namespace Aqua.Graphics
             // you have found the doofenshmirtz evil incorporated thing i dk   yea im tired
             canvas.Clear(Color.LightSeaGreen);
 
-            canvas.DrawString("Graphical User Interface Testing Environment", Cosmos.System.Graphics.Fonts.PCScreenFont.Default, Color.White, 0, 0);
+            canvas.DrawString(
+                "Graphical User Interface Testing Environment",
+                Cosmos.System.Graphics.Fonts.PCScreenFont.Default,
+                Color.White,
+                0,
+                0
+            );
             /*if (MouseManager.LastMouseState == MouseState.Left && canMove == true)
                 dragging = !dragging;*/
 
-            Window window = new("Test Window", (uint)winSize[0], (uint)winSize[1], (uint)windowPos[0], (uint)windowPos[1]);
+            Window window =
+                new(
+                    "Test Window",
+                    (uint)winSize[0],
+                    (uint)winSize[1],
+                    (uint)windowPos[0],
+                    (uint)windowPos[1]
+                );
             window.Update(canvas);
 
-            canvas.DrawFilledRectangle(Color.Black, (int)MouseManager.X - 5, (int)MouseManager.Y - 5, 10, 10);
+            canvas.DrawFilledRectangle(
+                Color.Black,
+                (int)MouseManager.X - 5,
+                (int)MouseManager.Y - 5,
+                10,
+                10
+            );
             canvas.Display();
         }
     }
 
     public class grComs : Command
     {
-        public grComs(String name, String description) : base(name, description) { }
+        public grComs(String name, String description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {

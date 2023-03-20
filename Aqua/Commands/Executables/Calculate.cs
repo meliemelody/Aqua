@@ -8,8 +8,12 @@ namespace Aqua.Commands.Executables
 {
     public class Calculate : Command
     {
-        public Calculate(string name, string description) : base(name, description) { }
-        int firstNumber = 0, secondNumber = 0, calc;
+        public Calculate(string name, string description)
+            : base(name, description) { }
+
+        int firstNumber = 0,
+            secondNumber = 0,
+            calc;
 
         public override string Execute(string[] args)
         {

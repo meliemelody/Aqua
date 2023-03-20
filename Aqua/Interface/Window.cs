@@ -17,10 +17,7 @@ namespace Aqua.Interface
 
         public string Title
         {
-            get
-            {
-                return _title;
-            }
+            get { return _title; }
             set
             {
                 _title = value;
@@ -29,10 +26,7 @@ namespace Aqua.Interface
         }
         public int Width
         {
-            get
-            {
-                return _width;
-            }
+            get { return _width; }
             set
             {
                 Utils.ClearArea(_x, _y, _width, _height, ConsoleColor.Black);
@@ -42,10 +36,7 @@ namespace Aqua.Interface
         }
         public int Height
         {
-            get
-            {
-                return _height;
-            }
+            get { return _height; }
             set
             {
                 Utils.ClearArea(_x, _y, _width, _height, ConsoleColor.Black);
@@ -56,10 +47,7 @@ namespace Aqua.Interface
 
         public int X
         {
-            get
-            {
-                return _x;
-            }
+            get { return _x; }
             set
             {
                 Utils.ClearArea(_x, _y, _width, _height, ConsoleColor.Black);
@@ -70,10 +58,7 @@ namespace Aqua.Interface
 
         public int Y
         {
-            get
-            {
-                return _y;
-            }
+            get { return _y; }
             set
             {
                 Utils.ClearArea(_x, _y, _width, _height, ConsoleColor.Black);
@@ -133,8 +118,6 @@ namespace Aqua.Interface
             _selected = false;
             Draw();
         }
-
-
 
         public void Draw()
         {

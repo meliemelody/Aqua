@@ -8,13 +8,18 @@ namespace Aqua.Commands.Executables
 {
     public class Manual : Command
     {
-        public Manual (string name, string description) : base (name, description) { }
+        public Manual(string name, string description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {
             for (int i = 0; i < Manager.descriptionStrings.Count; i++)
             {
-                if (Manager.commandStrings[i] == "f" || Manager.commandStrings[i] == "net" || Manager.commandStrings[i] == "get")
+                if (
+                    Manager.commandStrings[i] == "f"
+                    || Manager.commandStrings[i] == "net"
+                    || Manager.commandStrings[i] == "get"
+                )
                     Console.WriteLine();
 
                 Console.ForegroundColor = ConsoleColor.Cyan;

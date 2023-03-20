@@ -93,14 +93,18 @@ namespace Aqua
         private Manager _commandManager = new Manager();
         public static CosmosVFS fs;
 
-        public static bool isRoot, guiStarted, isNetworkConnected, tabBarVisible = false;
+        public static bool isRoot,
+            guiStarted,
+            isNetworkConnected,
+            tabBarVisible = false;
         public static string currentDirectory = "0:\\";
 
         public static AudioMixer mixer;
         public static AC97 audioDriver;
         public static AudioManager audioManager;
 
-        public static ConsoleColor bgColor = ConsoleColor.Black, fgColor = ConsoleColor.White;
+        public static ConsoleColor bgColor = ConsoleColor.Black,
+            fgColor = ConsoleColor.White;
 
         public static List<Tab> tabs = new List<Tab>();
         public static int currentTabIndex;
@@ -108,7 +112,8 @@ namespace Aqua
         public static Canvas canvas;
         public static string time;
 
-        [ManifestResourceStream(ResourceName = "Aqua.Fonts.zap-ext-vga09.psf")] public static byte[] font;
+        [ManifestResourceStream(ResourceName = "Aqua.Fonts.zap-ext-vga09.psf")]
+        public static byte[] font;
 
         //public static PCScreenFont Font = PCScreenFont.Default;
         //public static byte[] FontVga;
@@ -205,7 +210,7 @@ namespace Aqua
             if (System.IO.File.Exists(@"0:\AquaSys\Config\KeyMap.acf"))
             {
                 /* Reading the content of the file KeyMap.acf and then it is setting the keyboard
-				layout based on the content of the file. */
+                layout based on the content of the file. */
                 var content = System.IO.File.ReadAllText(@"0:\AquaSys\Config\KeyMap.acf");
 
                 switch (content)
@@ -234,8 +239,8 @@ namespace Aqua
 
         // The comment below was made by artificial intelligence.
         /* Checking if the file exists, then it is reading the first line of the file and assigning it
-		to the variable bg. Then it is reading the second line of the file and assigning it to the
-		variable fg. */
+        to the variable bg. Then it is reading the second line of the file and assigning it to the
+        variable fg. */
         // vscode-fold=#
         public void CheckColors()
         {
@@ -249,69 +254,85 @@ namespace Aqua
                 switch (bg)
                 {
                     // Light colors
-                    case "blue" or "b":
+                    case "blue"
+                    or "b":
                         Kernel.bgColor = ConsoleColor.Blue;
                         break;
 
-                    case "red" or "r":
+                    case "red"
+                    or "r":
                         Kernel.bgColor = ConsoleColor.Red;
                         break;
 
-                    case "yellow" or "y":
+                    case "yellow"
+                    or "y":
                         Kernel.bgColor = ConsoleColor.Yellow;
                         break;
 
-                    case "green" or "g":
+                    case "green"
+                    or "g":
                         Kernel.bgColor = ConsoleColor.Green;
                         break;
 
-                    case "magenta" or "m":
+                    case "magenta"
+                    or "m":
                         Kernel.bgColor = ConsoleColor.Magenta;
                         break;
 
-                    case "cyan" or "c":
+                    case "cyan"
+                    or "c":
                         Kernel.bgColor = ConsoleColor.Cyan;
                         break;
 
                     // Dark-toned colors
-                    case "darkblue" or "db":
+                    case "darkblue"
+                    or "db":
                         Kernel.bgColor = ConsoleColor.DarkBlue;
                         break;
 
-                    case "darkgreen" or "dg":
+                    case "darkgreen"
+                    or "dg":
                         Kernel.bgColor = ConsoleColor.DarkGreen;
                         break;
 
-                    case "darkcyan" or "dc":
+                    case "darkcyan"
+                    or "dc":
                         Kernel.bgColor = ConsoleColor.DarkCyan;
                         break;
 
-                    case "darkmagenta" or "dm":
+                    case "darkmagenta"
+                    or "dm":
                         Kernel.bgColor = ConsoleColor.DarkMagenta;
                         break;
 
-                    case "darkred" or "dr":
+                    case "darkred"
+                    or "dr":
                         Kernel.bgColor = ConsoleColor.DarkRed;
                         break;
 
-                    case "darkyellow" or "dy":
+                    case "darkyellow"
+                    or "dy":
                         Kernel.bgColor = ConsoleColor.DarkYellow;
                         break;
 
                     // Monochrome colors
-                    case "gray" or "g":
+                    case "gray"
+                    or "g":
                         Kernel.bgColor = ConsoleColor.Gray;
                         break;
 
-                    case "darkgray" or "dg":
+                    case "darkgray"
+                    or "dg":
                         Kernel.bgColor = ConsoleColor.DarkGray;
                         break;
 
-                    case "black" or "d":
+                    case "black"
+                    or "d":
                         Kernel.bgColor = ConsoleColor.Black;
                         break;
 
-                    case "white" or "w":
+                    case "white"
+                    or "w":
                         Kernel.bgColor = ConsoleColor.White;
                         break;
 
@@ -323,65 +344,80 @@ namespace Aqua
                 switch (fg)
                 {
                     // Light colors
-                    case "blue" or "b":
+                    case "blue"
+                    or "b":
                         Kernel.fgColor = ConsoleColor.Blue;
                         break;
 
-                    case "red" or "r":
+                    case "red"
+                    or "r":
                         Kernel.fgColor = ConsoleColor.Red;
                         break;
 
-                    case "yellow" or "y":
+                    case "yellow"
+                    or "y":
                         Kernel.fgColor = ConsoleColor.Yellow;
                         break;
 
-                    case "green" or "g":
+                    case "green"
+                    or "g":
                         Kernel.fgColor = ConsoleColor.Green;
                         break;
 
-                    case "magenta" or "m":
+                    case "magenta"
+                    or "m":
                         Kernel.fgColor = ConsoleColor.Magenta;
                         break;
 
-                    case "cyan" or "c":
+                    case "cyan"
+                    or "c":
                         Kernel.fgColor = ConsoleColor.Cyan;
                         break;
 
                     // Dark-toned colors
-                    case "darkblue" or "db":
+                    case "darkblue"
+                    or "db":
                         Kernel.fgColor = ConsoleColor.DarkBlue;
                         break;
 
-                    case "darkgreen" or "dg":
+                    case "darkgreen"
+                    or "dg":
                         Kernel.fgColor = ConsoleColor.DarkGreen;
                         break;
 
-                    case "darkcyan" or "dc":
+                    case "darkcyan"
+                    or "dc":
                         Kernel.fgColor = ConsoleColor.DarkCyan;
                         break;
 
-                    case "darkmagenta" or "dm":
+                    case "darkmagenta"
+                    or "dm":
                         Kernel.fgColor = ConsoleColor.DarkMagenta;
                         break;
 
-                    case "darkred" or "dr":
+                    case "darkred"
+                    or "dr":
                         Kernel.fgColor = ConsoleColor.DarkRed;
                         break;
 
-                    case "darkyellow" or "dy":
+                    case "darkyellow"
+                    or "dy":
                         Kernel.fgColor = ConsoleColor.DarkYellow;
                         break;
 
                     // Monochrome colors
-                    case "gray" or "g":
+                    case "gray"
+                    or "g":
                         Kernel.fgColor = ConsoleColor.Gray;
                         break;
 
-                    case "darkgray" or "dg":
+                    case "darkgray"
+                    or "dg":
                         Kernel.fgColor = ConsoleColor.DarkGray;
                         break;
 
-                    case "black" or "d":
+                    case "black"
+                    or "d":
                         Kernel.fgColor = ConsoleColor.Black;
                         break;
 
@@ -435,7 +471,11 @@ namespace Aqua
             CheckKeyboardLayout();
             CheckColors();
 
-            if (!System.IO.File.Exists("0:\\AquaSys\\Setup\\FirstRun.acf") || System.IO.File.ReadAllText("0:\\AquaSys\\Setup\\FirstRun.acf") != "true" || fs.Disks[0].Partitions == null)
+            if (
+                !System.IO.File.Exists("0:\\AquaSys\\Setup\\FirstRun.acf")
+                || System.IO.File.ReadAllText("0:\\AquaSys\\Setup\\FirstRun.acf") != "true"
+                || fs.Disks[0].Partitions == null
+            )
                 FirstRun();
 
             isNetworkConnected = false;
@@ -512,9 +552,10 @@ namespace Aqua
             Console.ForegroundColor = ConsoleColor.White;
 
             /* Setting the cursor position to the top left of the console window, then it is writing a
-			space to the console window for the width of the console window. */
+            space to the console window for the width of the console window. */
             Console.SetCursorPosition(0, 0);
-            for (int i = 0; i < Console.WindowWidth; i++) Console.Write(' ');
+            for (int i = 0; i < Console.WindowWidth; i++)
+                Console.Write(' ');
 
             Console.SetCursorPosition(0, 0);
             Console.Write("Aqua | Version " + version);
@@ -522,7 +563,7 @@ namespace Aqua
             DrawTime(time);
 
             /* Setting the cursor position to the bottom right of the console window and writing the
-			development status. */
+            development status. */
             Console.SetCursorPosition(Console.WindowWidth - developmentStatus.Length, 0);
             Console.Write(developmentStatus);
 
@@ -540,7 +581,8 @@ namespace Aqua
             Console.ForegroundColor = ConsoleColor.Black;
 
             Console.SetCursorPosition(0, 1);
-            for (int i = 0; i < Console.WindowWidth; i++) Console.Write(' ');
+            for (int i = 0; i < Console.WindowWidth; i++)
+                Console.Write(' ');
 
             Console.SetCursorPosition(0, 1);
             foreach (Tab tab in tabs)
@@ -551,11 +593,14 @@ namespace Aqua
                     /* Changing the background color of the console to gray. */
                     Console.BackgroundColor = ConsoleColor.Gray;
 
-                Console.Write($"[ {tab.Index} | {(tab.Index == currentTabIndex ? "> " : "")}{tab.Name} ]");
+                Console.Write(
+                    $"[ {tab.Index} | {(tab.Index == currentTabIndex ? "> " : "")}{tab.Name} ]"
+                );
             }
 
             Console.SetCursorPosition(cursorPos.Left, cursorPos.Top);
-            Console.BackgroundColor = bgColor; Console.ForegroundColor = fgColor;
+            Console.BackgroundColor = bgColor;
+            Console.ForegroundColor = fgColor;
         }
 
         public static void DrawTime(string time)
@@ -577,7 +622,8 @@ namespace Aqua
             {
                 term.DebugWrite("Setting up the network...", 1);
                 // Setup the network / Generate an IP address dynamically
-                if (!isNetworkConnected) Network.Network.Setup();
+                if (!isNetworkConnected)
+                    Network.Network.Setup();
 
                 // Network.Network.DownloadFile("http://info.cern.ch/hypertext/WWW/TheProject.html", @"0:\File.txt");
                 if (!VMTools.IsVMWare)
@@ -588,11 +634,7 @@ namespace Aqua
                     audioDriver = AC97.Initialize(bufferSize: 4096);
                     mixer = new AudioMixer();
 
-                    audioManager = new AudioManager()
-                    {
-                        Stream = mixer,
-                        Output = audioDriver
-                    };
+                    audioManager = new AudioManager() { Stream = mixer, Output = audioDriver };
 
                     audioManager.Enable();
                 }
@@ -615,26 +657,31 @@ namespace Aqua
 
             Console.WriteLine();
             // Center the cursor position
-            Console.SetCursorPosition((Console.WindowWidth / 2) - (welcome.Length / 2) - 1, Console.CursorTop);
+            Console.SetCursorPosition(
+                (Console.WindowWidth / 2) - (welcome.Length / 2) - 1,
+                Console.CursorTop
+            );
 
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine(welcome + "\n");
 
             string versionInfo = @"Aqua | Version " + version + " | Codename 'Paris'";
-            string[] devStatus =
-            {
-                "Current development status : ",
-                "Alpha | Milestone 2\n"
-            };
+            string[] devStatus = { "Current development status : ", "Alpha | Milestone 2\n" };
 
             /* Setting the cursor position to the center of the console window, then writing the
-			version info. */
-            Console.SetCursorPosition((Console.WindowWidth / 2) - (versionInfo.Length / 2) - 1, Console.CursorTop);
+            version info. */
+            Console.SetCursorPosition(
+                (Console.WindowWidth / 2) - (versionInfo.Length / 2) - 1,
+                Console.CursorTop
+            );
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(versionInfo);
 
-            Console.SetCursorPosition((Console.WindowWidth / 2) - ((devStatus[0].Length + devStatus[1].Length) / 2) - 1, Console.CursorTop);
+            Console.SetCursorPosition(
+                (Console.WindowWidth / 2) - ((devStatus[0].Length + devStatus[1].Length) / 2) - 1,
+                Console.CursorTop
+            );
             Console.Write(devStatus[0]);
 
             Console.ForegroundColor = ConsoleColor.Green;
@@ -643,7 +690,7 @@ namespace Aqua
             cursorPos = Console.GetCursorPosition();
 
             /* Checking if the machine is not a VMWare virtual machine. If it isn't, it will play the logon
-			sound. */
+            sound. */
             if (!VMTools.IsVMWare)
                 Sounds.Sounds.LogonSound();
         }

@@ -4,7 +4,8 @@ namespace Aqua.Commands.Executables
 {
     public class Time : Command
     {
-        public Time (string name, string description) : base (name, description) { }
+        public Time(string name, string description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {

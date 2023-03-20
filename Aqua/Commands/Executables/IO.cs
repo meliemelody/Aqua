@@ -5,7 +5,8 @@ namespace Aqua.Commands.Executables
 {
     public class IO : Command
     {
-        public IO(String name, String description) : base(name, description) { }
+        public IO(String name, String description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {
@@ -15,7 +16,8 @@ namespace Aqua.Commands.Executables
                     Cosmos.System.Power.Shutdown();
                     break;
 
-                case "rb" or "rd":
+                case "rb"
+                or "rd":
                     Cosmos.System.Power.Reboot();
                     break;
 

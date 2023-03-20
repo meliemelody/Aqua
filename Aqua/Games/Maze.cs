@@ -9,6 +9,11 @@ namespace Aqua.Games
     the player's color, the player's wins, and the player's coins */
     public class Player
     {
+        /// <summary>
+        /// Set some crucial variables, like the player's x and y coordinates,
+        /// the player's marker, the player's color, and the player's wins and
+        /// coins.
+        /// </summary>
         public int x { get; set; }
         public int y { get; set; }
 
@@ -70,6 +75,14 @@ namespace Aqua.Games
 
     public class Enemy
     {
+        /// <summary>
+        /// Define the enemies x and y coordinates, and the enemies marker and color.
+        /// The enemy can move, so the Draw() function is used to draw it, and Move() is used to move it.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+
         public int x { get; set; }
         public int y { get; set; }
 
@@ -159,7 +172,8 @@ namespace Aqua.Games
     public class World
     {
         public List<List<string>> grid = new List<List<string>>() { };
-        private int rows, cols;
+        private int rows,
+            cols;
 
         public World(int rows, int cols)
         {
@@ -178,7 +192,9 @@ namespace Aqua.Games
             }
         }
 
-        static int posX, posY;
+        static int posX,
+            posY;
+
         public List<List<string>> Draw()
         {
             Random random = new Random();
@@ -280,7 +296,8 @@ namespace Aqua.Games
 
     public class Maze
     {
-        static int width = 48, height = 48;
+        static int width = 48,
+            height = 48;
         static string symbol = "O";
         static bool running = true;
 
@@ -299,7 +316,7 @@ namespace Aqua.Games
             var oldCurPos = GetCursorPosition();
 
             player.Draw();
-            enemy.Draw(); 
+            enemy.Draw();
             world.Update();
 
             Instructions();

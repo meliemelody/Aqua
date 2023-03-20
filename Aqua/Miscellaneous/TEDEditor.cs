@@ -6,13 +6,13 @@ using System.Linq;
 namespace Aqua.Miscellaneous
 {
     /*
-	 * Project Avalanche
-	 * Source code by ipluxteamx.
-	 * Software for Aqua System 0.2.1
-	 * 
-	 * Version 0.1.2
-	 * Milestone 2
-	 */
+     * Project Avalanche
+     * Source code by ipluxteamx.
+     * Software for Aqua System 0.2.1
+     *
+     * Version 0.1.2
+     * Milestone 2
+     */
     public class TEDEditor
     {
         public static string Run(string[] args)
@@ -60,7 +60,10 @@ namespace Aqua.Miscellaneous
                     if (!File.Exists(path))
                     {
                         File.Create(path);
-                        File.WriteAllText(path, "This is the default TED Editor message.\nTo remove every line, simply press CTRL+K.");
+                        File.WriteAllText(
+                            path,
+                            "This is the default TED Editor message.\nTo remove every line, simply press CTRL+K."
+                        );
                     }
 
                     Console.Clear();
@@ -128,11 +131,13 @@ namespace Aqua.Miscellaneous
         }
 
         private static string[] lines;
-        private static string lineToInsert, newLine;
+        private static string lineToInsert,
+            newLine;
 
         public static void Editor(string path)
         {
-            string fileContents = File.ReadAllText(path), oldFC = File.ReadAllText(path);
+            string fileContents = File.ReadAllText(path),
+                oldFC = File.ReadAllText(path);
             int defaultYPos = 2;
 
             // Draw the information and title bar.
@@ -141,7 +146,8 @@ namespace Aqua.Miscellaneous
             Console.SetCursorPosition(0, defaultYPos);
             Console.Write(fileContents);
 
-            int cursorX = Console.CursorLeft, cursorY = Console.CursorTop;
+            int cursorX = Console.CursorLeft,
+                cursorY = Console.CursorTop;
             Console.SetCursorPosition(cursorX, cursorY);
 
             while (true)
@@ -172,7 +178,10 @@ namespace Aqua.Miscellaneous
                     case ConsoleKey.RightArrow:
                         // Split the input string into lines
                         TEDEditor.lines = fileContents.Split('\n');
-                        if (cursorY - defaultYPos < TEDEditor.lines.Length - 1 && cursorX < TEDEditor.lines[cursorY - defaultYPos].Length)
+                        if (
+                            cursorY - defaultYPos < TEDEditor.lines.Length - 1
+                            && cursorX < TEDEditor.lines[cursorY - defaultYPos].Length
+                        )
                             cursorX++;
                         else if (cursorY - defaultYPos < TEDEditor.lines.Length - 1)
                         {
@@ -218,7 +227,8 @@ namespace Aqua.Miscellaneous
                         TEDEditor.lines[cursorY - defaultYPos] += "\n";
 
                         fileContents = string.Join('\n', TEDEditor.lines);
-                        cursorX = 0; cursorY++;
+                        cursorX = 0;
+                        cursorY++;
                         break;
 
                     case ConsoleKey.Backspace:
@@ -232,12 +242,25 @@ namespace Aqua.Miscellaneous
 
                             if (cursorX > 0) // Check if cursorX is greater than 0
                             {
-                                TEDEditor.newLine = TEDEditor.lineToInsert.Substring(0, cursorX - 1) + TEDEditor.lineToInsert.Substring(cursorX);
+                                TEDEditor.newLine =
+                                    TEDEditor.lineToInsert.Substring(0, cursorX - 1)
+                                    + TEDEditor.lineToInsert.Substring(cursorX);
                                 TEDEditor.lines[cursorY - defaultYPos] = TEDEditor.newLine;
 
                                 cursorX--;
                                 Console.SetCursorPosition(cursorX, cursorY);
                                 Console.Write(' ');
+
+                                var PHxPos = Console.CursorLeft;
+                                var PHyPos = Console.CursorTop;
+
+                                Console.SetCursorPosition(
+                                    TEDEditor.lineToInsert.Length - 1,
+                                    cursorY
+                                );
+                                Console.Write(' ');
+
+                                Console.SetCursorPosition(PHxPos, PHyPos);
                             }
                             else if (cursorY > defaultYPos)
                             {
@@ -258,7 +281,10 @@ namespace Aqua.Miscellaneous
                         TEDEditor.lines = fileContents.Split('\n');
                         TEDEditor.lineToInsert = TEDEditor.lines[cursorY - defaultYPos];
 
-                        TEDEditor.newLine = TEDEditor.lineToInsert.Substring(0, cursorX) + "    " + TEDEditor.lineToInsert.Substring(cursorX);
+                        TEDEditor.newLine =
+                            TEDEditor.lineToInsert.Substring(0, cursorX)
+                            + "    "
+                            + TEDEditor.lineToInsert.Substring(cursorX);
                         TEDEditor.lines[cursorY - defaultYPos] = TEDEditor.newLine;
 
                         fileContents = string.Join('\n', TEDEditor.lines);
@@ -283,7 +309,8 @@ namespace Aqua.Miscellaneous
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     fileContents = "";
 
-                                    cursorX = 0; cursorY = defaultYPos;
+                                    cursorX = 0;
+                                    cursorY = defaultYPos;
                                     Console.Write(' ');
                                     cursorX = 0;
 
@@ -292,7 +319,9 @@ namespace Aqua.Miscellaneous
                                     break;
                             }
                         }
-                        else if (cursorY > defaultYPos || cursorY < defaultYPos + TEDEditor.lines.Length)
+                        else if (
+                            cursorY > defaultYPos || cursorY < defaultYPos + TEDEditor.lines.Length
+                        )
                         {
                             // Split the input string into lines
                             TEDEditor.lines = fileContents.Split('\n');
@@ -301,7 +330,10 @@ namespace Aqua.Miscellaneous
                             TEDEditor.lineToInsert = TEDEditor.lines[cursorY - defaultYPos];
 
                             if (lineToInsert.Length > 0)
-                                TEDEditor.newLine = TEDEditor.lineToInsert.Substring(0, cursorX) + input.KeyChar.ToString() + TEDEditor.lineToInsert.Substring(cursorX);
+                                TEDEditor.newLine =
+                                    TEDEditor.lineToInsert.Substring(0, cursorX)
+                                    + input.KeyChar.ToString()
+                                    + TEDEditor.lineToInsert.Substring(cursorX);
                             else
                                 TEDEditor.newLine = input.KeyChar.ToString();
 

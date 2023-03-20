@@ -5,7 +5,8 @@ namespace Aqua.Commands.Executables
 {
     public class Tabbing : Command
     {
-        public Tabbing(string name, string description) : base(name, description) { }
+        public Tabbing(string name, string description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {

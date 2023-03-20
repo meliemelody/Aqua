@@ -6,7 +6,8 @@ namespace Aqua.Commands.Executables
 {
     public class Games : Command
     {
-        public Games(string name, string description) : base(name, description) { }
+        public Games(string name, string description)
+            : base(name, description) { }
 
         public override string Execute(string[] args)
         {
@@ -26,7 +27,10 @@ namespace Aqua.Commands.Executables
 
                 default:
                     //return null;
-                    return Terminal.Screen.DebugWrite("Invalid argument, type \"help\" to list the available games.", 4);
+                    return Terminal.Screen.DebugWrite(
+                        "Invalid argument, type \"help\" to list the available games.",
+                        4
+                    );
             }
         }
     }

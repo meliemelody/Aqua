@@ -16,12 +16,17 @@ namespace Aqua.Interface
         private ConsoleColor _fg = ConsoleColor.Black;
         public Window _parent = null;
 
-        public virtual void KeyDown(ConsoleKeyInfo key)
-        {
+        public virtual void KeyDown(ConsoleKeyInfo key) { }
 
-        }
-
-        public input(int x, int y, int width, int height, ConsoleColor bg, ConsoleColor fg, Window parent)
+        public input(
+            int x,
+            int y,
+            int width,
+            int height,
+            ConsoleColor bg,
+            ConsoleColor fg,
+            Window parent
+        )
         {
             _x = x;
             _y = y;
@@ -36,10 +41,7 @@ namespace Aqua.Interface
 
         public ConsoleColor Background
         {
-            get
-            {
-                return _bg;
-            }
+            get { return _bg; }
             set
             {
                 _bg = value;
@@ -49,10 +51,7 @@ namespace Aqua.Interface
 
         public ConsoleColor Foreground
         {
-            get
-            {
-                return _fg;
-            }
+            get { return _fg; }
             set
             {
                 _fg = value;
@@ -62,10 +61,7 @@ namespace Aqua.Interface
 
         public int X
         {
-            get
-            {
-                return _x;
-            }
+            get { return _x; }
             set
             {
                 _x = value;
@@ -75,10 +71,7 @@ namespace Aqua.Interface
 
         public int Y
         {
-            get
-            {
-                return _y;
-            }
+            get { return _y; }
             set
             {
                 _y = value;
@@ -88,10 +81,7 @@ namespace Aqua.Interface
 
         public int Width
         {
-            get
-            {
-                return _width;
-            }
+            get { return _width; }
             set
             {
                 _width = value;
@@ -101,10 +91,7 @@ namespace Aqua.Interface
 
         public int Height
         {
-            get
-            {
-                return _height;
-            }
+            get { return _height; }
             set
             {
                 _height = value;

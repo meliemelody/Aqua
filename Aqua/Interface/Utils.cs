@@ -51,8 +51,15 @@ namespace Aqua.Interface
             Console.Write(text);
         }
 
-        public static void WriteBlock(string text, int x, int y, int width, int height, ConsoleColor bg,
-            ConsoleColor fg)
+        public static void WriteBlock(
+            string text,
+            int x,
+            int y,
+            int width,
+            int height,
+            ConsoleColor bg,
+            ConsoleColor fg
+        )
         {
             List<string> text_lines = new List<string>();
             //Separate lines of text.
