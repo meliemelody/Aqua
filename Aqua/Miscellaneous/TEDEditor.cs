@@ -84,7 +84,7 @@ namespace Aqua.Miscellaneous
 
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
                 Console.ForegroundColor = ConsoleColor.White;
-                for (int screenX = x; screenX <= Console.WindowWidth; screenX++)
+                for (int screenX = x; screenX < Console.WindowWidth; screenX++)
                 {
                     Console.Write(' ');
                 }
@@ -104,7 +104,7 @@ namespace Aqua.Miscellaneous
                 Console.ForegroundColor = ConsoleColor.White;
 
                 Console.SetCursorPosition(x, y + 1);
-                for (int screenX = x; screenX <= Console.WindowWidth; screenX++)
+                for (int screenX = x; screenX < Console.WindowWidth; screenX++)
                 {
                     Console.Write(' ');
                 }
@@ -264,11 +264,26 @@ namespace Aqua.Miscellaneous
                             }
                             else if (cursorY > defaultYPos)
                             {
+                                // Remove the last "\n" from the file contents
+                                int lastNewLineIndex = fileContents.LastIndexOf(
+                                    '\n',
+                                    fileContents.Length - 2
+                                );
+                                if (lastNewLineIndex >= 0)
+                                    fileContents = fileContents.Substring(0, lastNewLineIndex);
+
+                                TEDEditor.lines = fileContents.Split('\n');
                                 cursorY--;
                                 if (cursorY - defaultYPos >= 0)
-                                    cursorX = TEDEditor.lines[cursorY - defaultYPos].Length;
+                                {
+                                    if (TEDEditor.lines[cursorY - defaultYPos] == "")
+                                        cursorX = TEDEditor.lines[cursorY - defaultYPos].Length;
+                                    else
+                                        cursorX = TEDEditor.lines[cursorY - defaultYPos].Length;
+                                }
                                 else
                                     cursorX = 0;
+
                                 Console.SetCursorPosition(cursorX, cursorY);
                             }
 

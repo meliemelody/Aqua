@@ -19,7 +19,12 @@ namespace Aqua.ErrorHandler
 
             // Write the crash information to the terminal.
             term.DebugWrite(ex.ToString() + "\n", 5);
-            term.DebugWrite("More information about this fatal system failure will be available as \'system-crash-" + number + ".log\'\n", 6);
+            term.DebugWrite(
+                "More information about this fatal system failure will be available as \'system-crash-"
+                    + number
+                    + ".log\'\n",
+                6
+            );
 
             // Create the crash information folder if it doesn't exist.
             if (!System.IO.Directory.Exists(@"0:\AquaSys\Crash"))
@@ -31,7 +36,10 @@ namespace Aqua.ErrorHandler
                 }
                 catch (Exception e)
                 {
-                    term.DebugWrite("Could not create the crash information folder.\n  " + e.ToString() + "\n", 4);
+                    term.DebugWrite(
+                        "Could not create the crash information folder.\n  " + e.ToString() + "\n",
+                        4
+                    );
                 }
             }
 
@@ -45,8 +53,14 @@ namespace Aqua.ErrorHandler
 
                 // Write the crash information to the file.
                 // This is the most important part of this class.
-                // Without this, the crash information would be lost. 
-                System.IO.File.WriteAllText("0:\\AquaSys\\Crash\\system-crash-" + number + ".log", DateTime.Now.ToString("HH:mm:ss | ") + ex.ToString() + " | " + ex.Data.ToString());
+                // Without this, the crash information would be lost.
+                System.IO.File.WriteAllText(
+                    "0:\\AquaSys\\Crash\\system-crash-" + number + ".log",
+                    DateTime.Now.ToString("HH:mm:ss | ")
+                        + ex.ToString()
+                        + " | "
+                        + ex.Data.ToString()
+                );
             }
             catch (Exception e)
             {

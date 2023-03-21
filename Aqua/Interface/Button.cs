@@ -25,6 +25,37 @@ namespace Aqua.Interface
             Draw(false);
         }
 
+        public Button(
+            string text,
+            int x,
+            int y,
+            int width,
+            int height,
+            Window parent,
+            ConsoleColor background,
+            ConsoleColor foreground
+        )
+            : base(x, y, width, height, background, foreground, parent)
+        {
+            Text = text;
+            Draw(false);
+        }
+
+        public Button(string text, Window parent)
+            : base(
+                parent.X / 2 - 5,
+                parent.Y - 3,
+                5,
+                2,
+                Utils.COL_BUTTON_DEFAULT,
+                Utils.COL_BUTTON_TEXT,
+                parent
+            )
+        {
+            Text = text;
+            Draw(false);
+        }
+
         // Draw the button with the correct color and text depending on if it is selected or not.
         // This is called by the parent window when it is drawn.
         public override void Draw(bool _selected)
