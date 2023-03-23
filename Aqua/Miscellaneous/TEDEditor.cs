@@ -13,6 +13,28 @@ namespace Aqua.Miscellaneous
      * Version 0.1.2
      * Milestone 2
      */
+
+    // clipboard class that copies the line from the cursorY position
+    public class Clipboard
+    {
+        public static string line;
+
+        public Clipboard()
+        {
+            line = null;
+        }
+
+        public void Copy(string[] lines, int cursorY)
+        {
+            line = lines[cursorY - 2];
+        }
+
+        public void Paste(string[] lines, int cursorY)
+        {
+            lines[cursorY - 2] = line;
+        }
+    }
+
     public class TEDEditor
     {
         public static string Run(string[] args)
@@ -84,10 +106,9 @@ namespace Aqua.Miscellaneous
 
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
                 Console.ForegroundColor = ConsoleColor.White;
+
                 for (int screenX = x; screenX < Console.WindowWidth; screenX++)
-                {
                     Console.Write(' ');
-                }
 
                 string programName = "Project Avalanche | version 0.1.2";
                 Console.SetCursorPosition(x, y);
@@ -105,9 +126,7 @@ namespace Aqua.Miscellaneous
 
                 Console.SetCursorPosition(x, y + 1);
                 for (int screenX = x; screenX < Console.WindowWidth; screenX++)
-                {
                     Console.Write(' ');
-                }
 
                 Console.SetCursorPosition(x, y + 1);
                 if (newC.Length != 0)
@@ -139,6 +158,8 @@ namespace Aqua.Miscellaneous
             string fileContents = File.ReadAllText(path),
                 oldFC = File.ReadAllText(path);
             int defaultYPos = 2;
+
+            Clipboard clipboard = new Clipboard();
 
             // Draw the information and title bar.
             DrawUpperBar(0, 0, path, oldFC, fileContents);
@@ -318,6 +339,14 @@ namespace Aqua.Miscellaneous
                                 case ConsoleKey.S:
                                     File.WriteAllText(path, fileContents);
                                     oldFC = fileContents;
+                                    break;
+
+                                case ConsoleKey.C:
+                                    clipboard.Copy(TEDEditor.lines, cursorY);
+                                    break;
+
+                                case ConsoleKey.V:
+                                    clipboard.Paste(TEDEditor.lines, cursorY);
                                     break;
 
                                 case ConsoleKey.K:
