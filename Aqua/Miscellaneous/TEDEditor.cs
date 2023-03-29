@@ -21,17 +21,17 @@ namespace Aqua.Miscellaneous
 
         public Clipboard()
         {
-            line = null;
+            line = "";
         }
 
         public void Copy(string[] lines, int cursorY)
         {
-            line = lines[cursorY - 2];
+            Clipboard.line = lines[cursorY - 2];
         }
 
         public void Paste(string[] lines, int cursorY)
         {
-            lines[cursorY - 2] = line;
+            lines[cursorY - 2] = Clipboard.line;
         }
     }
 
@@ -342,11 +342,21 @@ namespace Aqua.Miscellaneous
                                     break;
 
                                 case ConsoleKey.C:
+                                    // Split the input string into lines
+                                    TEDEditor.lines = fileContents.Split('\n');
                                     clipboard.Copy(TEDEditor.lines, cursorY);
+                                    fileContents = string.Join('\n', TEDEditor.lines);
+                                    break;
+
+                                case ConsoleKey.Z:
+                                    fileContents = oldFC;
                                     break;
 
                                 case ConsoleKey.V:
+                                    // Split the input string into lines
+                                    TEDEditor.lines = fileContents.Split('\n');
                                     clipboard.Paste(TEDEditor.lines, cursorY);
+                                    fileContents = string.Join('\n', TEDEditor.lines);
                                     break;
 
                                 case ConsoleKey.K:
