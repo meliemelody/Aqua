@@ -6,7 +6,7 @@
 
 Welcome to the open-source world of Aqua System [by iplux].
 
-Congratulations on installing Aqua System version 0.3.0 !
+Congratulations on installing Aqua System version 0.3.1 !
 This system aims to be a different way for computing,
 while still being simple to use and to understand.
 
@@ -14,7 +14,7 @@ This release is probably the biggest release so far,
 in terms of bug fixing, optimizations and features.
 
 This readme was created on : 31/01/2023.
-Updated on : 15/02/2023.
+Updated on : 29/03/2023.
 
 ------------------------------------------------------------------------------------
 
@@ -82,6 +82,9 @@ Bugfixes :
 
 Additions :
 
+0.3.1 :
+- Ability to CTRL+C, CTRL+V, CTRL+Z and CTRL+X in the TED Editor.
+
 0.3.0 :
 - Ability to move files with ""f move"".
 - Brand new programming language for custom executables.
@@ -142,7 +145,7 @@ Thank you for supporting Aqua System. :]
 
 ------------------------------------------------------------------------------------
 
-Thank you for using Aqua System version 0.2.1 !
+Thank you for using Aqua System version 0.3.1 !
 
 I am incredibly grateful for your support in using Aqua.
 Please report any bugs you see on the official Aqua System Github** repository.

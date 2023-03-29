@@ -29,6 +29,12 @@ namespace Aqua.Miscellaneous
             Clipboard.line = lines[cursorY - 2];
         }
 
+        public void Cut(string[] lines, int cursorY) 
+        {
+            Clipboard.line = lines[cursorY - 2];
+            lines[cursorY - 2] = "";
+        }
+
         public void Paste(string[] lines, int cursorY)
         {
             lines[cursorY - 2] = Clipboard.line;
@@ -312,21 +318,6 @@ namespace Aqua.Miscellaneous
                         }
                         break;
 
-                    case ConsoleKey.Tab:
-                        // Split the input string into lines
-                        TEDEditor.lines = fileContents.Split('\n');
-                        TEDEditor.lineToInsert = TEDEditor.lines[cursorY - defaultYPos];
-
-                        TEDEditor.newLine =
-                            TEDEditor.lineToInsert.Substring(0, cursorX)
-                            + "    "
-                            + TEDEditor.lineToInsert.Substring(cursorX);
-                        TEDEditor.lines[cursorY - defaultYPos] = TEDEditor.newLine;
-
-                        fileContents = string.Join('\n', TEDEditor.lines);
-                        cursorX += 4;
-                        break;
-
                     case ConsoleKey.Escape:
                         Console.Clear();
                         return;
@@ -336,6 +327,10 @@ namespace Aqua.Miscellaneous
                         {
                             switch (input.Key)
                             {
+                                case ConsoleKey.Q:
+                                    Console.Clear();
+                                    return;
+
                                 case ConsoleKey.S:
                                     File.WriteAllText(path, fileContents);
                                     oldFC = fileContents;
@@ -350,6 +345,13 @@ namespace Aqua.Miscellaneous
 
                                 case ConsoleKey.Z:
                                     fileContents = oldFC;
+                                    break;
+                                
+                                case ConsoleKey.X:
+                                    // Split the input string into lines
+                                    TEDEditor.lines = fileContents.Split('\n');
+                                    clipboard.Cut(TEDEditor.lines, cursorY);
+                                    fileContents = string.Join('\n', TEDEditor.lines);
                                     break;
 
                                 case ConsoleKey.V:
