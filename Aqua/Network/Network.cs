@@ -3,7 +3,6 @@ using Cosmos.System.Network.Config;
 using Cosmos.System.Network.IPv4;
 using Cosmos.System.Network.IPv4.TCP;
 using Cosmos.System.Network.IPv4.UDP.DHCP;
-using CosmosFtpServer;
 using System;
 using System.Text;
 using term = Aqua.Terminal.Screen;
@@ -64,23 +63,6 @@ namespace Aqua.Network
         {
             switch (args[0])
             {
-                case "ftp":
-                    try
-                    {
-                        using (var xServer = new FtpServer(Kernel.fs, "0:\\"))
-                        {
-                            /** Listen for new FTP client connections **/
-                            term.DebugWrite($"FTP Server has been started at {NetworkConfiguration.CurrentAddress.ToString()}.", 2);
-                            xServer.Listen();
-                        }
-
-                        return null;
-                    }
-                    catch (Exception ex)
-                    {
-                        return term.DebugWrite(ex.ToString(), 4);
-                    }
-
                 case "get":
                     if (args[1] == "ip")
                     {

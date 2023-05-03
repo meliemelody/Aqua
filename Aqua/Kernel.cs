@@ -215,25 +215,34 @@ namespace Aqua
 
                 switch (content)
                 {
-                    /* Setting the keyboard layout to US_Standard. */
                     case "us":
-                        KeyboardManager.SetKeyLayout(new US_Standard());
+                        KeyboardManager.SetKeyLayout(new USStandardLayout());
                         break;
 
-                    /* Setting the keyboard layout to the French keyboard layout. */
                     case "fr":
-                        KeyboardManager.SetKeyLayout(new FR_Standard());
+                        KeyboardManager.SetKeyLayout(new FRStandardLayout());
                         break;
 
-                    /* Setting the keyboard layout to the German Standard layout. */
                     case "de":
-                        KeyboardManager.SetKeyLayout(new DE_Standard());
+                        KeyboardManager.SetKeyLayout(new DEStandardLayout());
+                        break;
+
+                    case "gb":
+                        KeyboardManager.SetKeyLayout(new GBStandardLayout());
+                        break;
+
+                    case "es":
+                        KeyboardManager.SetKeyLayout(new ESStandardLayout());
+                        break;
+
+                    case "tr":
+                        KeyboardManager.SetKeyLayout(new TRStandardLayout());
                         break;
                 }
             }
             else
             {
-                KeyboardManager.SetKeyLayout(new US_Standard());
+                KeyboardManager.SetKeyLayout(new USStandardLayout());
             }
         }
 
@@ -241,7 +250,6 @@ namespace Aqua
         /* Checking if the file exists, then it is reading the first line of the file and assigning it
         to the variable bg. Then it is reading the second line of the file and assigning it to the
         variable fg. */
-        // vscode-fold=#
         public void CheckColors()
         {
             if (System.IO.File.Exists(@"0:\AquaSys\Config\Colors.acf"))

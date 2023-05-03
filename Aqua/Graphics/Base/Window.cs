@@ -69,7 +69,7 @@ namespace Aqua.Graphics.Base
                 Cosmos.System.Graphics.Fonts.PCScreenFont.Default,
                 Color.Black,
                 10,
-                canvas.Mode.Height - 15
+                (int)canvas.Mode.Height - 15
             );
             windowEditMode = true;
 

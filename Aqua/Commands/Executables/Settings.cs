@@ -1,5 +1,7 @@
-﻿using Cosmos.System.ScanMaps;
+﻿using Cosmos.System;
+using Cosmos.System.ScanMaps;
 using System;
+using Console = System.Console;
 
 namespace Aqua.Commands.Executables
 {
@@ -203,15 +205,27 @@ namespace Aqua.Commands.Executables
                         switch (args[1])
                         {
                             case "us":
-                                Cosmos.System.KeyboardManager.SetKeyLayout(new US_Standard());
+                                KeyboardManager.SetKeyLayout(new USStandardLayout());
                                 break;
 
                             case "fr":
-                                Cosmos.System.KeyboardManager.SetKeyLayout(new FR_Standard());
+                                KeyboardManager.SetKeyLayout(new FRStandardLayout());
                                 break;
 
                             case "de":
-                                Cosmos.System.KeyboardManager.SetKeyLayout(new DE_Standard());
+                                KeyboardManager.SetKeyLayout(new DEStandardLayout());
+                                break;
+
+                            case "gb":
+                                KeyboardManager.SetKeyLayout(new GBStandardLayout());
+                                break;
+
+                            case "es":
+                                KeyboardManager.SetKeyLayout(new ESStandardLayout());
+                                break;
+
+                            case "tr":
+                                KeyboardManager.SetKeyLayout(new TRStandardLayout());
                                 break;
 
                             default:

@@ -4,6 +4,8 @@ using io = System.IO;
 using term = Aqua.Terminal.Screen;
 using System.Linq;
 using System.IO;
+using Aqua.Interface;
+using Aqua.Miscellaneous;
 
 namespace Aqua.Filesystem
 {
@@ -141,6 +143,79 @@ namespace Aqua.Filesystem
                         }
 
                         return null;
+                    }
+                    catch (Exception e)
+                    {
+                        return term.DebugWrite(e.ToString(), 4);
+                    }
+
+                case "encrypt":
+                    try
+                    {
+                        if (Kernel.isRoot) {
+                            var path = Kernel.currentDirectory + file;
+                            var fileC = io.File.ReadAllText(path);
+
+                            var encrypted = Decryption.Encrypt(fileC);
+                            io.File.WriteAllText(path, encrypted);
+
+                            return term.DebugWrite(
+                                "The file \""
+                                    + file
+                                    + "\" is successfully encrypted.",
+                                2
+                            );
+                        }
+                        else
+                        {
+                            return term.DebugWrite(
+                                "You are not a \"root\" user, please log in using root credentials.",
+                                4
+                            );
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return term.DebugWrite(e.ToString(), 4);
+                    }
+
+                case "decrypt":
+                    try
+                    {
+                        if (Kernel.isRoot)
+                        {
+                            var path = Kernel.currentDirectory + file;
+                            var fileC = io.File.ReadAllText(path);
+
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.Write("\nInput your password : ");
+
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            String input = Console.ReadLine();
+
+                            var password = Decryption.Decrypt(Utilities.ReadLine(@"0:\AquaSys\Login\Password.acf", 0));
+                            if (input != password) return term.DebugWrite(
+                                "You did not enter the correct password, aborting the decryption.",
+                                4
+                            );
+
+                            var decrypted = Decryption.Decrypt(fileC);
+                            io.File.WriteAllText(path, decrypted);
+
+                            return term.DebugWrite(
+                                "The file \""
+                                    + file
+                                    + "\" is successfully decrypted.",
+                                2
+                            );
+                        }
+                        else
+                        {
+                            return term.DebugWrite(
+                                "You are not a \"root\" user, please log in using root credentials.",
+                                4
+                            );
+                        }
                     }
                     catch (Exception e)
                     {
