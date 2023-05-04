@@ -188,7 +188,7 @@ namespace Aqua.Filesystem
                             var fileC = io.File.ReadAllText(path);
 
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.Write("\nInput your password : ");
+                            Console.Write("Input your password : ");
 
                             Console.ForegroundColor = ConsoleColor.Black;
                             String input = Console.ReadLine();

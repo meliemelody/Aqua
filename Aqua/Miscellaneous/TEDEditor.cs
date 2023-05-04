@@ -332,7 +332,10 @@ namespace Aqua.Miscellaneous
                                     return;
 
                                 case ConsoleKey.S:
-                                    File.WriteAllText(path, fileContents);
+                                    if ((input.Modifiers & ConsoleModifiers.Shift) != 0)
+                                        File.WriteAllText(path, Decryption.Encrypt(fileContents));
+                                    else
+                                        File.WriteAllText(path, fileContents);
                                     oldFC = fileContents;
                                     break;
 
