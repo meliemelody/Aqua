@@ -1,6 +1,8 @@
-﻿using Cosmos.System;
+﻿using Aqua.Filesystem;
+using Cosmos.System;
 using Cosmos.System.ScanMaps;
 using System;
+using System.IO;
 using Console = System.Console;
 
 namespace Aqua.Commands.Executables
@@ -240,6 +242,35 @@ namespace Aqua.Commands.Executables
                         System.IO.File.WriteAllText(@"0:\AquaSys\Config\KeyMap.acf", args[1]);
                         return Terminal.Screen.DebugWrite(
                             $"Successfully set the keyboard to \"{args[1]}\".",
+                            2
+                        );
+                    }
+                    catch (Exception e)
+                    {
+                        return Terminal.Screen.DebugWrite(e.ToString(), 4);
+                    }
+
+                case "barmsg":
+                    try
+                    {
+                        // FIRST MESSAGE
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Input your left bar message :");
+
+                        Console.ForegroundColor = ConsoleColor.White;
+                        var text1 = Console.ReadLine();
+
+                        // SECOND MESSAGE
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Input your right bar message :");
+
+                        Console.ForegroundColor = ConsoleColor.White;
+                        var text2 = Console.ReadLine();
+
+                        // PUT TO FILE
+                        System.IO.File.WriteAllText(@"0:\AquaSys\Bar.acf", $"{text1}\n{text2}");
+                        return Terminal.Screen.DebugWrite(
+                            $"Successfully modified the bar messages.",
                             2
                         );
                     }

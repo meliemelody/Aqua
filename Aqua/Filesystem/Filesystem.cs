@@ -20,7 +20,7 @@ namespace Aqua.Filesystem
 
             switch (args[0])
             {
-                case "make":
+                case "make" or "mk":
                     try
                     {
                         io.File.Create(Kernel.currentDirectory + file);
@@ -36,7 +36,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "del":
+                case "delete" or "del":
                     try
                     {
                         if (io.File.Exists(Kernel.currentDirectory + file))
@@ -62,7 +62,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "move":
+                case "move" or "mv":
                     try
                     {
                         //io.File.Move(args[0], args[1]);
@@ -84,7 +84,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "copy":
+                case "copy" or "cp":
                     try
                     {
                         //io.File.Move(args[0], args[1]);
@@ -100,7 +100,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "write":
+                case "write" or "wrt":
                     try
                     {
                         //io.File.WriteAllText(Kernel.currentDirectory + args[1], args[2]);
@@ -126,7 +126,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "read":
+                case "read" or "rd":
                     try
                     {
                         var path = Kernel.currentDirectory + file;
@@ -149,7 +149,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "encrypt":
+                case "encrypt" or "ec":
                     try
                     {
                         if (Kernel.isRoot) {
@@ -179,7 +179,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "decrypt":
+                case "decrypt" or "dc":
                     try
                     {
                         if (Kernel.isRoot)
@@ -252,7 +252,7 @@ namespace Aqua.Filesystem
 
             switch (args[0])
             {
-                case "make":
+                case "make" or "mk":
                     try
                     {
                         //Kernel.fs.CreateDirectory(Kernel.currentDirectory + string.Join(' ', args.Skip(1)));
@@ -269,7 +269,7 @@ namespace Aqua.Filesystem
                         return term.DebugWrite(e.ToString(), 4);
                     }
 
-                case "del":
+                case "delete" or "del":
                     try
                     {
                         if (System.IO.Directory.Exists(Kernel.currentDirectory + directory))

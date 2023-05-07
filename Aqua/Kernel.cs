@@ -22,6 +22,7 @@ using IL2CPU.API.Attribs;
 using Cosmos.System.ScanMaps;
 using System.Collections.Generic;
 using futils = Aqua.Filesystem.Utilities;
+using Aqua.Filesystem;
 
 namespace Aqua
 {
@@ -551,6 +552,7 @@ namespace Aqua
             //var time = DateTime.Now.ToString("HH:mm");
             /* Drawing the top bar of the console. */
             var developmentStatus = "Alpha | Milestone 2";
+            if (System.IO.File.Exists(@"0:\AquaSys\Bar.acf") && Utilities.ReadLine(@"0:\AquaSys\Bar.acf", 1) != "") developmentStatus = Utilities.ReadLine(@"0:\AquaSys\Bar.acf", 0);
 
             time = $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}";
             //time = DateTime.Now.ToString("t");
@@ -566,8 +568,11 @@ namespace Aqua
                 Console.Write(' ');
 
             Console.SetCursorPosition(0, 0);
-            Console.Write("Aqua | Version " + version);
 
+            var versionStr = "Aqua | Version " + version;
+            if (System.IO.File.Exists(@"0:\AquaSys\Bar.acf") && Utilities.ReadLine(@"0:\AquaSys\Bar.acf", 0) != "") versionStr = Utilities.ReadLine(@"0:\AquaSys\Bar.acf", 1);
+
+            Console.Write(versionStr);
             DrawTime(time);
 
             /* Setting the cursor position to the bottom right of the console window and writing the

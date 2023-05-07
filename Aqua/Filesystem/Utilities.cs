@@ -15,10 +15,12 @@ namespace Aqua.Filesystem
             return lines[line];
         }
 
+        // USELESS
         public static bool WriteLine(string file, string content, bool append)
         {
             try
             {
+                if (!io.File.Exists(file)) io.File.Create(file);
                 TextWriter fileOpen = new StreamWriter(file, append);
 
                 fileOpen.WriteLine(content);
