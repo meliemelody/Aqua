@@ -7,7 +7,6 @@ using System;
 using System.Text;
 using term = Aqua.Terminal.Screen;
 using Cosmos.System.Network.IPv4.UDP.DNS;
-using PrismNetwork;
 using System.IO;
 
 namespace Aqua.Network
@@ -37,14 +36,16 @@ namespace Aqua.Network
         {
             try
             {
-                WebClient wc = new WebClient(args[0]);
+                /*WebClient wc = new WebClient(args[0]);
                 Random random = new Random();
                 string path = $"0:\\temp-{random.Next(100, 999)}.txt";
 
                 byte[] fileData = wc.DownloadFile();
 
                 using (FileStream fileStream = new(path, FileMode.Create))
-                    fileStream.Write(fileData, 0, fileData.Length);
+                    fileStream.Write(fileData, 0, fileData.Length);*/
+                string path = "not used";
+                Console.WriteLine("NOT FINISHED, DO NOT USE THIS");
 
                 return term.DebugWrite($"File downloaded successfully at \"{path}\".", 4);
             }

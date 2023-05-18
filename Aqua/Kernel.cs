@@ -2,7 +2,6 @@
 using Aqua.Commands;
 using Aqua.Terminal.Accounts;
 
-using Cosmos.HAL.Drivers.PCI.Audio;
 using Cosmos.System;
 using Cosmos.System.Audio;
 using Cosmos.System.FileSystem;
@@ -100,9 +99,8 @@ namespace Aqua
             tabBarVisible = false;
         public static string currentDirectory = "0:\\";
 
-        public static AudioMixer mixer;
-        public static AC97 audioDriver;
-        public static AudioManager audioManager;
+        // public static AudioMixer mixer;
+        // public static AudioManager audioManager;
 
         public static ConsoleColor bgColor = ConsoleColor.Black,
             fgColor = ConsoleColor.White;
@@ -501,9 +499,7 @@ namespace Aqua
             //Console.WriteLine($"Collected : {Heap.Collect()} objects.");
             Heap.Collect();
 
-            if (guiStarted)
-                Graphics.Graphics.Draw(canvas);
-            else
+            if (!guiStarted)
             {
                 // Draw the upper bar, with the time, name of the OS and version.
                 // I need to find a way to update it while still being able to use the shell, and vice-versa.
@@ -639,18 +635,18 @@ namespace Aqua
                     Network.Network.Setup();
 
                 // Network.Network.DownloadFile("http://info.cern.ch/hypertext/WWW/TheProject.html", @"0:\File.txt");
-                if (!VMTools.IsVMWare)
+                /*if (!VMTools.IsVMWare)
                 {
                     term.DebugWrite("Setting up the audio drivers...", 0);
 
-                    /* Initializing the audio driver and mixer. */
+                    // Initializing the audio driver and mixer.
                     audioDriver = AC97.Initialize(bufferSize: 4096);
                     mixer = new AudioMixer();
 
                     audioManager = new AudioManager() { Stream = mixer, Output = audioDriver };
 
                     audioManager.Enable();
-                }
+                }*/
 
                 Cosmos.HAL.Global.PIT.Wait(750);
                 Console.Clear();
@@ -701,11 +697,6 @@ namespace Aqua
             Console.WriteLine(devStatus[1]);
 
             cursorPos = Console.GetCursorPosition();
-
-            /* Checking if the machine is not a VMWare virtual machine. If it isn't, it will play the logon
-            sound. */
-            if (!VMTools.IsVMWare)
-                Sounds.Sounds.LogonSound();
         }
     }
 }

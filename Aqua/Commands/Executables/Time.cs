@@ -11,9 +11,9 @@ namespace Aqua.Commands.Executables
         {
             switch (args[0])
             {
-                case "compile":
+                /*case "compile":
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    return Miscellaneous.Compilation.Date + " | " + Miscellaneous.Compilation.Time;
+                    return Miscellaneous.Compilation.Date + " | " + Miscellaneous.Compilation.Time;*/
 
                 default:
                     Console.ForegroundColor = ConsoleColor.Gray;
