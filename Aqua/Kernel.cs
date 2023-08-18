@@ -22,6 +22,8 @@ using Cosmos.System.ScanMaps;
 using System.Collections.Generic;
 using futils = Aqua.Filesystem.Utilities;
 using Aqua.Filesystem;
+using Aqua.Commands.Executables;
+using Aqua.Interface;
 
 namespace Aqua
 {
@@ -496,11 +498,10 @@ namespace Aqua
 
         protected override void Run()
         {
-            //Console.WriteLine($"Collected : {Heap.Collect()} objects.");
-            Heap.Collect();
-
             if (!guiStarted)
             {
+                Heap.Collect();
+
                 // Draw the upper bar, with the time, name of the OS and version.
                 // I need to find a way to update it while still being able to use the shell, and vice-versa.
                 DrawBar();
@@ -516,6 +517,10 @@ namespace Aqua
                 // Can set them using the "set" command.
                 Console.BackgroundColor = bgColor;
                 Console.ForegroundColor = fgColor;
+            } 
+            else
+            {
+                Base.Update();
             }
         }
 
@@ -547,7 +552,7 @@ namespace Aqua
         {
             //var time = DateTime.Now.ToString("HH:mm");
             /* Drawing the top bar of the console. */
-            var developmentStatus = "Alpha | Milestone 2";
+            var developmentStatus = "Alpha | Milestone 3";
             if (System.IO.File.Exists(@"0:\AquaSys\Bar.acf") && Utilities.ReadLine(@"0:\AquaSys\Bar.acf", 1) != "") developmentStatus = Utilities.ReadLine(@"0:\AquaSys\Bar.acf", 0);
 
             time = $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}";
