@@ -1,30 +1,27 @@
 ﻿using Aqua.Commands;
-using Cosmos.System.Network.Config;
-using Cosmos.System.Network.IPv4;
-using Cosmos.System.Network.IPv4.TCP;
-using Cosmos.System.Network.IPv4.UDP.DHCP;
+using Cosmos.System.Network;
 using System;
 using System.Text;
 using term = Aqua.Terminal.Screen;
 using Cosmos.System.Network.IPv4.UDP.DNS;
 using System.IO;
+using Cosmos.System.Network.IPv4.UDP.DHCP;
+using Cosmos.System.Network.Config;
+using Cosmos.System.Network.IPv4;
 
 namespace Aqua.Network
 {
     public class Network
     {
         public Network() { }
-        public static DHCPClient xClient = new DHCPClient();
         public static void Setup()
         {
-            /** Send a DHCP Discover packet **/
-            //This will automatically set the IP config after DHCP response
-            xClient.SendDiscoverPacket();
-
-            Address dnsAddress = new Address(8, 8, 8, 8);
-            DNSConfig.Add(dnsAddress);
-
-            Kernel.isNetworkConnected = true;
+            using (var xClient = new DHCPClient())
+            {
+                /** Send a DHCP Discover packet **/
+                //This will automatically set the IP config after DHCP response
+                xClient.SendDiscoverPacket();
+            }
         }
     }
 
@@ -44,10 +41,18 @@ namespace Aqua.Network
 
                 using (FileStream fileStream = new(path, FileMode.Create))
                     fileStream.Write(fileData, 0, fileData.Length);*/
-                string path = "not used";
-                Console.WriteLine("NOT FINISHED, DO NOT USE THIS");
+                using (var xClient = new DnsClient())
+                {
+                    xClient.Connect(new Address(192, 168, 1, 254)); //DNS Server address
 
-                return term.DebugWrite($"File downloaded successfully at \"{path}\".", 4);
+                    /** Send DNS ask for a single domain name **/
+                    xClient.SendAsk("github.com");
+
+                    /** Receive DNS Response **/
+                    Address destination = xClient.Receive(); //can set a timeout value
+
+                    return term.DebugWrite($"File downloaded successfully at \"{destination}\".", 4);
+                }
             }
             catch (Exception e)
             {

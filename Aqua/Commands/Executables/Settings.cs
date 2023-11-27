@@ -201,7 +201,7 @@ namespace Aqua.Commands.Executables
                     Filesystem.Utilities.WriteLine(@"0:\AquaSys\Config\Colors.acf", args[1], true);
                     return null;
 
-                case "keymap":
+                case "kb":
                     try
                     {
                         switch (args[1])

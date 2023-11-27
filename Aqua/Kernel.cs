@@ -24,6 +24,8 @@ using futils = Aqua.Filesystem.Utilities;
 using Aqua.Filesystem;
 using Aqua.Commands.Executables;
 using Aqua.Interface;
+using Aqua.Network;
+using Aqua.Sounds;
 
 namespace Aqua
 {
@@ -639,7 +641,7 @@ namespace Aqua
                 if (!isNetworkConnected)
                     Network.Network.Setup();
 
-                // Network.Network.DownloadFile("http://info.cern.ch/hypertext/WWW/TheProject.html", @"0:\File.txt");
+                //Network.Network.DownloadFile("http://info.cern.ch/hypertext/WWW/TheProject.html", @"0:\File.txt");
                 /*if (!VMTools.IsVMWare)
                 {
                     term.DebugWrite("Setting up the audio drivers...", 0);
@@ -652,6 +654,8 @@ namespace Aqua
 
                     audioManager.Enable();
                 }*/
+
+                //Audio.Initialize();
 
                 Cosmos.HAL.Global.PIT.Wait(750);
                 Console.Clear();
@@ -667,7 +671,7 @@ namespace Aqua
             Console.SetCursorPosition(0, 1);
 
             // Introduction
-            string welcome = "Welcome to the world of Aqua.";
+            string welcome = "Welcome to the world of the Aqua System.";
 
             Console.WriteLine();
             // Center the cursor position
@@ -679,7 +683,7 @@ namespace Aqua
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine(welcome + "\n");
 
-            string versionInfo = @"Aqua | Version " + version + " | Codename 'Paris'";
+            string versionInfo = @"Aqua System | Version " + version + " | Codename 'Paris'";
             string[] devStatus = { "Current development status : ", "Alpha | Milestone 2\n" };
 
             /* Setting the cursor position to the center of the console window, then writing the

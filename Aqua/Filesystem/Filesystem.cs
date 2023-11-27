@@ -367,7 +367,7 @@ namespace Aqua.Filesystem
                                 Console.WriteLine("  - " + file);
                             }
                         }
-                        else if (args[1] == "a" || args[1] == null || args[1] == "")
+                        else if (args[1] == "a")
                         {
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             foreach (var directory in dList)

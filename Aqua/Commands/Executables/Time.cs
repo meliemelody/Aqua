@@ -9,16 +9,8 @@ namespace Aqua.Commands.Executables
 
         public override string Execute(string[] args)
         {
-            switch (args[0])
-            {
-                /*case "compile":
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    return Miscellaneous.Compilation.Date + " | " + Miscellaneous.Compilation.Time;*/
-
-                default:
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    return $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")}";
-            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return $"{Cosmos.HAL.RTC.Hour.ToString("D2")}:{Cosmos.HAL.RTC.Minute.ToString("D2")}:{Cosmos.HAL.RTC.Second.ToString("D2")}";
         }
     }
 }

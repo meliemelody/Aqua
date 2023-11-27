@@ -20,7 +20,7 @@ namespace Aqua.Commands
                     "Clears your entire screen, and leaves you with only the shell and the bar"),
                 new Executables.IO("io", "Used to shutdown or reboot/restart your computer."),
                 new Executables.Time("time",
-                    "Shows the current time with \"direct\", and the compile time with \"compile\"."),
+                    "Shows the current time."),
                 new Executables.Calculate("calc", "Calculate values between them [only 2 values allowed for now]"),
                 new Executables.TextEditor("ted", "Execute the TED Editor, an all new text editor for Aqua System."),
                 new Executables.Games("games", "Play some games and have fun!"),
