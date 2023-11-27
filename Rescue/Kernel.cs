@@ -23,6 +23,8 @@ namespace Rescue
 
         protected override void Run()
         {
+            Console.WriteLine("Welcome to the Aqua System Rescue Disk.\nThis version is for use with the 0.3.1 version of Aqua System only.\n\n");
+
             // Show the available options [format, delete the login info, etc...]
             ShowOptions();
 
@@ -100,6 +102,7 @@ namespace Rescue
                                 break;
 
                             default:
+                                // In case the user enters an incorrect argument.
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("You have entered an incorrect argument, aborting this step.");
 
@@ -207,7 +210,7 @@ namespace Rescue
         private static void ShowOptions()
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("Aqua System | Rescue Disk | v0.1.1");
+            Console.WriteLine("Aqua System | Rescue Disk | v0.1.2");
 
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(
